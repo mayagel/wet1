@@ -8,9 +8,14 @@ when we saw this file together we sugested to create 2 AVL tree.
 2. for the company
 every tree have nodes that is arrange by the ID (of the employee or the company depend on the tree)
 one employee node will hold the next fileds:
+
 (*** almog here you need to insert what you wrote in the IPAD)
+
+
 one company node will hold the next fileds:
+
 (*** almog here you need to insert what you wrote in the IPAD)
+
 
 ### sugestion of files and contain
 1. AVL.h - hold the the AVL tree DS with the important function(like constuctore, find, insert, remove, select)
