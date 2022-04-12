@@ -1,7 +1,7 @@
 # wet1
 wet1 for mivney
 
-## instuctions (in general)
+### instuctions (in general)
 you can find the full instruction in the DS-WET1-2022-spring.pdf file
 when we saw this file together we sugested to create 2 AVL tree.
 1. for the all employees
@@ -12,7 +12,7 @@ one employee node will hold the next fileds:
 one company node will hold the next fileds:
 (*** almog here you need to insert what you wrote in the IPAD)
 
-## sugestion of files and contain
+### sugestion of files and contain
 1. AVL.h - hold the the AVL tree DS with the important function(like constuctore, find, insert, remove, select)
 for example in the insert function we should insert "key" that will compare with the other "key nodes until it will find the right place for the new node. in our case the key is employeeID or companyID.
 another value we should insert is the "data" whats means we should create object that will be the node himself, in our case, the data is object of employee of object of company
