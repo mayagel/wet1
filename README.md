@@ -19,4 +19,6 @@ another value we should insert is the "data" whats means we should create object
 2. employee.cpp/.h - hold the object of one employee, will comtain the right fileds thats in almog IPAD and some function we will need to use if needed
 3. company.cpp/.h - very similar to above
 4. library.h - we got it from the Segel, dont touch this file is for th function we should use in the main file 
+5. library.cpp - implementation of the method that we should create
+6. DS.cpp - the whole DS that contains all the avl and data.
 5. main.cpp - import all the above files and create obects and avltrees and with those Datas execute the function we need to do.
