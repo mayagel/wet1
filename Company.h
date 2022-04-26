@@ -13,6 +13,20 @@ typedef struct
     int employee_id;
 }KeyBySalary;
 
+bool operator<(const KeyBySalary& a, KeyBySalary& b){
+    if (a.salary<b.salary)
+    {
+        return true;
+    }
+    if (a.salary>b.salary)
+    {
+        return false;
+    }
+    return a.employee_id > b.employee_id;
+    
+    
+}
+
 class Company
 {
 private:
