@@ -26,40 +26,35 @@ StatusType DataStructure::AddCompany(int CompanyID, int Value)
     {
         return INVALID_INPUT;
     }
-    // Company *newCompany = new Company(CompanyID, Value); //CarTypepp
-    // if (!newCompany)
-    // {
-    //     return ALLOCATION_ERROR;
-    // }
-    if (this->Companies->find(this->Companies,CompanyID))
+    Company *newCompany = new Company(CompanyID, Value);
+    if (!newCompany)
     {
-        // delete newCompany;
+        return ALLOCATION_ERROR;
+    }
+    if (this->Companies->find(CompanyID))
+    {
+        delete newCompany;
         return FAILURE;
     }
     else
     {
-        this->all_types->insert(*(new_car1)); //*(new_car->clone())
-        this->zero_types->insert(*(new_car2));
-        CarModel *best_to_insert = new CarModel();
-        *best_to_insert = *new_car1->getBestSell();
-        best_to_insert->changeBest();
-
-        best_models_sells->insert(*best_to_insert);
-        this->bestSell = *(*this->best_models_sells->maxNode(best_models_sells));
+        this->Companies->insert(CompanyID,*(newCompany));
         return SUCCESS;
     }
 }
 
-void del_tree(AvlNode<CarModel> *from_delet, AvlNode<CarModel> *to_delet)
+StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary, int Grade)
 {
-    if (!to_delet)
+    if (CompanyID<=0 || Salary <=0 || Grade <0)
     {
-        return;
+        return INVALID_INPUT;
     }
+    if(!(Companies->find(CompanyID))||Employees->find(EmployeeID)
+    {
+        return FAILURE;
+    }
+    Employee *newEmployee = new Employee(EmployeeID,CompanyID,Salary,Grade);
 
-    del_tree(from_delet, to_delet->getRight());
-    del_tree(from_delet, to_delet->getLeft());
-    delete (from_delet->search(***to_delet));
 }
 
 StatusType CarDealershipManager::RemoveCarType(int type)

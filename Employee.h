@@ -8,28 +8,26 @@ class Employee
 {
 private:
     int EmployeeID;
+    int EmployerID;
     int Salary;
     int Grade;
-    int EmployerID;
-    AVLNode<Company> Employer;
+    AVLNode<Company,int>* Employer;
 public:
-    Employee() = default;
-    Employee(int EmployeeID, int Salary,int Grade,int modelGrade) : EmployeeID(EmployeeID), Salary(Salary), Grade(Grade), EmployerID(EmployerID),Employer(Employer){
-    };
-    Employee(const Employee &ce)
-    {
-        EmployeeID = ce.EmployeeID;
-        Salary = ce.Salary;
-        Grade = ce.Grade;
-        EmployerID = ce.EmployerID;
-        //Employer = 
-    }
+    Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
+                                                                                               EmployerID(EmployerID),
+                                                                                               Salary(Salary),
+                                                                                               Grade(Grade),
+                                                                                               Employer(Employer){};
+
+    // Employee(const Employee &ce)
+    // {
+    //     EmployeeID = ce.EmployeeID;
+    //     Salary = ce.Salary;
+    //     Grade = ce.Grade;
+    //     EmployerID = ce.EmployerID;
+    //     Employer = ce.Employer; 
+    // }
     ~Employee() = default;
-    //CarModel &operator++();//function that increases modelSells by 1 and add 10 to grade
-    // void higherGrade();
-    // void changeBest() { best = !best; }
-    // void makeDemo() { demo = true; }
-    // void lowerGrade(int t);                      //decreases 100/t from grade
     bool operator<(const Employee &emp) const; //based on EmployeeID
     bool operator>(const Employee &emp) const; //based on EmployeeID
     Employee &operator=(const Employee &emp);
@@ -41,6 +39,5 @@ public:
     void setGrade(int t) { Grade = t; }
     //  bool operator==(const Employee &emp);
 };
-//}
 
 #endif

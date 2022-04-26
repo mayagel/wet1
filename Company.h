@@ -5,14 +5,16 @@
 
 //namespace data_structure
 //{
-class CarModel
+
+
+class Company
 {
 private:
     int CompanyID;
     int Value;
     int numEmployees;
-    Avltree<Employee>* comEmpBySalary;
-    Avltree<Employee>* comEmpByID;
+    AVLTree<Employee,int>* comEmpBySalary; // int need to change to struct **almogkarif 
+    AVLTree<Employee,int>* comEmpByID; //this int is ok.
     Employee* HighestEarnerInCom;
 
 

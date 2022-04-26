@@ -5,22 +5,22 @@
 
 #include <algorithm>
 
-template<class C>
+template<class C,class D>
 class AVLNode {
 public:
-	C key;
+	D key;
 	C data;
 	int rank;
 	int height;
 	AVLNode* left;
 	AVLNode* right;
 	AVLNode* father;
-	AVLNode(const C& key, const C& data, AVLNode* father) :
+	AVLNode(const D& key, const C& data, AVLNode* father) :
 		key(key), data(data), rank(1), height(0), left(nullptr), right(nullptr), father(father) {};
 	~AVLNode() = default;
 };
 
-template<class T>
+template<class T,class S>
 class AVLTree {
 private:
 	AVLNode<T>* root;
@@ -272,7 +272,7 @@ public:
 		return this->root;
 	}
 
-	AVLNode<T>* find(AVLNode<T>* curr_node, const T& key)
+	AVLNode<T>* find(AVLNode<T>* curr_node, const S& key)
 	{
 		if (curr_node == nullptr || curr_node->key == key)
 		{
@@ -285,7 +285,7 @@ public:
 		return find(curr_node->left, key);
 	}
 
-	void insert(const T& key, const T& data)
+	void insert(const S& key, const T& data)
 	{
 		if (find(root, key) != nullptr)
 		{

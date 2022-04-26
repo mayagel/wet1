@@ -11,27 +11,27 @@
 class DataStructure
 {
 private:
-    AVLNode<Company> *Companies;
-    AVLNode<Company> *CopaniesWithEmp;
-    AVLNode<Employee> *Employees;
-    AVLNode<Employee> *EmployeesBySalary;
+    AVLTree<Company> *Companies;
+    AVLTree<Company> *CopaniesWithEmp;
+    AVLTree<Employee> *Employees;
+    AVLTree<Employee> *EmployeesBySalary;
     Employee *HighestEarner;
 
 public:
     DataStructure()
     {
-        AVLNode<Company> *Companies = new AVLNode<Company>(); 
+        AVLTree<Company> *Companies = new AVLTree<Company>(); 
         this->Companies = Companies;
-        AVLNode<Company> *CopaniesWithEmp = new AVLNode<Company>(); 
+        AVLTree<Company> *CopaniesWithEmp = new AVLTree<Company>(); 
         this->CopaniesWithEmp = CopaniesWithEmp;
-        AVLNode<Employee> *Employees = new AVLNode<Employee>(); 
+        AVLTree<Employee> *Employees = new AVLTree<Employee>(); 
         this->Employees = Employees;
-        AVLNode<Employee> *EmployeesBySalary = new AVLNode<Employee>(); 
+        AVLTree<Employee> *EmployeesBySalary = new AVLTree<Employee>(); 
         this->EmployeesBySalary = EmployeesBySalary;
         HighestEarner = nullptr; 
     }
     // ~DS()=default;
-    DataStructure(const DS &cd)
+    DataStructure(const DataStructure &cd)
     {
         this->Companies = cd.Companies;
         this->CopaniesWithEmp = cd.CopaniesWithEmp;
@@ -39,30 +39,7 @@ public:
         this->EmployeesBySalary = cd.EmployeesBySalary;
         this->HighestEarner = cd.HighestEarner;
     }
-    // void deleteTrees(AVLNode<CarType> *tree)
-    // {
-    //     if (tree)
-    //     {
-    //         if (**tree)
-    //         {
-    //             delete (*(*tree))->getmodelsTree();
-    //         }
-    //         deleteTrees(tree->getRight());
-    //         deleteTrees(tree->getLeft());
-    //     }
-    // }
-    // void deleteBestSell(AvlNode<CarType> *tree)
-    // {
-    //     if (tree)
-    //     {
-    //         if (**tree)
-    //         {
-    //             delete (*(*tree))->getBestSell();
-    //         }
-    //         deleteBestSell(tree->getRight());
-    //         deleteBestSell(tree->getLeft());
-    //     }
-    // }
+
     ~DataStructure()
     {
       
@@ -73,20 +50,20 @@ public:
         // delete HighestEarner;
     };
 
-    StatusType AddCompany(void *DS, int CompanyID, int Value);
-    StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
-    StatusType RemoveEmployee(void *DS, int EmployeeID);
-    StatusType RemoveCompany(void *DS, int CompanyID);
-    StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees);
-    StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade);
-    StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease);
-    StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade);
-    StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID);
-    StatusType AcquireCompany(void *DS, int AcquirerID, int TargetID, double Factor);
-    StatusType GetHighestEarner(void *DS, int CompanyID, int *EmployeeID);
-    StatusType GetAllEmployeesBySalary(void *DS, int CompanyID, int **Employees, int *NumOfEmployees);
-    StatusType GetHighestEarnerInEachCompany(void *DS, int NumOfCompanies, int **Employees);
-    StatusType GetNumEmployeesMatching(void *DS, int CompanyID, int MinEmployeeID, int
+    StatusType AddCompany(int CompanyID, int Value);
+    StatusType AddEmployee(int EmployeeID, int CompanyID, int Salary, int Grade);
+    StatusType RemoveEmployee(int EmployeeID);
+    StatusType RemoveCompany(int CompanyID);
+    StatusType GetCompanyInfo(int CompanyID, int *Value, int *NumEmployees);
+    StatusType GetEmployeeInfo(int EmployeeID, int *EmployerID, int *Salary, int *Grade);
+    StatusType IncreaseCompanyValue(int CompanyID, int ValueIncrease);
+    StatusType PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
+    StatusType HireEmployee(int EmployeeID, int NewCompanyID);
+    StatusType AcquireCompany(int AcquirerID, int TargetID, double Factor);
+    StatusType GetHighestEarner(int CompanyID, int *EmployeeID);
+    StatusType GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
+    StatusType GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
+    StatusType GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
     void Quit();
 };
