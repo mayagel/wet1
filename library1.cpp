@@ -5,15 +5,15 @@
 
  void *Init()
  {
-    DS *ds = new DS();
-    return (void *)ds;
+    DataStructure *DS = new DataStructure();
+    return (void *)DS;
  }
  StatusType AddCompany(void *DS, int CompanyID, int Value)
  {
-    if (!DS || CompanyID<=0 || Value <= 0)
+    if (!DS)
     {
         return INVALID_INPUT;
     }
-    return DS->AddCompany(CompanyID, Value);
+    return ((DataStructure *)DS)->AddCompany(CompanyID, Value);
  }
 

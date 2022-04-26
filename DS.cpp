@@ -19,21 +19,21 @@
     // MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
     // // void try();
 
-StatusType AddCompany(void *DS, int CompanyID, int Value)
+StatusType DataStructure::AddCompany(int CompanyID, int Value)
 {
 
-    if (!DS || CompanyID<=0 || Value <= 0)
+    if (CompanyID<=0 || Value <= 0)
     {
         return INVALID_INPUT;
     }
-    Company *newCompany = new Company(CompanyID, Value); //CarTypepp
-    if (!newCompany)
+    // Company *newCompany = new Company(CompanyID, Value); //CarTypepp
+    // if (!newCompany)
+    // {
+    //     return ALLOCATION_ERROR;
+    // }
+    if (this->Companies->find(this->Companies,CompanyID))
     {
-        return ALLOCATION_ERROR;
-    }
-    if ((Company *)DS->Companies->find(DS->Companies,CompanyID))
-    {
-        delete newCompany;
+        // delete newCompany;
         return FAILURE;
     }
     else
