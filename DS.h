@@ -11,18 +11,18 @@
 class DataStructure
 {
 private:
-    AVLTree<Company> *Companies;
-    AVLTree<Company> *CopaniesWithEmp;
-    AVLTree<Employee> *Employees;
-    AVLTree<Employee> *EmployeesBySalary;
+    AVLTree<Company,int> *Companies;
+    AVLTree<Company,int> *CopaniesWithEmp;
+    AVLTree<Employee,int> *Employees;
+    AVLTree<Employee,> *EmployeesBySalary;
     Employee *HighestEarner;
 
 public:
     DataStructure()
     {
-        AVLTree<Company> *Companies = new AVLTree<Company>(); 
+        AVLTree<Company,int> *Companies = new AVLTree<Company,int>(); 
         this->Companies = Companies;
-        AVLTree<Company> *CopaniesWithEmp = new AVLTree<Company>(); 
+        AVLTree<Company,int> *CopaniesWithEmp = new AVLTree<Company,int>(); 
         this->CopaniesWithEmp = CopaniesWithEmp;
         AVLTree<Employee> *Employees = new AVLTree<Employee>(); 
         this->Employees = Employees;
