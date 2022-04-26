@@ -8,13 +8,15 @@
 #ifndef _DS
 #define _DS
 
+#include <iostream>
+
 class DataStructure
 {
 private:
     AVLTree<Company,int> *Companies;
     AVLTree<Company,int> *CopaniesWithEmp;
     AVLTree<Employee,int> *Employees;
-    AVLTree<Employee,> *EmployeesBySalary;
+    AVLTree<Employee, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
 public:
@@ -24,9 +26,9 @@ public:
         this->Companies = Companies;
         AVLTree<Company,int> *CopaniesWithEmp = new AVLTree<Company,int>(); 
         this->CopaniesWithEmp = CopaniesWithEmp;
-        AVLTree<Employee> *Employees = new AVLTree<Employee>(); 
+        AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
         this->Employees = Employees;
-        AVLTree<Employee> *EmployeesBySalary = new AVLTree<Employee>(); 
+        AVLTree<Employee, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
         HighestEarner = nullptr; 
     }

@@ -3,6 +3,8 @@
 #include "Avltree.h"
 #include "DS.h"
 
+#include <iostream>
+
  void *Init()
  {
     DataStructure *DS = new DataStructure();
@@ -136,9 +138,9 @@ StatusType GetNumEmployeesMatching(void *DS, int CompanyID, int MinEmployeeID, i
                  MinGrade, TotalNumOfEmployees, NumOfEmployees);
             }
 
-    void Quit(void** DS)
-    {
-        delete ((DataStructure *)*DS);
-        *DS = NULL;
-    }
+void Quit(void** DS)
+{
+    delete ((DataStructure *)*DS);
+    *DS = nullptr;
+}
 

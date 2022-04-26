@@ -2,10 +2,16 @@
 #define _CARMODEL
 #include "Avltree.h"
 #include "Employee.h"
+/*
+Yagel 27.04 2:23
+**/
+#include <iostream>
 
-//namespace data_structure
-//{
-
+typedef struct 
+{
+    int salary;
+    int employee_id;
+}KeyBySalary;
 
 class Company
 {
@@ -13,48 +19,60 @@ private:
     int CompanyID;
     int Value;
     int numEmployees;
-    AVLTree<Employee,int>* comEmpBySalary; // int need to change to struct **almogkarif 
-    AVLTree<Employee,int>* comEmpByID; //this int is ok.
-    Employee* HighestEarnerInCom;
-
-
-    bool best;
-    bool demo;
-    int carType;
-    int modelId;
-    int modelSells;
-    int modelGrade;
-
+    AVLTree<Employee, KeyBySalary> *comEmpBySalary; 
+    AVLTree<Employee, int> *comEmpByID;    
+    Employee *HighestEarnerInCom;
 public:
-    CarModel() = default;
-    CarModel(int carType, int modelId) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(0){};
-    // CarModel(int carType, int modelId, int grade, i) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(grade){};
+    Company() = default;
+    Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0){
+        comEmpBySalary = new AVLTree<Employee, KeyBySalary>();
+        comEmpByID = new AVLTree<Employee, int>();
+        HighestEarnerInCom = nullptr;
+        
+    };
+    // Company(int carType, int modelId, int grade, i) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(grade){};
 
-    CarModel(const CarModel &cd)
+    Company(const Company &comp)
     {
-        best = cd.best;
-        demo = cd.demo;
-        carType = cd.carType;
-        modelId = cd.modelId;
-        modelSells = cd.modelSells;
-        modelGrade = cd.modelGrade;
+        CompanyID = comp.CompanyID;
+        Value = comp.Value;
+        numEmployees = comp.numEmployees;
+        comEmpBySalary = new AVLTree<Employee, KeyBySalary>();
+        if (comp.comEmpBySalary)
+        {
+            *comEmpBySalary = *comp.comEmpBySalary;
+        }
+        
+        comEmpByID = new AVLTree<Employee, int>();
+        if (comp.comEmpByID)
+        {
+            *comEmpByID = *comp.comEmpByID;
+        }
+        
+        HighestEarnerInCom = new Employee();
+        if (comp.HighestEarnerInCom)
+        {
+            *HighestEarnerInCom = *comp.HighestEarnerInCom;
+        }
+        
+
     }
-    ~CarModel() = default;
-    //CarModel &operator++();//function that increases modelSells by 1 and add 10 to grade
-    void higherGrade();
-    void changeBest() { best = !best; }
-    void makeDemo() { demo = true; }
-    void lowerGrade(int t);                      //decreases 100/t from grade
-    bool operator<(const CarModel &model) const; //based on grade and if equal then based on carType
-    bool operator>(const CarModel &model) const; //based on grade and if equal then based on carType
-    CarModel &operator=(const CarModel &car);
-    int getCarType() { return carType; };
-    int getGrade() { return modelGrade; };
-    int getModelId() { return modelId; };
-    int getSells() { return modelSells; };
-    void setSells(int t) { modelSells = t; }
-    void setGrade(int t) { modelGrade = t; }
-    //  bool operator==(const CarModel &model);
+    ~Company() = default;
+    // CarModel &operator++();//function that increases modelSells by 1 and add 10 to grade
+    // void higherGrade();
+    // void changeBest() { best = !best; }
+    // void makeDemo() { demo = true; }
+    // void lowerGrade(int t);                      // decreases 100/t from grade
+    bool operator<(const Company &c) const; // based on grade and if equal then based on carType
+    bool operator>(const Company &c) const; // based on grade and if equal then based on carType
+    Company &operator=(const Company &c);
+    // int getCarType() { return carType; };
+    // int getGrade() { return modelGrade; };
+    // int getModelId() { return modelId; };
+    // int getSells() { return modelSells; };
+    // void setSells(int t) { modelSells = t; }
+    // void setGrade(int t) { modelGrade = t; }
+    // //  bool operator==(const CarModel &model);
 };
 //}
 

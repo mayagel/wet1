@@ -1,9 +1,12 @@
 #pragma once
-
+/*
+Yagel 27.04 1:48
+**/
 #ifndef AVLTREE_H
 #define AVLTREE_H
 
-#include <algorithm>
+#include <iostream>
+
 
 template<class C,class D>
 class AVLNode {
@@ -15,6 +18,7 @@ public:
 	AVLNode* left;
 	AVLNode* right;
 	AVLNode* father;
+	AVLNode(){};// Yagel added empty default constructor 
 	AVLNode(const D& key, const C& data, AVLNode* father) :
 		key(key), data(data), rank(1), height(0), left(nullptr), right(nullptr), father(father) {};
 	~AVLNode() = default;
@@ -23,15 +27,15 @@ public:
 template<class T,class S>
 class AVLTree {
 private:
-	AVLNode<T>* root;
+	AVLNode<T, S>* root;
 
-	int getBalanceFactor(AVLNode<T>* node)
+	int getBalanceFactor(AVLNode<T, S>* node)
 	{
 		int balance_factor = node == nullptr ? 0 : getHeight(node->left) - getHeight(node->right);
 		return balance_factor;
 	}
 
-	void balance(AVLNode<T>* node)
+	void balance(AVLNode<T, S>* node)
 	{
 		while (node != nullptr)
 		{
@@ -63,16 +67,16 @@ private:
 		}
 	}
 
-	void updateRank(AVLNode<T>* node)
+	void updateRank(AVLNode<T, S>* node)
 	{
 		int node_left_rank = node->left == nullptr ? 0 : node->left->rank;
 		int node_right_rank = node->right == nullptr ? 0 : node->right->rank;
 		node->rank = node_left_rank + node_right_rank + 1;
 	}
 
-	void left_left_rotation(AVLNode<T>* node)
+	void left_left_rotation(AVLNode<T, S>* node)
 	{
-		AVLNode<T>* tmp = node->left;
+		AVLNode<T, S>* tmp = node->left;
 		node->left = tmp->right;
 		if (tmp->right != nullptr)
 		{
@@ -101,9 +105,9 @@ private:
 		setHeight(tmp);
 	}
 
-	void right_right_rotation(AVLNode<T>* node)
+	void right_right_rotation(AVLNode<T, S>* node)
 	{
-		AVLNode<T>* tmp = node->right;
+		AVLNode<T, S>* tmp = node->right;
 		node->right = tmp->left;
 		if (tmp->left != nullptr)
 		{
@@ -132,30 +136,30 @@ private:
 		setHeight(tmp);
 	}
 
-	void left_right_rotation(AVLNode<T>* node)
+	void left_right_rotation(AVLNode<T, S>* node)
 	{
 		right_right_rotation(node->left);
 		left_left_rotation(node);
 	}
 
-	void right_left_rotation(AVLNode<T>* node)
+	void right_left_rotation(AVLNode<T, S>* node)
 	{
 		left_left_rotation(node->right);
 		right_right_rotation(node);
 	}
 
-	void setHeight(AVLNode<T>* node)
+	void setHeight(AVLNode<T, S>* node)
 	{
 		node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
 	}
 
-	int getHeight(AVLNode<T>* node)
+	int getHeight(AVLNode<T, S>* node)
 	{
 		int height = node == nullptr ? -1 : node->height;
 		return height;
 	}
 
-	AVLNode<T>* handleZeroSonsRemove(AVLNode<T>* node)
+	AVLNode<T, S>* handleZeroSonsRemove(AVLNode<T, S>* node)
 	{
 		if (node->father->left == node)
 		{
@@ -165,12 +169,12 @@ private:
 		{
 			node->father->right = nullptr;
 		}
-		AVLNode<T>* father = node->father;
+		AVLNode<T, S>* father = node->father;
 		delete node;
 		return father;
 	}
 
-	AVLNode<T>* handleOneSonRemove(AVLNode<T>* node, LinkedList<T>* swappedNodes)
+	AVLNode<T, S>* handleOneSonRemove(AVLNode<T, S>* node, LinkedList<T>* swappedNodes)
 	{
 		if (node->right != nullptr)
 		{
@@ -193,9 +197,9 @@ private:
 		return node;
 	}
 
-	AVLNode<T>* handleTwoSonsRemove(AVLNode<T>* node, LinkedList<T>* swappedNodes)
+	AVLNode<T, S>* handleTwoSonsRemove(AVLNode<T, S>* node, LinkedList<T>* swappedNodes)
 	{
-		AVLNode<T>* tmp = findPrecedingNode(node);
+		AVLNode<T, S>* tmp = findPrecedingNode(node);
 
 		std::swap(node->key, tmp->key);
 		std::swap(node->data, tmp->data);
@@ -206,7 +210,7 @@ private:
 		bool left_son_exist = tmp->left != nullptr;
 		bool right_son_exist = tmp->right != nullptr;
 
-		AVLNode<T>* father;
+		AVLNode<T, S>* father;
 		if (!left_son_exist && !right_son_exist)
 		{
 			father = handleZeroSonsRemove(tmp);
@@ -218,9 +222,9 @@ private:
 		return father;
 	}
 
-	AVLNode<T>* findPrecedingNode(AVLNode<T>* node)
+	AVLNode<T, S>* findPrecedingNode(AVLNode<T, S>* node)
 	{
-		AVLNode<T>* tmp = node->right;
+		AVLNode<T, S>* tmp = node->right;
 		while (tmp->left != nullptr)
 		{
 			tmp = tmp->left;
@@ -228,10 +232,10 @@ private:
 		return tmp;
 	}
 
-	AVLNode<T>* removeFromBST(AVLNode<T>* node, bool left_son_exist, bool right_son_exist,
+	AVLNode<T, S>* removeFromBST(AVLNode<T, S>* node, bool left_son_exist, bool right_son_exist,
 		LinkedList<T>* swappedNodes)
 	{
-		AVLNode<T>* father;
+		AVLNode<T, S>* father;
 		if (!left_son_exist && !right_son_exist)
 		{
 			father = handleZeroSonsRemove(node);
@@ -249,7 +253,7 @@ private:
 
 public:
 
-	AVLTree(AVLNode<T>* root = nullptr) : root(root) {}
+	AVLTree(AVLNode<T, S>* root = nullptr) : root(root) {}
 
 	~AVLTree()
 	{
@@ -257,7 +261,7 @@ public:
 		root = nullptr;
 	}
 
-	void deleteTree(AVLNode<T>* node)
+	void deleteTree(AVLNode<T, S>* node)
 	{
 		if (node != nullptr)
 		{
@@ -267,12 +271,12 @@ public:
 		}
 	}
 
-	AVLNode<T>* getRoot()
+	AVLNode<T, S>* getRoot()
 	{
 		return this->root;
 	}
 
-	AVLNode<T>* find(AVLNode<T>* curr_node, const S& key)
+	AVLNode<T, S>* find(AVLNode<T, S>* curr_node, const S& key)
 	{
 		if (curr_node == nullptr || curr_node->key == key)
 		{
@@ -293,19 +297,19 @@ public:
 		}
 		if (root == nullptr)
 		{
-			root = new AVLNode<T>(key, data, nullptr);
+			root = new AVLNode<T, S>(key, data, nullptr);
 			setHeight(root);
 		}
 		else
 		{
-			AVLNode<T>* tmp = root;
+			AVLNode<T, S>* tmp = root;
 			while (tmp != nullptr)
 			{
 				if (key < tmp->key)
 				{
 					if (tmp->left == nullptr)
 					{
-						tmp->left = new AVLNode<T>(key, data, tmp);
+						tmp->left = new AVLNode<T, S>(key, data, tmp);
 						setHeight(tmp);
 						balance(tmp);
 						break;
@@ -319,7 +323,7 @@ public:
 				{
 					if (tmp->right == nullptr)
 					{
-						tmp->right = new AVLNode<T>(key, data, tmp);
+						tmp->right = new AVLNode<T, S>(key, data, tmp);
 						setHeight(tmp);
 						balance(tmp);
 						break;
@@ -335,7 +339,7 @@ public:
 
 	void remove(const T& key, LinkedList<T>* swappedNodes)
 	{
-		AVLNode<T>* node = find(root, key);
+		AVLNode<T, S>* node = find(root, key);
 		if (node == nullptr)
 		{
 			throw Failure();
@@ -375,12 +379,12 @@ public:
 				return;
 			}
 		}
-		AVLNode<T>* father = removeFromBST(node, left_son_exist, right_son_exist, swappedNodes);
+		AVLNode<T, S>* father = removeFromBST(node, left_son_exist, right_son_exist, swappedNodes);
 		setHeight(father);
 		balance(father);
 	}
 
-	AVLNode<T>* select(AVLNode<T>* node, int index)
+	AVLNode<T, S>* select(AVLNode<T, S>* node, int index)
 	{
 		int left_degree = node->left == nullptr ? 0 : node->left->rank;
 		if (left_degree == index - 1)
