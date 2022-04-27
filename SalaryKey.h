@@ -4,8 +4,8 @@
 class KeyBySalary
 {
 public:
-    int Salary;
     int EmployeeID;
+    int Salary;
 
 public:
     KeyBySalary() = delete;

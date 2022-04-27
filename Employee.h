@@ -2,8 +2,8 @@
 #define _Employee
 #include "Company.h"
 #include "Avltree.h"
-// namespace data_structure
-//{
+
+
 class Employee
 {
 private:

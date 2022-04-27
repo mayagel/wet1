@@ -7,6 +7,8 @@ Yagel 27.04 1:48
 
 #include "List.h"
 #include <iostream>
+#include <algorithm>
+#include "Exceptions.h"
 
 
 template<class C,class D>
