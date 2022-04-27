@@ -35,7 +35,10 @@ public:
     //     EmployerID = ce.EmployerID;
     //     Employer = ce.Employer; 
     // }
-    ~Employee() = default;
+    ~Employee()
+    {
+        delete Employer;
+    }
     Employee(const Employee &emp){
         EmployeeID = emp.EmployeeID;
         EmployerID = emp.EmployerID;
