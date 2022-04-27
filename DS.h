@@ -2,6 +2,7 @@
 #include "Company.h"
 #include "Employee.h"
 #include "library1.h"
+#include "SalaryKey.h"
 //#include "stdio.h"
 // #include "cstring"
 //#include "string.h"
@@ -49,7 +50,7 @@ public:
         delete CopaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
-        // delete HighestEarner;
+        delete HighestEarner;
     };
 
     StatusType AddCompany(int CompanyID, int Value);

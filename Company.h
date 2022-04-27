@@ -1,8 +1,8 @@
-#ifndef _CARMODEL
-#define _CARMODEL
+#ifndef _Company
+#define _Company
 #include "Avltree.h"
 #include "Employee.h"
-// #include "SalaryKey.h"
+#include "SalaryKey.h"
 /*
 Yagel 27.04 2:23
 **/
@@ -16,8 +16,8 @@ private:
     int CompanyID;
     int Value;
     int numEmployees;
-    AVLTree<Employee, KeyBySalary> *comEmpBySalary; 
-    AVLTree<Employee, int> *comEmpByID;    
+    AVLTree<Employee,KeyBySalary> *comEmpBySalary; 
+    AVLTree<Employee,int> *comEmpByID;    
     Employee *HighestEarnerInCom;
 public:
     Company() = default;
@@ -55,22 +55,24 @@ public:
 
     }
     ~Company() = default;
-    // CarModel &operator++();//function that increases modelSells by 1 and add 10 to grade
-    // void higherGrade();
-    // void changeBest() { best = !best; }
-    // void makeDemo() { demo = true; }
-    // void lowerGrade(int t);                      // decreases 100/t from grade
-    bool operator<(const Company &c) const; // based on grade and if equal then based on carType
-    bool operator>(const Company &c) const; // based on grade and if equal then based on carType
+    bool operator<(const Company &c) const; 
+    bool operator>(const Company &c) const; 
     Company &operator=(const Company &c);
-    // int getCarType() { return carType; };
-    // int getGrade() { return modelGrade; };
-    // int getModelId() { return modelId; };
-    // int getSells() { return modelSells; };
-    // void setSells(int t) { modelSells = t; }
-    // void setGrade(int t) { modelGrade = t; }
-    // //  bool operator==(const CarModel &model);
+
+    //geters
+    AVLTree<Employee,KeyBySalary> getcomEmpBySalary() { return *comEmpBySalary; };
+    AVLTree<Employee,int> getcomEmpByID() { return *comEmpByID; };
+    int getCompanyID() {return CompanyID; };
+    int getValue() {return Value; };
+    int getNumEmployees() { return numEmployees; };
+    Employee* getHighestEarnerInCom() {return HighestEarnerInCom; };
+
+    //seters
+    void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
+    void setNumEmployees(){numEmployees++;};
+
+
+   
 };
-//}
 
 #endif

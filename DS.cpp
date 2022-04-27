@@ -2,83 +2,93 @@
 #include "stdio.h"
 #include <cstddef>
 
-    // StatusType AddCompany(void *DS, int CompanyID, int Value);
-    // StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
-    // StatusType RemoveEmployee(void *DS, int EmployeeID);
-    // StatusType RemoveCompany(void *DS, int CompanyID);
-    // StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees);
-    // StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade);
-    // StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease);
-    // StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade);
-    // StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID);
-    // StatusType AcquireCompany(void *DS, int AcquirerID, int TargetID, double Factor);
-    // StatusType GetHighestEarner(void *DS, int CompanyID, int *EmployeeID);
-    // StatusType GetAllEmployeesBySalary(void *DS, int CompanyID, int **Employees, int *NumOfEmployees);
-    // StatusType GetHighestEarnerInEachCompany(void *DS, int NumOfCompanies, int **Employees);
-    // StatusType GetNumEmployeesMatching(void *DS, int CompanyID, int MinEmployeeID, int
-    // MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
-    // // void try();
+//     StatusType RemoveEmployee(int EmployeeID);
+//     StatusType RemoveCompany(int CompanyID);
+//     StatusType GetCompanyInfo(int CompanyID, int *Value, int *NumEmployees);
+//     StatusType GetEmployeeInfo(int EmployeeID, int *EmployerID, int *Salary, int *Grade);
+//     StatusType IncreaseCompanyValue(int CompanyID, int ValueIncrease);
+//     StatusType PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
+//     StatusType HireEmployee(int EmployeeID, int NewCompanyID);
+//     StatusType AcquireCompany(int AcquirerID, int TargetID, double Factor);
+//     StatusType GetHighestEarner(int CompanyID, int *EmployeeID);
+//     StatusType GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
+//     StatusType GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
+//     StatusType GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
+//     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
+//     void Quit();
 
 StatusType DataStructure::AddCompany(int CompanyID, int Value)
 {
 
-    if (CompanyID<=0 || Value <= 0)
+    if (CompanyID <= 0 || Value <= 0)
     {
         return INVALID_INPUT;
+    }
+    if (this->Companies->find((this->Companies)->getRoot(), CompanyID))
+    {
+        return FAILURE;
     }
     Company *newCompany = new Company(CompanyID, Value);
     if (!newCompany)
     {
         return ALLOCATION_ERROR;
     }
-    if (this->Companies->find((this->Companies)->getRoot(), CompanyID))
-    {
-        delete newCompany;
-        return FAILURE;
-    }
-    else
-    {
-        this->Companies->insert(CompanyID,*(newCompany));
-        return SUCCESS;
-    }
+    this->Companies->insert(CompanyID, newCompany);
+    return SUCCESS;
 }
 
 StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary, int Grade)
 {
-    if (CompanyID<=0 || Salary <=0 || Grade <0)
+    if (CompanyID <= 0 || Salary <= 0 || Grade < 0 || EmployeeID<=0)
     {
         return INVALID_INPUT;
     }
-    if(!(Companies->find((this->Companies)->getRoot(), CompanyID))||Employees->find((this->Employees)->getRoot(), EmployeeID)) 
+    if (!(Companies->find((this->Companies)->getRoot(), CompanyID)) || Employees->find((this->Employees)->getRoot(), EmployeeID))
     {
         return FAILURE;
     }
 
-    AVLNode<Company, int>* employer = Companies->find((this->Companies)->getRoot(), CompanyID);
-    Employee *newEmployee = new Employee(EmployeeID,CompanyID,Salary,Grade,employer);
+    AVLNode<Company*, int> *employer = Companies->find((this->Companies)->getRoot(), CompanyID);
+    Employee *newEmployee = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
+    KeyBySalary *keyToInsert = new KeyBySalary(EmployeeID, Salary);
 
-    //insert to trees
-    (this->Employees)->insert(EmployeeID,*newEmployee);
-    (this->EmployeesBySalary)->insert(/*KeyBySalary*/,*newEmployee);
-    ((employer->data).getcomEmpBySalary())->insert(/*KeyBySalary*/,*newEmployee);
-    ((employer->data).getcomEmpByID())->insert(EmployeeID,*newEmployee);
+    // insert to trees
+    (this->Employees)->insert(EmployeeID, *newEmployee);
+    (this->EmployeesBySalary)->insert(*keyToInsert, *newEmployee);
+    ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, *newEmployee);
+    ((employer->data)->getcomEmpByID()).insert(EmployeeID, *newEmployee);
 
-    //HighestEarner
-    if(newEmployee > this->HighestEarner)
+    // HighestEarner
+    if (newEmployee >  (employer->data)->getHighestEarner())
     {
-        (employer->data).setHighestEarner(newEmployee);
+        (employer->data)->setHighestEarner(newEmployee);
     }
-    if(newEmployee > (employer->data).getHighestEarnerInCom())
+    if (newEmployee > (employer->data)->getHighestEarnerInCom())
     {
-        (employer->data).setHighestEarnerInCom(newEmployee);
+        (employer->data)->setHighestEarnerInCom(newEmployee);
     }
-    if((employer->data).getNumEmployees()==0)
+    if ((employer->data)->getNumEmployees() == 0)
     {
-        this->CopaniesWithEmp->insert(CompanyID,employer->data);
+        this->CopaniesWithEmp->insert(CompanyID, employer->data);
     }
-    (employer->data).setNumEmployees();
+    (employer->data)->setNumEmployees();
     return SUCCESS;
-       
+}
+
+
+StatusType DataStructure::RemoveEmployee(int EmployeeID)
+{
+    if(EmployeeID<=0)
+    {
+        return INVALID_INPUT;
+    }
+    if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
+    {
+        return FAILURE;
+    }
+    AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
+
+
 }
 
 // StatusType CarDealershipManager::RemoveCarType(int type)
