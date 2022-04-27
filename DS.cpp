@@ -87,7 +87,7 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
         return FAILURE;
     }
     AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-    
+    AVLNode<Company*, int> *employer = Employee->data.get->find((this->Companies)->getRoot(), CompanyID);
 
 }
 
