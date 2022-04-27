@@ -2,7 +2,7 @@
 #define _Employee
 #include "Company.h"
 #include "Avltree.h"
-//namespace data_structure
+// namespace data_structure
 //{
 class Employee
 {
@@ -11,16 +11,16 @@ private:
     int EmployerID;
     int Salary;
     int Grade;
-    AVLNode<Company,int>* Employer;
+    AVLNode<Company, int> *Employer;
+
 public:
     Employee() = default;
-    Employee(int EmployeeID): EmployeeID(EmployeeID){}
-    Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
-                                                                                               EmployerID(EmployerID),
-                                                                                               Salary(Salary),
-                                                                                               Grade(Grade),
-                                                                                               Employer (new AVLNode<Company,int>()),
-                                                                                               {};
+    Employee(int EmployeeID) : EmployeeID(EmployeeID) {}
+    Employee(int EmployeeID, int EmployerID, int Salary, int Grade, AVLNode<Company, int> *Employer) : EmployeeID(EmployeeID),
+                                                                                                       EmployerID(EmployerID),
+                                                                                                       Salary(Salary),
+                                                                                                       Grade(Grade),
+                                                                                                       Employer(new AVLNode<Company, int>()){};
     // Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
     //                                                                                            EmployerID(EmployerID),
     //                                                                                            Salary(Salary),
@@ -33,18 +33,19 @@ public:
     //     Salary = ce.Salary;
     //     Grade = ce.Grade;
     //     EmployerID = ce.EmployerID;
-    //     Employer = ce.Employer; 
+    //     Employer = ce.Employer;
     // }
     ~Employee() = default;
-    Employee(const Employee &emp){
+    Employee(const Employee &emp)
+    {
         EmployeeID = emp.EmployeeID;
         EmployerID = emp.EmployerID;
         Salary = emp.Salary;
-        Grade = emp.Grade; 
+        Grade = emp.Grade;
         Employer = emp.Employer;
     }
-    bool operator<(const Employee &emp) const; //based on EmployeeID
-    bool operator>(const Employee &emp) const; //based on EmployeeID
+    bool operator<(const Employee &emp) const; // based on EmployeeID
+    bool operator>(const Employee &emp) const; // based on EmployeeID
     // Employee &operator=(const Employee &emp);
     int getEmployeeID() { return EmployeeID; };
     int getGrade() { return Grade; };

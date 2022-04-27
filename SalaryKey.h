@@ -2,10 +2,11 @@ class KeyBySalary
 {
 private:
     int Salary;
-    int EmployerID;
+    int EmployeeID;
 
 public:
-    KeyBySalary() =default;
+    KeyBySalary() = default;
+    KeyBySalary(int salary, int empID) : EmployeeID(empID), Salary(salary) {}
 
     // bool operator<(const KeyBySalary& a) const{
     // if (a.salary<salary)
@@ -18,38 +19,40 @@ public:
     // }
     // return a.employee_id > employee_id;
     // }
-    bool operator>(const KeyBySalary& a) const{
-    if (a.Salary>Salary)
+    bool operator>(const KeyBySalary &a) const
     {
-        return true;
+        if (a.Salary > Salary)
+        {
+            return true;
+        }
+        if (a.Salary < Salary)
+        {
+            return false;
+        }
+        return a.EmployeeID < EmployeeID;
     }
-    if (a.Salary<Salary)
+    bool operator==(const KeyBySalary &a) const
     {
+        if (a.Salary == Salary)
+        {
+            return a.EmployeeID > EmployeeID;
+        }
         return false;
-    }
-    return a.EmployerID < EmployerID;
-    }
-    bool operator==(const KeyBySalary& a) const{
-    if (a.Salary==Salary)
-    {
-        return a.EmployerID > EmployerID;
-    }
-    return false;
     }
     ~KeyBySalary() = default;
     int getSalary() const { return Salary; };
-    int getEmployerID() const { return EmployerID; };
-
+    int getEmployeeID() const { return EmployeeID; };
 };
 
-bool operator<(const KeyBySalary& a,const KeyBySalary& b){
-    if (a.getSalary()<b.getSalary())
+bool operator<(const KeyBySalary &a, const KeyBySalary &b)
+{
+    if (a.getSalary() < b.getSalary())
     {
         return true;
     }
-    if (a.getSalary()>b.getSalary())
+    if (a.getSalary() > b.getSalary())
     {
         return false;
     }
-    return a.getEmployerID() > b.getEmployerID();
+    return a.getEmployeeID() > b.getEmployeeID();
 }
