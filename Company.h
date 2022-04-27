@@ -2,30 +2,13 @@
 #define _CARMODEL
 #include "Avltree.h"
 #include "Employee.h"
+#include "SalaryKey.h"
 /*
 Yagel 27.04 2:23
 **/
 #include <iostream>
 
-typedef struct 
-{
-    int salary;
-    int employee_id;
-}KeyBySalary;
 
-bool operator<(const KeyBySalary& a, KeyBySalary& b){
-    if (a.salary<b.salary)
-    {
-        return true;
-    }
-    if (a.salary>b.salary)
-    {
-        return false;
-    }
-    return a.employee_id > b.employee_id;
-    
-    
-}
 
 class Company
 {

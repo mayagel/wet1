@@ -18,15 +18,14 @@ public:
     Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
                                                                                                EmployerID(EmployerID),
                                                                                                Salary(Salary),
-                                                                                               Grade(Grade)
-                                                                                               {
-                                                                                                   Employer = new AVLNode<Company,int>();
-                                                                                               };
-    Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
-                                                                                               EmployerID(EmployerID),
-                                                                                               Salary(Salary),
                                                                                                Grade(Grade),
-                                                                                               Employer(Employer){};
+                                                                                               Employer (new AVLNode<Company,int>()),
+                                                                                               {};
+    // Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
+    //                                                                                            EmployerID(EmployerID),
+    //                                                                                            Salary(Salary),
+    //                                                                                            Grade(Grade),
+    //                                                                                            Employer(Employer){};
 
     // Employee(const Employee &ce)
     // {
