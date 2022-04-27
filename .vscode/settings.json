@@ -6,6 +6,14 @@
         "__string": "cpp",
         "string": "cpp",
         "string_view": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "__functional_base": "cpp",
+        "utility": "cpp",
+        "bitset": "cpp",
+        "ios": "cpp"
     }
 }

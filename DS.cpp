@@ -31,8 +31,7 @@ StatusType DataStructure::AddCompany(int CompanyID, int Value)
     {
         return ALLOCATION_ERROR;
     }
-    AVLNode<Company, int>* node_to_find = new AVLNode<Company, int>(CompanyID, *newCompany, nullptr); // yagel
-    if (this->Companies->find(node_to_find, CompanyID)) //Yagel need to insert to find avl node not the data inside the node!
+    if (this->Companies->find((this->Companies)->getRoot(), CompanyID))
     {
         delete newCompany;
         return FAILURE;
@@ -50,16 +49,36 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     {
         return INVALID_INPUT;
     }
-    Company *newCompany = new Company(CompanyID, 0); //demi company to search in the tree
-    Employee *newEmp = new Employee(EmployeeID); //demi company to search in the tree
-    AVLNode<Company, int>* comp_to_find = new AVLNode<Company, int>(CompanyID, *newCompany, nullptr); //Yagel
-    AVLNode<Employee, int>* emp_to_find = new AVLNode<Employee, int>(EmployeeID, *newEmp, nullptr); //Yagel
-    if(!(Companies->find(comp_to_find, CompanyID))||Employees->find(emp_to_find, EmployeeID)) //Yagel need to insert to find avl node not the data inside the node!
+    if(!(Companies->find((this->Companies)->getRoot(), CompanyID))||Employees->find((this->Employees)->getRoot(), EmployeeID)) 
     {
         return FAILURE;
     }
-    Employee *newEmployee = new Employee(EmployeeID,CompanyID,Salary,Grade);
 
+    AVLNode<Company, int>* employer = Companies->find((this->Companies)->getRoot(), CompanyID);
+    Employee *newEmployee = new Employee(EmployeeID,CompanyID,Salary,Grade,employer);
+
+    //insert to trees
+    (this->Employees)->insert(EmployeeID,*newEmployee);
+    (this->EmployeesBySalary)->insert(/*KeyBySalary*/,*newEmployee);
+    ((employer->data).getcomEmpBySalary())->insert(/*KeyBySalary*/,*newEmployee);
+    ((employer->data).getcomEmpByID())->insert(EmployeeID,*newEmployee);
+
+    //HighestEarner
+    if(newEmployee > this->HighestEarner)
+    {
+        (employer->data).setHighestEarner(newEmployee);
+    }
+    if(newEmployee > (employer->data).getHighestEarnerInCom())
+    {
+        (employer->data).setHighestEarnerInCom(newEmployee);
+    }
+    if((employer->data).getNumEmployees()==0)
+    {
+        this->CopaniesWithEmp->insert(CompanyID,employer->data);
+    }
+    (employer->data).setNumEmployees();
+    return SUCCESS;
+       
 }
 
 // StatusType CarDealershipManager::RemoveCarType(int type)

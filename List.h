@@ -3,6 +3,9 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <iostream>
+
+
 template <class T>
 class Node {
 public:

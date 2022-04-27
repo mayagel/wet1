@@ -5,6 +5,7 @@ Yagel 27.04 1:48
 #ifndef AVLTREE_H
 #define AVLTREE_H
 
+#include "List.h"
 #include <iostream>
 
 

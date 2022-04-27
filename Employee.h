@@ -13,8 +13,9 @@ private:
     int Grade;
     AVLNode<Company,int>* Employer;
 public:
+    Employee() = default;
     Employee(int EmployeeID): EmployeeID(EmployeeID){}
-    Employee(int EmployeeID,int EmployerID, int Salary,int Grade) : EmployeeID(EmployeeID),
+    Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company,int>* Employer) : EmployeeID(EmployeeID),
                                                                                                EmployerID(EmployerID),
                                                                                                Salary(Salary),
                                                                                                Grade(Grade)
@@ -45,7 +46,7 @@ public:
     }
     bool operator<(const Employee &emp) const; //based on EmployeeID
     bool operator>(const Employee &emp) const; //based on EmployeeID
-    Employee &operator=(const Employee &emp);
+    // Employee &operator=(const Employee &emp);
     int getEmployeeID() { return EmployeeID; };
     int getGrade() { return Grade; };
     int getSalary() { return Salary; };
