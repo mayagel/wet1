@@ -19,6 +19,7 @@ private:
     AVLTree<Employee,KeyBySalary> *comEmpBySalary; 
     AVLTree<Employee,int> *comEmpByID;    
     Employee *HighestEarnerInCom;
+    static Employee *HighestEarner;
 public:
     Company() = default;
     Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0){
@@ -66,11 +67,16 @@ public:
     int getValue() {return Value; };
     int getNumEmployees() { return numEmployees; };
     Employee* getHighestEarnerInCom() {return HighestEarnerInCom; };
+    Employee* getHighestEarner() {return HighestEarner; };
+
+    
+    
 
     //seters
     void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
+    void setHighestEarner(Employee* emp) {HighestEarner=emp; };
     void setNumEmployees(){numEmployees++;};
-
+    // Employee *HighestEarner = nullptr;
 
    
 };

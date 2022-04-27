@@ -22,21 +22,8 @@ public:
                                                                                                        Grade(Grade),
                                                                                                        Employer(new AVLNode<Company*,int>())
                                                                                                        {};
-    Employee(int EmployeeID,int EmployerID, int Salary,int Grade,AVLNode<Company*,KeyBySalary>* Employer) : EmployeeID(EmployeeID),
-                                                                                               EmployerID(EmployerID),
-                                                                                               Salary(Salary),
-                                                                                               Grade(Grade),
-                                                                                                Employer(new AVLNode<Company*,KeyBySalary>())
-                                                                                               {};
 
-    // Employee(const Employee &ce)
-    // {
-    //     EmployeeID = ce.EmployeeID;
-    //     Salary = ce.Salary;
-    //     Grade = ce.Grade;
-    //     EmployerID = ce.EmployerID;
-    //     Employer = ce.Employer;
-    // }
+
     ~Employee() = default;
     Employee(const Employee &emp)
     {
