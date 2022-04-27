@@ -3,17 +3,15 @@
 #include <cstddef>
 
 //     StatusType RemoveEmployee(int EmployeeID);
-//     StatusType RemoveCompany(int CompanyID);
-//     StatusType GetCompanyInfo(int CompanyID, int *Value, int *NumEmployees);
-//     StatusType GetEmployeeInfo(int EmployeeID, int *EmployerID, int *Salary, int *Grade);
-//     StatusType IncreaseCompanyValue(int CompanyID, int ValueIncrease);
-//     StatusType PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
-//     StatusType HireEmployee(int EmployeeID, int NewCompanyID);
-//     StatusType AcquireCompany(int AcquirerID, int TargetID, double Factor);
-//     StatusType GetHighestEarner(int CompanyID, int *EmployeeID);
-//     StatusType GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
-//     StatusType GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
-//     StatusType GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
+//     StatusType DataStructure::RemoveCompany(int CompanyID);
+//     StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease);
+//     StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
+//     StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID);
+//     StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor);
+//     StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID);
+//     StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
+//     StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
+//     StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 //     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
 //     void Quit();
 
@@ -75,21 +73,79 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     return SUCCESS;
 }
 
+// StatusType DataStructure::RemoveEmployee(int EmployeeID)
+// {
+//     if(EmployeeID<=0)
+//     {
+//         return INVALID_INPUT;
+//     }
+//     if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
+//     {
+//         return FAILURE;
+//     }
+//     AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
+//     AVLNode<Company*, int> *Employer = &Employee->data.getEmployer();
 
-StatusType DataStructure::RemoveEmployee(int EmployeeID)
+
+// }
+
+// StatusType DataStructure::RemoveCompany(int CompanyID)
+// {
+
+// }
+
+StatusType DataStructure::GetCompanyInfo(int CompanyID, int *Value, int *NumEmployees)
 {
-    if(EmployeeID<=0)
+    if (CompanyID <= 0 || Value == nullptr|| NumEmployees == nullptr)
     {
         return INVALID_INPUT;
     }
-    if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
+    if (!this->Companies->find((this->Companies)->getRoot(), CompanyID))
     {
         return FAILURE;
     }
-    AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-    AVLNode<Company*, int> *employer = Employee->data.get->find((this->Companies)->getRoot(), CompanyID);
-
+    AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+    *Value = theCompany->data->getValue();
+    *NumEmployees = theCompany->data->getNumEmployees();
+    return SUCCESS;
 }
+
+StatusType DataStructure::GetEmployeeInfo(int EmployeeID, int *EmployerID, int *Salary, int *Grade)
+{
+    if (EmployeeID <= 0 || EmployerID == nullptr|| Salary == nullptr || Grade == nullptr)
+    {
+        return INVALID_INPUT;
+    }
+    if(!Employees->find((this->Employees)->getRoot(), EmployeeID))
+    {
+        return FAILURE;
+    }
+    AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
+    *EmployerID = theEmployee->data.getEmployeeID();
+    *Salary = theEmployee->data.getSalary();
+    *Grade = theEmployee->data.getGrade();
+    return SUCCESS;
+}
+
+StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
+{
+    if (CompanyID <= 0 || ValueIncrease <= 0)
+    {
+        return INVALID_INPUT;
+    }
+    if (!this->Companies->find((this->Companies)->getRoot(), CompanyID))
+    {
+        return FAILURE;
+    }
+    AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+    theCompany->data->setValue();
+    
+}
+
+
+
+
+
 
 // StatusType CarDealershipManager::RemoveCarType(int type)
 // {

@@ -20,7 +20,7 @@ public:
                                                                                                        EmployerID(EmployerID),
                                                                                                        Salary(Salary),
                                                                                                        Grade(Grade),
-                                                                                                       Employer(new AVLNode<Company*,int>()),
+                                                                                                       Employer(Employer)
                                                                                                        {};
 
 
@@ -42,9 +42,11 @@ public:
     int getGrade() { return Grade; };
     int getSalary() { return Salary; };
     int getEmployerID() { return EmployerID; };
+    AVLNode<Company*,int> getEmployer() {return *Employer; };
+    
     //seters
-    void setSalary(int t) { Salary = t; };
-    void setGrade(int t) { Grade = t; };
+    void setSalary(int t) { Salary = t; }
+    void setGrade(int t) { Grade = t; }
 };
 
 #endif

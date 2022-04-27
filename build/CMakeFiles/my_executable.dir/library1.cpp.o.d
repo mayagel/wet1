@@ -417,6 +417,7 @@ CMakeFiles/my_executable.dir/library1.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/_types/_nl_item.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
+  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Exceptions.h \
   /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.h \
   /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Company.h \
   /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Employee.h \

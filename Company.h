@@ -73,9 +73,12 @@ public:
     
 
     //seters
-    void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
-    void setHighestEarner(Employee* emp) {HighestEarner=emp; };
-    void setNumEmployees(){numEmployees++;};
+    void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; }
+    void setHighestEarner(Employee* emp) {HighestEarner=emp; }
+    void incNumEmployees(){numEmployees++;}
+    void setNumEmployees(int num){numEmployees=num;}
+    void setValue(int val){Value=val;}
+    void incValue(int val){Value+=val;}
     // Employee *HighestEarner = nullptr;
 
    
