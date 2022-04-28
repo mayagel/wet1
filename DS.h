@@ -23,6 +23,8 @@ private:
     AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
+    void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
+
 public:
     DataStructure()
     {

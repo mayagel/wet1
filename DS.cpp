@@ -180,7 +180,7 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     //NEED TO ORGANIZE THE TREE
     return SUCCESS;
 }
-
+//NOT FINISHED
 StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
 {
     return SUCCESS;
@@ -196,7 +196,7 @@ StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
 //         return FAILURE;
 //     }
 }
-
+//NOT FINISHED
 StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor)
 {
         return SUCCESS;
@@ -252,6 +252,7 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
         {
             return FAILURE;
         }
+        *NumOfEmployees = 0;
         inOrderBySalary(theCompany->data->getcomEmpBySalary().getRoot(), Employees, NumOfEmployees);
     }
     else
@@ -260,31 +261,29 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
         {
             return FAILURE;
         }
+        *NumOfEmployees = 0;
         inOrderBySalary(EmployeesBySalary->getRoot(), Employees, NumOfEmployees);
     }
     return SUCCESS;
 }
+//NOT FINISHED
 StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees)
 {
+
     return SUCCESS;
 }
+//NOT FINISHED
 StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
 {
     return SUCCESS;
 }
-
+//private
 void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees)
 {
     if (start == nullptr) return;
     inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
     *Employees[*NumOfEmployees] = start->data->getEmployeeID();
-    *NumOfEmployees++;
-    inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
+    NumOfEmployees++;
+    inOrderBySalary(start->getRight(),Employees,NumOfEmployees);
 }
-
-void DataStructure::inOrderToNode(int CompanyID, int MinEmployeeID, int
-    MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
-    {
-
-    }
