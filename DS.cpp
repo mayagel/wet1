@@ -9,7 +9,6 @@
 //     StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor);
 //     StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID);
 //     StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
-//     StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
 //     StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 //     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
 
@@ -91,8 +90,8 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
     {
         this->CopaniesWithEmp->remove(Employee->data.getEmployer().data->getCompanyID());
     }
-    this->Employees->remove(EmployeeID);
     this->EmployeesBySalary->remove(*tempKey);
+    this->Employees->remove(EmployeeID);
     delete tempKey;
     return SUCCESS;
 }
@@ -159,7 +158,7 @@ StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
     theCompany->data->incValue(ValueIncrease);
     return SUCCESS;
 }
-
+//NOT FINISHED
 StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade)
 {
      if (EmployeeID <= 0 || SalaryIncrease <= 0)
@@ -177,7 +176,8 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     theEmployee->data.incGrade();
     }
     AVLNode<Employee, int> *newEmployee = theEmployee;
-
+    
+    //NEED TO ORGANIZE THE TREE
     return SUCCESS;
 }
 
@@ -215,23 +215,76 @@ StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Fa
 
 StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID)
 {
+    if (CompanyID == 0||EmployeeID==nullptr)
+    {
+        return INVALID_INPUT;
+    }
+    if(CompanyID>0)
+    {
+        AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+        if(!theCompany || theCompany->data->getNumEmployees() == 0)
+        {
+            return FAILURE;
+        }
+        *EmployeeID = theCompany->data->getHighestEarnerInCom()->getEmployeeID(); 
+    }
+    else
+    {
+        if(Employees->getNumOfNode()==0)
+        {
+            return FAILURE;
+        }
+         *EmployeeID = HighestEarner->getEmployeeID();
+    }
     return SUCCESS;
-//     if (CompanyID == 0||EmployeeID==nullptr)
-//     {
-//         return INVALID_INPUT;
-//     }
 }
 
 StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees)
 {
+    if(Employees == nullptr || NumOfEmployees == nullptr || CompanyID == 0)
+    {
+        return INVALID_INPUT;
+    }
+     if(CompanyID>0)
+    {
+        AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+        if(!theCompany || theCompany->data->getNumEmployees() == 0)
+        {
+            return FAILURE;
+        }
+        inOrderBySalary(theCompany->data->getcomEmpBySalary().getRoot(), Employees, NumOfEmployees);
+    }
+    else
+    {
+        if(this->Employees->getNumOfNode()==0)
+        {
+            return FAILURE;
+        }
+        inOrderBySalary(EmployeesBySalary->getRoot(), Employees, NumOfEmployees);
+    }
     return SUCCESS;
 }
-    StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees)
-    {
-        return SUCCESS;
-    }
-    StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
+StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees)
+{
+    return SUCCESS;
+}
+StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
+MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
+{
+    return SUCCESS;
+}
+
+void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees)
+{
+    if (start == nullptr) return;
+    inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
+    *Employees[*NumOfEmployees] = start->data->getEmployeeID();
+    *NumOfEmployees++;
+    inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
+}
+
+void DataStructure::inOrderToNode(int CompanyID, int MinEmployeeID, int
     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
     {
-        return SUCCESS;
+
     }
