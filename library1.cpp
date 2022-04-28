@@ -1,4 +1,6 @@
 
+#ifndef _lib
+#define _lib
 #include "library1.h"
 #include "Avltree.h"
 #include "DS.h"
@@ -144,3 +146,4 @@ void Quit(void** DS)
     *DS = nullptr;
 }
 
+#endif
