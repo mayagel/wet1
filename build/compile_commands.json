@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -o CMakeFiles/my_executable.dir/DS.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp",
+  "file": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp"
+},
+{
+  "directory": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -o CMakeFiles/my_executable.dir/library1.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp",
+  "file": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp"
+},
+{
+  "directory": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -o CMakeFiles/my_executable.dir/main.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main.cpp",
+  "file": "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main.cpp"
+}
+]
