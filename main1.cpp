@@ -42,21 +42,21 @@ static errorType parser(const char* const command);
 #define ValidateRead(read_parameters,required_parameters,ErrorString) \
 if ( (read_parameters)!=(required_parameters) ) { printf(ErrorString); return error; }
 
-/* enum to string for return value */
-static const char* ReturnValToStr(int val) {
-    switch (val) {
-        case SUCCESS:
-            return "SUCCESS";
-        case ALLOCATION_ERROR:
-            return "ALLOCATION_ERROR";
-        case FAILURE:
-            return "FAILURE";
-        case INVALID_INPUT:
-            return "INVALID_INPUT";
-        default:
-            return "";
-    }
-}
+// /* enum to string for return value */
+// static const char* ReturnValToStr(int val) {
+//     switch (val) {
+//         case SUCCESS:
+//             return "SUCCESS";
+//         case ALLOCATION_ERROR:
+//             return "ALLOCATION_ERROR";
+//         case FAILURE:
+//             return "FAILURE";
+//         case INVALID_INPUT:
+//             return "INVALID_INPUT";
+//         default:
+//             return "";
+//     }
+// }
 
 /* Global isInit for running data structure */
 static bool isInit = false;
@@ -113,40 +113,40 @@ static const char *commandStr[] = {
 
 /* On-Command Functions */
 static errorType OnInit(void** DS, const char* const command);
-static errorType OnAddCompany(void **DS, const char* const command);
-static errorType OnAddEmployee(void **DS, const char* const command);
-static errorType OnRemoveCompany(void **DS, const char* const command);
-static errorType OnRemoveEmployee(void **DS, const char* const command);
-static errorType OnGetCompanyInfo(void **DS, const char* const command);
-static errorType OnGetEmployeeInfo(void **DS, const char* const command);
-static errorType OnIncreaseCompanyValue(void **DS, const char* const command);
-static errorType OnPromoteEmployee(void **DS, const char* const command);
-static errorType OnHireEmployee(void **DS, const char* const command);
-static errorType OnAcquireCompany(void **DS, const char* const command);
-static errorType OnGetHighestEarner(void **DS, const char* const command);
-static errorType OnGetAllEmployeesBySalary(void **DS, const char* const command);
-static errorType OnGetHighestEarnerInEachCompany(void **DS, const char* const command);
-static errorType OnGetNumEmployeesMatching(void **DS, const char* const command);
+// static errorType OnAddCompany(void **DS, const char* const command);
+// static errorType OnAddEmployee(void **DS, const char* const command);
+// static errorType OnRemoveCompany(void **DS, const char* const command);
+// static errorType OnRemoveEmployee(void **DS, const char* const command);
+// static errorType OnGetCompanyInfo(void **DS, const char* const command);
+// static errorType OnGetEmployeeInfo(void **DS, const char* const command);
+// static errorType OnIncreaseCompanyValue(void **DS, const char* const command);
+// static errorType OnPromoteEmployee(void **DS, const char* const command);
+// static errorType OnHireEmployee(void **DS, const char* const command);
+// static errorType OnAcquireCompany(void **DS, const char* const command);
+// static errorType OnGetHighestEarner(void **DS, const char* const command);
+// static errorType OnGetAllEmployeesBySalary(void **DS, const char* const command);
+// static errorType OnGetHighestEarnerInEachCompany(void **DS, const char* const command);
+// static errorType OnGetNumEmployeesMatching(void **DS, const char* const command);
 static errorType OnQuit(void** DS, const char* const command);
 
 /* On-Command Function Pointers */
 typedef errorType(*OnFuncPtr)(void**, const char* const);
 static OnFuncPtr OnCmdPtrs[] = {
     OnInit,
-    OnAddCompany,
-    OnAddEmployee,
-    OnRemoveCompany,
-    OnRemoveEmployee,
-    OnGetCompanyInfo,
-    OnGetEmployeeInfo,
-    OnIncreaseCompanyValue,
-    OnPromoteEmployee,
-    OnHireEmployee,
-    OnAcquireCompany,
-    OnGetHighestEarner,
-    OnGetAllEmployeesBySalary,
-    OnGetHighestEarnerInEachCompany,
-    OnGetNumEmployeesMatching,
+    // OnAddCompany,
+    // OnAddEmployee,
+    // OnRemoveCompany,
+    // OnRemoveEmployee,
+    // OnGetCompanyInfo,
+    // OnGetEmployeeInfo,
+    // OnIncreaseCompanyValue,
+    // OnPromoteEmployee,
+    // OnHireEmployee,
+    // OnAcquireCompany,
+    // OnGetHighestEarner,
+    // OnGetAllEmployeesBySalary,
+    // OnGetHighestEarnerInEachCompany,
+    // OnGetNumEmployeesMatching,
     OnQuit
 };
 

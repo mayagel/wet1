@@ -21,7 +21,7 @@ private:
     AVLTree<Company*,int> *CopaniesWithEmp;
     AVLTree<Employee,int> *Employees;
     AVLTree<Employee, KeyBySalary> *EmployeesBySalary;
-    //Employee *HighestEarner;
+    Employee *HighestEarner;
 
 public:
     DataStructure()
@@ -34,7 +34,7 @@ public:
         this->Employees = Employees;
         AVLTree<Employee, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
-        // HighestEarner = nullptr; 
+        HighestEarner = nullptr; 
     }
     // ~DS()=default;
     DataStructure(const DataStructure &cd)
@@ -43,7 +43,7 @@ public:
         this->CopaniesWithEmp = cd.CopaniesWithEmp;
         this->Employees = cd.Employees;
         this->EmployeesBySalary = cd.EmployeesBySalary;
-        // this->HighestEarner = cd.HighestEarner;
+        this->HighestEarner = cd.HighestEarner;
     }
 
     ~DataStructure()
@@ -53,7 +53,7 @@ public:
         delete CopaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
-        // delete HighestEarner;
+        delete HighestEarner;
     };
 
     StatusType AddCompany(int CompanyID, int Value);
