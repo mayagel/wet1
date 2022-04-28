@@ -1,14 +1,15 @@
 #ifndef _Company
 #define _Company
+#include <iostream>
 #include "Avltree.h"
 #include "Employee.h"
 #include "SalaryKey.h"
 /*
 Yagel 27.04 2:23
 **/
-#include <iostream>
 
-
+class Employee;
+class KeyBySalary;
 
 class Company
 {

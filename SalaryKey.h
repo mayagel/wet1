@@ -1,3 +1,10 @@
+
+#pragma once
+
+#ifndef SALARY_KEY
+#define SALARY_KEY
+
+
 class KeyBySalary
 {
 public:
@@ -46,3 +53,5 @@ public:
     int getSalary() const { return Salary; };
     int getEmployeeID() const { return EmployeeID; };
 };
+
+#endif
