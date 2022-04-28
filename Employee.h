@@ -1,8 +1,8 @@
 #ifndef _Employee
 #define _Employee
-#include "Company.h"
 #include "Avltree.h"
 
+class Company;
 
 class Employee
 {

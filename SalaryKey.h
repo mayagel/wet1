@@ -1,5 +1,11 @@
-#ifndef _KeyBySalary
-#define _KeyBySalary
+
+
+#pragma once
+
+#ifndef SALARY_KEY
+#define SALARY_KEY
+
+
 
 class KeyBySalary
 {
@@ -51,3 +57,4 @@ public:
 };
 
 #endif
+

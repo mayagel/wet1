@@ -37,9 +37,9 @@ extern "C" {
 
     StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
 
-    StatusType RemoveEmployee(void *DS, int EmployeeID);
-
     StatusType RemoveCompany(void *DS, int CompanyID);
+
+    StatusType RemoveEmployee(void *DS, int EmployeeID);
 
     StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees);
 
