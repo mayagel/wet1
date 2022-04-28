@@ -155,6 +155,8 @@ static OnFuncPtr OnCmdPtrs[] = {
 /***************************************************************************/
 
 int main(int argc, const char**argv) {
+    
+    freopen("./test.in", "r", stdin);
     char buffer[MAX_STRING_INPUT_SIZE];
 
     // Reading commands

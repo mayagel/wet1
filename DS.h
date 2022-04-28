@@ -19,8 +19,8 @@ class DataStructure
 private:
     AVLTree<Company*,int> *Companies;
     AVLTree<Company*,int> *CopaniesWithEmp;
-    AVLTree<Employee,int> *Employees;
-    AVLTree<Employee, KeyBySalary> *EmployeesBySalary;
+    AVLTree<Employee*,int> *Employees;
+    AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
 public:
@@ -30,9 +30,9 @@ public:
         this->Companies = Companies;
         AVLTree<Company*,int> *CopaniesWithEmp = new AVLTree<Company*,int>(); 
         this->CopaniesWithEmp = CopaniesWithEmp;
-        AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
+        AVLTree<Employee*, int> *Employees = new AVLTree<Employee*, int>(); 
         this->Employees = Employees;
-        AVLTree<Employee, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee, KeyBySalary>(); 
+        AVLTree<Employee*, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee*, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
         HighestEarner = nullptr; 
     }

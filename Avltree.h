@@ -18,8 +18,7 @@ public:
 	AVLNode *left;
 	AVLNode *right;
 	AVLNode *father;
-		AVLNode(){};// Yagel added empty default constructor 
-
+	AVLNode(){};// Yagel added empty default constructor 
 	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), rank(1), height(0), left(nullptr), right(nullptr), father(father){};
 	~AVLNode() = default;
 };

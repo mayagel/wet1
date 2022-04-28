@@ -17,14 +17,14 @@ private:
     int CompanyID;
     int Value;
     int numEmployees;
-    AVLTree<Employee,KeyBySalary> *comEmpBySalary; 
-    AVLTree<Employee,int> *comEmpByID;    
+    AVLTree<Employee*,KeyBySalary> *comEmpBySalary; 
+    AVLTree<Employee*,int> *comEmpByID;    
     Employee *HighestEarnerInCom;
 public:
     Company() = default;
     Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0){
-        comEmpBySalary = new AVLTree<Employee, KeyBySalary>();
-        comEmpByID = new AVLTree<Employee, int>();
+        comEmpBySalary = new AVLTree<Employee*, KeyBySalary>();
+        comEmpByID = new AVLTree<Employee*, int>();
         HighestEarnerInCom = nullptr;
         
     };
@@ -35,13 +35,13 @@ public:
         CompanyID = comp.CompanyID;
         Value = comp.Value;
         numEmployees = comp.numEmployees;
-        comEmpBySalary = new AVLTree<Employee, KeyBySalary>();
+        comEmpBySalary = new AVLTree<Employee*, KeyBySalary>();
         if (comp.comEmpBySalary)
         {
             *comEmpBySalary = *comp.comEmpBySalary;
         }
         
-        comEmpByID = new AVLTree<Employee, int>();
+        comEmpByID = new AVLTree<Employee*, int>();
         if (comp.comEmpByID)
         {
             *comEmpByID = *comp.comEmpByID;
@@ -61,8 +61,8 @@ public:
     Company &operator=(const Company &c);
 
     //geters
-    AVLTree<Employee,KeyBySalary> getcomEmpBySalary() { return *comEmpBySalary; };
-    AVLTree<Employee,int> getcomEmpByID() { return *comEmpByID; };
+    AVLTree<Employee*,KeyBySalary>& getcomEmpBySalary() { return *comEmpBySalary; };
+    AVLTree<Employee*,int>& getcomEmpByID() { return *comEmpByID; };
     int getCompanyID() {return CompanyID; };
     int getValue() {return Value; };
     int getNumEmployees() { return numEmployees; };

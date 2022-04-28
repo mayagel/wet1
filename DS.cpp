@@ -50,10 +50,10 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     KeyBySalary *keyToInsert = new KeyBySalary(EmployeeID, Salary);
 
     // insert to trees
-    (this->Employees)->insert(EmployeeID, *newEmployee);
-    (this->EmployeesBySalary)->insert(*keyToInsert, *newEmployee);
-    ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, *newEmployee);
-    ((employer->data)->getcomEmpByID()).insert(EmployeeID, *newEmployee);
+    (this->Employees)->insert(EmployeeID, newEmployee);
+    (this->EmployeesBySalary)->insert(*keyToInsert, newEmployee);
+    ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, newEmployee);
+    ((employer->data)->getcomEmpByID()).insert(EmployeeID, newEmployee);
 
     // HighestEarner
     if (newEmployee >  HighestEarner)
@@ -139,10 +139,10 @@ StatusType DataStructure::GetEmployeeInfo(int EmployeeID, int *EmployerID, int *
     {
         return FAILURE;
     }
-    AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
-    *EmployerID = theEmployee->data.getEmployeeID();
-    *Salary = theEmployee->data.getSalary();
-    *Grade = theEmployee->data.getGrade();
+    AVLNode<Employee*, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
+    *EmployerID = theEmployee->data->getEmployeeID();
+    *Salary = theEmployee->data->getSalary();
+    *Grade = theEmployee->data->getGrade();
     return SUCCESS;
 }
 
