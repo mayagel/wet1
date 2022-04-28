@@ -59,9 +59,9 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     ((employer->data)->getcomEmpByID()).insert(EmployeeID, *newEmployee);
 
     // HighestEarner
-    if (newEmployee >  (employer->data)->getHighestEarner())
+    if (newEmployee >  HighestEarner)
     {
-        (employer->data)->setHighestEarner(newEmployee);
+        (HighestEarner = newEmployee);
     }
     if (newEmployee > (employer->data)->getHighestEarnerInCom())
     {

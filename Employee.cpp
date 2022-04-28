@@ -13,7 +13,6 @@ bool Employee::operator<(const Employee &emp) const
             return true;
         }
     }
-    else
     return false;
 }
 bool Employee::operator>(const Employee &emp) const
@@ -29,6 +28,5 @@ bool Employee::operator>(const Employee &emp) const
             return true;
         }
     }
-    else
     return false;
 }
