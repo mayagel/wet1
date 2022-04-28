@@ -84,61 +84,61 @@ StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int Bum
     return ((DataStructure *)DS)->PromoteEmployee(EmployeeID, SalaryIncrease, BumpGrade);
 }
 
-// StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->HireEmployee(EmployeeID, NewCompanyID);
-// }
+StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->HireEmployee(EmployeeID, NewCompanyID);
+}
 
-// StatusType AcquireCompany(void *DS, int AcquirerID, int TargetID, double Factor)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->AcquireCompany(AcquirerID, TargetID, Factor);
-// }
+StatusType AcquireCompany(void *DS, int AcquirerID, int TargetID, double Factor)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->AcquireCompany(AcquirerID, TargetID, Factor);
+}
 
-// StatusType GetHighestEarner(void *DS, int CompanyID, int *EmployeeID)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->GetHighestEarner(CompanyID, EmployeeID);
-// }
+StatusType GetHighestEarner(void *DS, int CompanyID, int *EmployeeID)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->GetHighestEarner(CompanyID, EmployeeID);
+}
 
-// StatusType GetAllEmployeesBySalary(void *DS, int CompanyID, int **Employees, int *NumOfEmployees)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->GetAllEmployeesBySalary(CompanyID, Employees, NumOfEmployees);
-// }
+StatusType GetAllEmployeesBySalary(void *DS, int CompanyID, int **Employees, int *NumOfEmployees)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->GetAllEmployeesBySalary(CompanyID, Employees, NumOfEmployees);
+}
 
-// StatusType GetHighestEarnerInEachCompany(void *DS, int NumOfCompanies, int **Employees)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->GetHighestEarnerInEachCompany(NumOfCompanies, Employees);
-// }
+StatusType GetHighestEarnerInEachCompany(void *DS, int NumOfCompanies, int **Employees)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->GetHighestEarnerInEachCompany(NumOfCompanies, Employees);
+}
 
-// StatusType GetNumEmployeesMatching(void *DS, int CompanyID, int MinEmployeeID, int MaxEmployeeId,
-//             int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
-//             {
-//                 if (!DS)
-//                     {
-//                        return INVALID_INPUT;
-//                     }
-//                  return ((DataStructure *)DS)->GetNumEmployeesMatching(CompanyID, MinEmployeeID, MaxEmployeeId, MinSalary, 
-//                  MinGrade, TotalNumOfEmployees, NumOfEmployees);
-//             }
+StatusType GetNumEmployeesMatching(void *DS, int CompanyID, int MinEmployeeID, int MaxEmployeeId,
+            int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
+            {
+                if (!DS)
+                    {
+                       return INVALID_INPUT;
+                    }
+                 return ((DataStructure *)DS)->GetNumEmployeesMatching(CompanyID, MinEmployeeID, MaxEmployeeId, MinSalary, 
+                 MinGrade, TotalNumOfEmployees, NumOfEmployees);
+            }
 
 void Quit(void** DS)
 {

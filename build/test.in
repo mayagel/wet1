@@ -9,28 +9,4 @@ AddEmployee 12 2 600 700
 AddEmployee 13 3 6000 7000
 IncreaseCompanyValue 1 100
 PromoteEmployee 13 10 1
-GetHighestEarner 12
-GetAllEmployeesBySalary 3
-GetHighestEarnerInEachCompany 2
-GetNumEmployeesMatching -1 0 20 100 10
-HireEmployee 12 1
-GetCompanyInfo 1
-GetCompanyInfo 2
-GetCompanyInfo 3
-GetEmployeeInfo 11
-GetEmployeeInfo 12
-GetEmployeeInfo 13
-RemoveEmployee 13
-RemoveCompany 3
-AddEmployee 11 1 70 25
-GetCompanyInfo -14
-GetCompanyInfo 1
-IncreaseCompanyValue 1 39
-IncreaseCompanyValue 1 15
-GetHighestEarner 1
-GetNumEmployeesMatching 1 1 52 54 65
-GetHighestEarnerInEachCompany 1
 Quit
-#Injecting commands after Quit
-GetNumEmployeesMatching -16 58 21 57 60
-GetAllEmployeesBySalary 82
