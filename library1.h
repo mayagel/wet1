@@ -33,9 +33,9 @@ extern "C" {
 
     void *Init();
 
-    // StatusType AddCompany(void *DS, int CompanyID, int Value);
+    StatusType AddCompany(void *DS, int CompanyID, int Value);
 
-    // StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
+    StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
 
     // StatusType RemoveCompany(void *DS, int CompanyID);
 

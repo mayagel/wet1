@@ -10,23 +10,23 @@
     DataStructure *DS = new DataStructure();
     return (void *)DS;
  }
-//  StatusType AddCompany(void *DS, int CompanyID, int Value)
-//  {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->AddCompany(CompanyID, Value);
-//  }
+ StatusType AddCompany(void *DS, int CompanyID, int Value)
+ {
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->AddCompany(CompanyID, Value);
+ }
 
-// StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade)
-//  {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->AddEmployee(EmployeeID,CompanyID,Salary,Grade);
-//  }
+StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade)
+ {
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->AddEmployee(EmployeeID,CompanyID,Salary,Grade);
+ }
 
 // StatusType RemoveCompany(void *DS, int CompanyID)
 // {

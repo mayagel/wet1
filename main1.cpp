@@ -42,21 +42,21 @@ static errorType parser(const char* const command);
 #define ValidateRead(read_parameters,required_parameters,ErrorString) \
 if ( (read_parameters)!=(required_parameters) ) { printf(ErrorString); return error; }
 
-// /* enum to string for return value */
-// static const char* ReturnValToStr(int val) {
-//     switch (val) {
-//         case SUCCESS:
-//             return "SUCCESS";
-//         case ALLOCATION_ERROR:
-//             return "ALLOCATION_ERROR";
-//         case FAILURE:
-//             return "FAILURE";
-//         case INVALID_INPUT:
-//             return "INVALID_INPUT";
-//         default:
-//             return "";
-//     }
-// }
+/* enum to string for return value */
+static const char* ReturnValToStr(int val) {
+    switch (val) {
+        case SUCCESS:
+            return "SUCCESS";
+        case ALLOCATION_ERROR:
+            return "ALLOCATION_ERROR";
+        case FAILURE:
+            return "FAILURE";
+        case INVALID_INPUT:
+            return "INVALID_INPUT";
+        default:
+            return "";
+    }
+}
 
 /* Global isInit for running data structure */
 static bool isInit = false;
@@ -113,8 +113,8 @@ static const char *commandStr[] = {
 
 /* On-Command Functions */
 static errorType OnInit(void** DS, const char* const command);
-// static errorType OnAddCompany(void **DS, const char* const command);
-// static errorType OnAddEmployee(void **DS, const char* const command);
+static errorType OnAddCompany(void **DS, const char* const command);
+static errorType OnAddEmployee(void **DS, const char* const command);
 // static errorType OnRemoveCompany(void **DS, const char* const command);
 // static errorType OnRemoveEmployee(void **DS, const char* const command);
 // static errorType OnGetCompanyInfo(void **DS, const char* const command);
@@ -133,8 +133,8 @@ static errorType OnQuit(void** DS, const char* const command);
 typedef errorType(*OnFuncPtr)(void**, const char* const);
 static OnFuncPtr OnCmdPtrs[] = {
     OnInit,
-    // OnAddCompany,
-    // OnAddEmployee,
+    OnAddCompany,
+    OnAddEmployee,
     // OnRemoveCompany,
     // OnRemoveEmployee,
     // OnGetCompanyInfo,
@@ -249,27 +249,27 @@ static errorType OnQuit(void** DS, const char* const command) {
     }
 }
 
-// /************************************************************************/
-// /* OnAddCompany                                                         */
-// /************************************************************************/
-// static errorType OnAddCompany(void **DS, const char* const command) {
-//     int CompanyID, Value;
-//     ValidateRead(sscanf(command, "%d %d", &CompanyID, &Value), 2, "AddCompany failed.\n");
-//     StatusType res = AddCompany(*DS, CompanyID, Value);
-//     printf("AddCompany: %s\n", ReturnValToStr(res));
-//     return error_free;
-// }
+/************************************************************************/
+/* OnAddCompany                                                         */
+/************************************************************************/
+static errorType OnAddCompany(void **DS, const char* const command) {
+    int CompanyID, Value;
+    ValidateRead(sscanf(command, "%d %d", &CompanyID, &Value), 2, "AddCompany failed.\n");
+    StatusType res = AddCompany(*DS, CompanyID, Value);
+    printf("AddCompany: %s\n", ReturnValToStr(res));
+    return error_free;
+}
 
-// /************************************************************************/
-// /* OnAddEmployee                                                        */
-// /************************************************************************/
-// static errorType OnAddEmployee(void **DS, const char* const command) {
-//     int EmployeeID, CompanyID, Salary, Grade;
-//     ValidateRead(sscanf(command, "%d %d %d %d", &EmployeeID, &CompanyID, &Salary, &Grade), 4, "AddEmployee failed.\n");
-//     StatusType res = AddEmployee(*DS, EmployeeID, CompanyID, Salary, Grade);
-//     printf("AddEmployee: %s\n", ReturnValToStr(res));
-//     return error_free;
-// }
+/************************************************************************/
+/* OnAddEmployee                                                        */
+/************************************************************************/
+static errorType OnAddEmployee(void **DS, const char* const command) {
+    int EmployeeID, CompanyID, Salary, Grade;
+    ValidateRead(sscanf(command, "%d %d %d %d", &EmployeeID, &CompanyID, &Salary, &Grade), 4, "AddEmployee failed.\n");
+    StatusType res = AddEmployee(*DS, EmployeeID, CompanyID, Salary, Grade);
+    printf("AddEmployee: %s\n", ReturnValToStr(res));
+    return error_free;
+}
 
 // /************************************************************************/
 // /* OnRemoveCompany                                                      */
