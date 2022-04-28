@@ -7,7 +7,6 @@ AddCompany 3 5000
 AddEmployee 11 1 60 70
 AddEmployee 12 2 600 700
 AddEmployee 13 3 6000 7000
-AcquireCompany 3 2 1.63
 IncreaseCompanyValue 1 100
 PromoteEmployee 13 10 1
 GetHighestEarner 12

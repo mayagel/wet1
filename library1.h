@@ -37,17 +37,17 @@ extern "C" {
 
     StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int Grade);
 
-    // StatusType RemoveCompany(void *DS, int CompanyID);
+    StatusType RemoveCompany(void *DS, int CompanyID);
 
-    // StatusType RemoveEmployee(void *DS, int EmployeeID);
+    StatusType RemoveEmployee(void *DS, int EmployeeID);
 
-    // StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees);
+    StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees);
 
-    // StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade);
+    StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade);
 
-    // StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease);
+    StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease);
 
-    // StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade);
+    StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade);
 
     // StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID);
 

@@ -163,18 +163,25 @@ StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
     return SUCCESS;
 }
 
-// StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade)
-// {
-//      if (EmployeeID <= 0 || SalaryIncrease <= 0)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     if(!Employees->find((this->Employees)->getRoot(), EmployeeID))
-//     {
-//         return FAILURE;
-//     }
-//     AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
-// }
+StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade)
+{
+     if (EmployeeID <= 0 || SalaryIncrease <= 0)
+    {
+        return INVALID_INPUT;
+    }
+    if(!Employees->find((this->Employees)->getRoot(), EmployeeID))
+    {
+        return FAILURE;
+    }
+    AVLNode<Employee*, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
+    theEmployee->data->addToSalary(SalaryIncrease);
+    if(BumpGrade>0)
+    {
+    theEmployee->data->incGrade();
+    }
+    // theEmployee->data->getEmployer().data->getcomEmpByID().find();
+    return SUCCESS;
+}
 
 // StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
 // {
@@ -211,6 +218,5 @@ StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
 //     {
 //         return INVALID_INPUT;
 //     }
-    
 // }
 

@@ -30,59 +30,59 @@ StatusType AddEmployee(void *DS, int EmployeeID, int CompanyID, int Salary, int 
     return ((DataStructure *)DS)->AddEmployee(EmployeeID,CompanyID,Salary,Grade);
  }
 
-// StatusType RemoveCompany(void *DS, int CompanyID)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->RemoveCompany(CompanyID);
-// }
+StatusType RemoveCompany(void *DS, int CompanyID)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->RemoveCompany(CompanyID);
+}
 
-// StatusType RemoveEmployee(void *DS, int EmployeeID)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->RemoveEmployee(EmployeeID);
-// }
+StatusType RemoveEmployee(void *DS, int EmployeeID)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->RemoveEmployee(EmployeeID);
+}
 
-// StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->GetCompanyInfo(CompanyID, Value, NumEmployees);
-// }
+StatusType GetCompanyInfo(void *DS, int CompanyID, int *Value, int *NumEmployees)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->GetCompanyInfo(CompanyID, Value, NumEmployees);
+}
 
-// StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->GetEmployeeInfo(EmployeeID, EmployerID, Salary,Grade);
-// }
+StatusType GetEmployeeInfo(void *DS, int EmployeeID, int *EmployerID, int *Salary, int *Grade)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->GetEmployeeInfo(EmployeeID, EmployerID, Salary,Grade);
+}
 
-// StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->IncreaseCompanyValue(CompanyID, ValueIncrease);
-// }
+StatusType IncreaseCompanyValue(void *DS, int CompanyID, int ValueIncrease)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->IncreaseCompanyValue(CompanyID, ValueIncrease);
+}
 
-// StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade)
-// {
-//     if (!DS)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     return ((DataStructure *)DS)->PromoteEmployee(EmployeeID, SalaryIncrease, BumpGrade);
-// }
+StatusType PromoteEmployee(void *DS, int EmployeeID, int SalaryIncrease, int BumpGrade)
+{
+    if (!DS)
+    {
+        return INVALID_INPUT;
+    }
+    return ((DataStructure *)DS)->PromoteEmployee(EmployeeID, SalaryIncrease, BumpGrade);
+}
 
 // StatusType HireEmployee(void *DS, int EmployeeID, int NewCompanyID)
 // {
