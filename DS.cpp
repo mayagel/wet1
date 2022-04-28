@@ -74,18 +74,19 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
 
 
 
-// StatusType DataStructure::RemoveEmployee(int EmployeeID)
-// {
-//     if(EmployeeID<=0)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
-//     {
-//         return FAILURE;
-//     }
-//     AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-// }
+StatusType DataStructure::RemoveEmployee(int EmployeeID)
+{
+    if(EmployeeID<=0)
+    {
+        return INVALID_INPUT;
+    }
+    if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
+    {
+        return FAILURE;
+    }
+    AVLNode<Employee*, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
+    Employee->data->getEmployer()
+}
 // StatusType DataStructure::RemoveEmployee(int EmployeeID)
 // {
 //     if(EmployeeID<=0)

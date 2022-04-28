@@ -70,11 +70,12 @@ public:
 
     
     
-
+    //setters
 
     void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
     void setNumEmployees(){numEmployees++;};
     void incNumEmployees(){numEmployees++;}
+    void decNumEmployees(){numEmployees--;}
     void setNumEmployees(int num){numEmployees=num;}
     void setValue(int val){Value=val;}
     void incValue(int val){Value+=val;}
