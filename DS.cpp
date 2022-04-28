@@ -203,12 +203,12 @@ StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
 //     }
 // }
 
-StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID)
-{
-    if (CompanyID == 0||EmployeeID==nullptr)
-    {
-        return INVALID_INPUT;
-    }
+// StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID)
+// {
+//     if (CompanyID == 0||EmployeeID==nullptr)
+//     {
+//         return INVALID_INPUT;
+//     }
     
-}
+// }
 
