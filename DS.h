@@ -19,9 +19,11 @@ class DataStructure
 private:
     AVLTree<Company*,int> *Companies;
     AVLTree<Company*,int> *CopaniesWithEmp;
-    AVLTree<Employee*,int> *Employees;
+    AVLTree<Employee,int> *Employees;
     AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
+
+    void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
 
 public:
     DataStructure()
@@ -30,7 +32,7 @@ public:
         this->Companies = Companies;
         AVLTree<Company*,int> *CopaniesWithEmp = new AVLTree<Company*,int>(); 
         this->CopaniesWithEmp = CopaniesWithEmp;
-        AVLTree<Employee*, int> *Employees = new AVLTree<Employee*, int>(); 
+        AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
         this->Employees = Employees;
         AVLTree<Employee*, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee*, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
@@ -48,7 +50,6 @@ public:
 
     ~DataStructure()
     {
-      
         delete Companies;
         delete CopaniesWithEmp;
         delete Employees;
@@ -71,7 +72,6 @@ public:
     StatusType GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees);
     StatusType GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
-    void Quit();
 };
 
 #endif //_CDM
