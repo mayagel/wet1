@@ -85,34 +85,35 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
         return FAILURE;
     }
     AVLNode<Employee*, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-    Employee->data->getEmployer()
-}
-// StatusType DataStructure::RemoveEmployee(int EmployeeID)
-// {
-//     if(EmployeeID<=0)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     if (!(this->Employees->find((this->Employees)->getRoot(), EmployeeID)))
-//     {
-//         return FAILURE;
-//     }
-//     AVLNode<Employee, int> *Employee = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-//     AVLNode<Company*, int> *Employer = &Employee->data.getEmployer();
-// }
+    KeyBySalary *tempKey = new KeyBySalary(EmployeeID,Employee->data->getSalary());
 
-// StatusType DataStructure::RemoveCompany(int CompanyID)
-// {
-//     if (CompanyID <= 0)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
-//     if (!theCompany || theCompany->data->getNumEmployees() != 0)
-//     {
-//         return FAILURE;
-//     }
-// }
+    Employee->data->getEmployer().data->getcomEmpByID().remove(EmployeeID);
+    Employee->data->getEmployer().data->getcomEmpBySalary().remove(*tempKey);
+    Employee->data->getEmployer().data->decNumEmployees();
+    if(Employee->data->getEmployer().data->getNumEmployees()==0)
+    {
+        this->CopaniesWithEmp->remove(Employee->data->getEmployer().data->getCompanyID());
+    }
+    this->Employees->remove(EmployeeID);
+    this->EmployeesBySalary->remove(*tempKey);
+    delete tempKey;
+    return SUCCESS;
+}
+
+StatusType DataStructure::RemoveCompany(int CompanyID)
+{
+    if (CompanyID <= 0)
+    {
+        return INVALID_INPUT;
+    }
+    AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+    if (!theCompany || theCompany->data->getNumEmployees() != 0)
+    {
+        return FAILURE;
+    }
+    this->Companies->remove(CompanyID);
+    return SUCCESS;
+}
 
 StatusType DataStructure::GetCompanyInfo(int CompanyID, int *Value, int *NumEmployees)
 {
