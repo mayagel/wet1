@@ -2,15 +2,6 @@
 #include "stdio.h"
 #include <cstddef>
 
-//     StatusType RemoveEmployee(int EmployeeID);
-//     StatusType DataStructure::RemoveCompany(int CompanyID);
-//     StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
-//     StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID);
-//     StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor);
-//     StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID);
-//     StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
-//     StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
-//     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
 
 StatusType DataStructure::AddCompany(int CompanyID, int Value)
 {
