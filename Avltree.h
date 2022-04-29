@@ -416,5 +416,6 @@ public:
 	}
 
 	int getNumOfNode() { return num_of_nodes; } //added by yagel 06.06
+	
 };
 #endif

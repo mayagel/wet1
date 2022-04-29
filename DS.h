@@ -18,20 +18,21 @@ class DataStructure
 {
 private:
     AVLTree<Company*,int> *Companies;
-    AVLTree<Company*,int> *CopaniesWithEmp;
+    AVLTree<Company*,int> *CompaniesWithEmp;
     AVLTree<Employee,int> *Employees;
     AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
     void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
+    void subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size);
 
 public:
     DataStructure()
     {
         AVLTree<Company*,int> *Companies = new AVLTree<Company*,int>(); 
         this->Companies = Companies;
-        AVLTree<Company*,int> *CopaniesWithEmp = new AVLTree<Company*,int>(); 
-        this->CopaniesWithEmp = CopaniesWithEmp;
+        AVLTree<Company*,int> *CompaniesWithEmp = new AVLTree<Company*,int>(); 
+        this->CompaniesWithEmp = CompaniesWithEmp;
         AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
         this->Employees = Employees;
         AVLTree<Employee*, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee*, KeyBySalary>(); 
@@ -42,7 +43,7 @@ public:
     DataStructure(const DataStructure &cd)
     {
         this->Companies = cd.Companies;
-        this->CopaniesWithEmp = cd.CopaniesWithEmp;
+        this->CompaniesWithEmp = cd.CompaniesWithEmp;
         this->Employees = cd.Employees;
         this->EmployeesBySalary = cd.EmployeesBySalary;
         this->HighestEarner = cd.HighestEarner;
@@ -51,7 +52,7 @@ public:
     ~DataStructure()
     {
         delete Companies;
-        delete CopaniesWithEmp;
+        delete CompaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
         delete HighestEarner;

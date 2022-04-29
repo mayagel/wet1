@@ -2,15 +2,6 @@
 #include "stdio.h"
 #include <cstddef>
 
-//     StatusType RemoveEmployee(int EmployeeID);
-//     StatusType DataStructure::RemoveCompany(int CompanyID);
-//     StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade);
-//     StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID);
-//     StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor);
-//     StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID);
-//     StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees, int *NumOfEmployees);
-//     StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
-//     MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees);
 
 StatusType DataStructure::AddCompany(int CompanyID, int Value)
 {
@@ -64,7 +55,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     }
     if ((employer->data)->getNumEmployees() == 0)
     {
-        this->CopaniesWithEmp->insert(CompanyID, employer->data);
+        this->CompaniesWithEmp->insert(CompanyID, employer->data);
     }
     (employer->data)->incNumEmployees();
     return SUCCESS;
@@ -88,7 +79,7 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
     Employee->data.getEmployer().data->decNumEmployees();
     if(Employee->data.getEmployer().data->getNumEmployees()==0)
     {
-        this->CopaniesWithEmp->remove(Employee->data.getEmployer().data->getCompanyID());
+        this->CompaniesWithEmp->remove(Employee->data.getEmployer().data->getCompanyID());
     }
     this->EmployeesBySalary->remove(*tempKey);
     this->Employees->remove(EmployeeID);
@@ -245,7 +236,8 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
     {
         return INVALID_INPUT;
     }
-     if(CompanyID>0)
+    *Employees = (int*)malloc(sizeof(int)*(*NumOfEmployees));
+    if(CompanyID>0)
     {
         AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
         if(!theCompany || theCompany->data->getNumEmployees() == 0)
@@ -266,10 +258,19 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
     }
     return SUCCESS;
 }
-//NOT FINISHED
+
 StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees)
 {
-
+    if(Employees == nullptr || this->Employees->getNumOfNode() < 1)
+    {
+        return INVALID_INPUT;
+    }
+    if(this->CompaniesWithEmp->getNumOfNode() < 1)
+    {
+        return FAILURE;
+    }
+    *Employees = (int*)malloc(sizeof(int)*NumOfCompanies);
+    subInOrder(CompaniesWithEmp->getRoot(),*Employees,0,NumOfCompanies);
     return SUCCESS;
 }
 //NOT FINISHED
@@ -278,6 +279,7 @@ MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOf
 {
     return SUCCESS;
 }
+
 //private
 void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees)
 {
@@ -286,4 +288,18 @@ void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int 
     *Employees[*NumOfEmployees] = start->data->getEmployeeID();
     NumOfEmployees++;
     inOrderBySalary(start->getRight(),Employees,NumOfEmployees);
+}
+
+void DataStructure::subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size)
+{
+	if (subtree == nullptr) {
+   	 return;
+	}
+	subInOrder(subtree->left, arr, index, size);
+	if (index < size) {
+    arr[index] = subtree->data->getHighestEarnerInCom()->getEmployeeID();
+   	index += 1;
+	subInOrder(subtree->right, arr, index, size);
+    }
+    return;
 }
