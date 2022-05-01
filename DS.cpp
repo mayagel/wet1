@@ -269,7 +269,7 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
     {
         return INVALID_INPUT;
     }
-    *Employees = (int*)malloc(sizeof(int)*(*NumOfEmployees));
+    *Employees = (int*)malloc(sizeof(int)*(this->Employees->getNumOfNode()));
     if(CompanyID>0)
     {
         AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
@@ -320,7 +320,7 @@ void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int 
     if (start == nullptr) return;
     inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
     *Employees[*NumOfEmployees] = start->data->getEmployeeID();
-    NumOfEmployees++;
+    (*NumOfEmployees)++;
     inOrderBySalary(start->getRight(),Employees,NumOfEmployees);
 }
 
