@@ -59,6 +59,8 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     {
         this->CompaniesWithEmp->insert(CompanyID, employer->data);
     }
+
+    //numOfEmployees++
     (employer->data)->incNumEmployees();
     return SUCCESS;
 }
@@ -184,37 +186,46 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     delete keyToRemove;
     return SUCCESS;
 }
-//NOT FINISHED
+
 StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
 {
+    if (EmployeeID <= 0|| NewCompanyID<=0)
+    {
+        return INVALID_INPUT;
+    }
+    AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), NewCompanyID);
+    AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
+    AVLNode<Company*, int> *employer = Companies->find((this->Companies)->getRoot(), NewCompanyID);
+    if (!theCompany ||!theEmployee||employer->data->getCompanyID() == theCompany->data->getCompanyID())
+    {
+        return FAILURE;
+    }
+    int newGrade = theEmployee->data.getGrade();
+    int newSalary = theEmployee->data.getSalary();
+
+    RemoveEmployee(EmployeeID);
+    AddEmployee(EmployeeID,NewCompanyID,newSalary,newGrade);
     return SUCCESS;
-//  if (EmployeeID <= 0||NewCompanyID<=0)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), NewCompanyID);
-//     AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
-//     AVLNode<Company*, int> *employer = Companies->find((this->Companies)->getRoot(), NewCompanyID);
-//     if (!theCompany ||!theEmployee||employer->data->getCompanyID() == theCompany->data->getCompanyID())
-//     {
-//         return FAILURE;
-//     }
+
 }
+
 //NOT FINISHED
 StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor)
 {
-        return SUCCESS;
+    // if (AcquirerID <= 0||TargetID<=0||TargetID == AcquirerID ||Factor<1.00)
+    // {
+    //     return INVALID_INPUT;
+    // }
+    // AVLNode<Company*, int> *AcquirerCom = Companies->find((this->Companies)->getRoot(), AcquirerID);
+    // AVLNode<Company*, int> *TargetCom = Companies->find((this->Companies)->getRoot(), TargetID);
+    // if(!TargetCom || !AcquirerCom || AcquirerCom->data->getValue() < (TargetCom->data->getValue()*10))
+    // {
+    //     return FAILURE;
+    // }
+    
 
-//     if (AcquirerID <= 0||TargetID<=0||TargetID == AcquirerID ||Factor<1.00)
-//     {
-//         return INVALID_INPUT;
-//     }
-//     AVLNode<Company*, int> *AcquirerCom = Companies->find((this->Companies)->getRoot(), AcquirerID);
-//     AVLNode<Company*, int> *TargetCom = Companies->find((this->Companies)->getRoot(), TargetID);
-//     if(!TargetCom || !AcquirerCom || AcquirerCom->data->getValue() < (TargetCom->data->getValue()*10))
-//     {
-//         return FAILURE;
-//     }
+
+    return SUCCESS;
 }
 
 StatusType DataStructure::GetHighestEarner(int CompanyID, int *EmployeeID)
@@ -286,6 +297,7 @@ StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int 
     subInOrder(CompaniesWithEmp->getRoot(),*Employees,0,NumOfCompanies);
     return SUCCESS;
 }
+
 //NOT FINISHED
 StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
