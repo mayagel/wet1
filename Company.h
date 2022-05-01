@@ -28,6 +28,9 @@ public:
         HighestEarnerInCom = nullptr;
         
     };
+    Company(int compId, int value, int numEmployees, AVLTree<Employee*,KeyBySalary> *comEmpBySalary, AVLTree<Employee*,int> *comEmpByID, Employee *HighestEarnerInCom) 
+    : CompanyID(compId), Value(value), numEmployees(numEmployees, comEmpBySalary(comEmpBySalary), comEmpByID(comEmpByID), HighestEarnerInCom(HighestEarnerInCom)){
+    };
     // Company(int carType, int modelId, int grade, i) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(grade){};
 
     Company(const Company &comp)
@@ -71,7 +74,8 @@ public:
     
     
     //setters
-
+    void setcomEmpBySalary(AVLTree<Employee*,KeyBySalary>* emp_by_sal ) { comEmpBySalary = emp_by_sal; };
+    void setcomEmpByID(AVLTree<Employee*,int>* emp_by_id) { comEmpByID = emp_by_id; };
     void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
     void setNumEmployees(){numEmployees++;};
     void incNumEmployees(){numEmployees++;}
