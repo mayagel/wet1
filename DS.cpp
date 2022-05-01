@@ -43,7 +43,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     // insert to trees
     (this->Employees)->insert(EmployeeID, *newEmployee);
     (this->EmployeesBySalary)->insert(*keyToInsert, *newEmployeeBySal);
-    ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, newEmployee);
+    ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, newEmployeeBySal);
     ((employer->data)->getcomEmpByID()).insert(EmployeeID, newEmployee);
 
     // HighestEarner
@@ -183,6 +183,15 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     (this->EmployeesBySalary)->insert(*keyToInsert, *theEmployee);
     ((theEmployee->getEmployer().data)->getcomEmpBySalary()).insert(*keyToInsert, theEmployee);
 
+    // HighestEarner
+    if (theEmployee >  HighestEarner)
+    {
+        (HighestEarner = theEmployee);
+    }
+    if (theEmployee > theEmployee->getEmployer().data->getHighestEarnerInCom())
+    {
+        theEmployee->getEmployer().data->setHighestEarnerInCom(theEmployee);
+    }
     delete keyToRemove;
     return SUCCESS;
 }
