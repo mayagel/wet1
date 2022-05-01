@@ -35,12 +35,14 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     }
 
     AVLNode<Company*, int> *employer = Companies->find((this->Companies)->getRoot(), CompanyID);
+       
     Employee *newEmployee = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
+    Employee *newEmployeeBySal = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
     KeyBySalary *keyToInsert = new KeyBySalary(EmployeeID, Salary);
 
     // insert to trees
     (this->Employees)->insert(EmployeeID, *newEmployee);
-    (this->EmployeesBySalary)->insert(*keyToInsert, newEmployee);
+    (this->EmployeesBySalary)->insert(*keyToInsert, *newEmployeeBySal);
     ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, newEmployee);
     ((employer->data)->getcomEmpByID()).insert(EmployeeID, newEmployee);
 
@@ -149,7 +151,7 @@ StatusType DataStructure::IncreaseCompanyValue(int CompanyID, int ValueIncrease)
     theCompany->data->incValue(ValueIncrease);
     return SUCCESS;
 }
-//NOT FINISHED
+
 StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, int BumpGrade)
 {
      if (EmployeeID <= 0 || SalaryIncrease <= 0)
@@ -160,15 +162,26 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     {
         return FAILURE;
     }
-    AVLNode<Employee, int> *theEmployee = Employees->find((this->Employees)->getRoot(), EmployeeID);
-    theEmployee->data.addToSalary(SalaryIncrease);
+    Employee *theEmployee =&(Employees->find((this->Employees)->getRoot(), EmployeeID)->data);
+    KeyBySalary *keyToRemove = new KeyBySalary(EmployeeID,theEmployee->getSalary());
+
+    //remove
+    theEmployee->getEmployer().data->getcomEmpBySalary().remove(*keyToRemove);
+    this->EmployeesBySalary->remove(*keyToRemove);
+    
+    //upgrade
+    theEmployee->addToSalary(SalaryIncrease);
     if(BumpGrade>0)
     {
-    theEmployee->data.incGrade();
+        theEmployee->incGrade();
     }
-    AVLNode<Employee, int> *newEmployee = theEmployee;
-    
-    //NEED TO ORGANIZE THE TREE
+
+    //insert
+    KeyBySalary *keyToInsert = new KeyBySalary(EmployeeID,theEmployee->getSalary());
+    (this->EmployeesBySalary)->insert(*keyToInsert, *theEmployee);
+    ((theEmployee->getEmployer().data)->getcomEmpBySalary()).insert(*keyToInsert, theEmployee);
+
+    delete keyToRemove;
     return SUCCESS;
 }
 //NOT FINISHED
@@ -254,7 +267,7 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
             return FAILURE;
         }
         *NumOfEmployees = 0;
-        inOrderBySalary(EmployeesBySalary->getRoot(), Employees, NumOfEmployees);
+        inOrderBySalary2(EmployeesBySalary->getRoot(), Employees, NumOfEmployees);
     }
     return SUCCESS;
 }
@@ -288,6 +301,15 @@ void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int 
     *Employees[*NumOfEmployees] = start->data->getEmployeeID();
     NumOfEmployees++;
     inOrderBySalary(start->getRight(),Employees,NumOfEmployees);
+}
+
+void DataStructure::inOrderBySalary2(AVLNode<Employee, KeyBySalary> *start, int **Employees,int *NumOfEmployees)
+{
+    if (start == nullptr) return;
+    inOrderBySalary2(start->getLeft(),Employees,NumOfEmployees);
+    *Employees[*NumOfEmployees] = start->data.getEmployeeID();
+    NumOfEmployees++;
+    inOrderBySalary2(start->getRight(),Employees,NumOfEmployees);
 }
 
 void DataStructure::subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size)
