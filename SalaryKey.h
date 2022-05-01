@@ -47,7 +47,7 @@ public:
     {
         if (a.Salary == Salary)
         {
-            return a.EmployeeID > EmployeeID;
+            return a.EmployeeID == EmployeeID;
         }
         return false;
     }

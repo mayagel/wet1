@@ -20,10 +20,11 @@ private:
     AVLTree<Company*,int> *Companies;
     AVLTree<Company*,int> *CompaniesWithEmp;
     AVLTree<Employee,int> *Employees;
-    AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
+    AVLTree<Employee, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
     void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
+    void inOrderBySalary2(AVLNode<Employee, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
     void subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size);
 
 public:
@@ -35,7 +36,7 @@ public:
         this->CompaniesWithEmp = CompaniesWithEmp;
         AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
         this->Employees = Employees;
-        AVLTree<Employee*, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee*, KeyBySalary>(); 
+        AVLTree<Employee, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
         HighestEarner = nullptr; 
     }
