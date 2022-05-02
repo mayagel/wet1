@@ -225,7 +225,6 @@ StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
     return SUCCESS;
 
 }
-
 StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double factor)
 {
     if (acquirer_id <= 0||target_id<=0||target_id == acquirer_id ||factor<1.00)
@@ -428,6 +427,32 @@ StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int 
 StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
 {
+    if(TotalNumOfEmployees == nullptr || NumOfEmployees == nullptr || CompanyID == 0 ||
+    MinEmployeeID <0 || MaxEmployeeId <0 || MinSalary <0 || MinGrade <0 || MinEmployeeID > MaxEmployeeId)
+    {
+        return INVALID_INPUT;
+    }
+    if(CompanyID>0)
+    {
+        AVLNode<Company*, int> *theCompany = Companies->find((this->Companies)->getRoot(), CompanyID);
+        if(!theCompany || theCompany->data->getNumEmployees() == 0)
+        {
+            return FAILURE;
+        }
+        *TotalNumOfEmployees =0;
+        *NumOfEmployees =0;
+        nodeToNodeInOrder(theCompany->data->getcomEmpBySalary().getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
+
+    }
+    else
+    {
+        if(Employees->getNumOfNode()==0)
+        {
+            return FAILURE;
+        }
+
+    }
+
     return SUCCESS;
 }
 
@@ -463,3 +488,16 @@ void DataStructure::subInOrder(AVLNode<Company*,int> *subtree, int *arr, int ind
     }
     return;
 }
+
+
+void DataStructure::nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade)
+{
+    if(subtree->data->getEmployeeID()> MinEmployeeID)
+    nodeToNodeInOrder(subtree->left,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
+    //update
+    if(subtree->data->getEmployeeID() <= MinEmployeeID)
+    nodeToNodeInOrder(subtree->right,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
+
+    return;
+}
+
