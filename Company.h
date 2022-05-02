@@ -28,9 +28,6 @@ public:
         HighestEarnerInCom = nullptr;
         
     };
-    Company(int compId, int value, int numEmployees, AVLTree<Employee*,KeyBySalary> *comEmpBySalary, AVLTree<Employee*,int> *comEmpByID, Employee *HighestEarnerInCom) 
-    : CompanyID(compId), Value(value), numEmployees(numEmployees, comEmpBySalary(comEmpBySalary), comEmpByID(comEmpByID), HighestEarnerInCom(HighestEarnerInCom)){
-    };
     // Company(int carType, int modelId, int grade, i) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(grade){};
 
     Company(const Company &comp)

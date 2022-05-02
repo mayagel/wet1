@@ -421,10 +421,10 @@ public:
 
 
 // from here update by Yagel 02.05 00:14
-	S *merge(int arr1[], int arr2[], int m, int n)
+	AVLNode<T, S>  **merge(AVLNode<T, S>* arr1[], AVLNode<T, S>* arr2[], int m, int n)
 	{
     // mergedArr[] is going to contain result
-    int *mergedArr = new int[m + n];
+    AVLNode<T, S>  **mergedArr = new AVLNode<T, S>*[m + n];
     int i = 0, j = 0, k = 0;
  
     // Traverse through both arrays
@@ -465,18 +465,18 @@ public:
 {
     // Store inorder traversal of
     // first tree in an array arr1[]
-    S *arr1 = new S[length1];
+    AVLNode<T, S> **arr1 = new AVLNode<T, S>* [length1];
     int i = 0;
     storeInorder(root1, arr1, &i);
  
     // Store inorder traversal of second
     // tree in another array arr2[]
-    S *arr2 = new S[length2];
+    AVLNode<T, S> **arr2 = new AVLNode<T, S>* [length2];
     int j = 0;
     storeInorder(root2, arr2, &j);
  
     // Merge the two sorted array into one
-    S *mergedArr = merge(arr1, arr2, length1, length2);
+    AVLNode<T, S> **mergedArr = merge(arr1, arr2, length1, length2);
  
     // Construct a tree from the merged
     // array and return root of the tree
@@ -485,7 +485,7 @@ public:
 	
 	// A helper function that stores inorder
 	// traversal of a tree rooted with node
-	void storeInorder(AVLNode<T, S>* node, int inorder[], int *index_ptr)
+	void storeInorder(AVLNode<T, S>* node, AVLNode<T, S>* inorder[], int *index_ptr)
 	{
 		if (node == NULL)
 			return;
@@ -493,14 +493,14 @@ public:
 		/* first recur on left child */
 		storeInorder(node->left, inorder, index_ptr);
 	
-		inorder[*index_ptr] = node->data;
+		inorder[*index_ptr] = new AVLNode<T, S> (node->key, node->data, node->father);
 		(*index_ptr)++; // increase index for next entry
 	
 		/* now recur on right child */
 		storeInorder(node->right, inorder, index_ptr);
 	}
  
-	AVLNode<T, S>* sortedArrayToBST(int arr[], int start, int end)
+	AVLNode<T, S>* sortedArrayToBST(AVLNode<T, S> *arr[], int start, int end)
 	{
 		/* Base Case */
 		if (start > end)
@@ -508,7 +508,8 @@ public:
 	
 		/* Get the middle element and make it root */
 		int mid = (start + end)/2;
-		AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]);
+		/* maybe create new node with key, data, father*/
+		AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, arr[mid]->father);
 	
 		/* Recursively construct the left subtree and make it
 		left child of root */
