@@ -441,8 +441,7 @@ MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOf
         }
         *TotalNumOfEmployees =0;
         *NumOfEmployees =0;
-        nodeToNodeInOrder(theCompany->data->getcomEmpBySalary().getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
-
+        nodeToNodeInOrder(theCompany->data->getcomEmpBySalary().getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
     }
     else
     {
@@ -450,6 +449,7 @@ MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOf
         {
             return FAILURE;
         }
+        nodeToNodeInOrderEmployeeBySalary(EmployeesBySalary->getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
 
     }
 
@@ -471,7 +471,7 @@ void DataStructure::inOrderBySalary2(AVLNode<Employee, KeyBySalary> *start, int 
     if (start == nullptr) return;
     inOrderBySalary2(start->getLeft(),Employees,NumOfEmployees);
     *Employees[*NumOfEmployees] = start->data.getEmployeeID();
-    NumOfEmployees++;
+    (*NumOfEmployees)++;
     inOrderBySalary2(start->getRight(),Employees,NumOfEmployees);
 }
 
@@ -490,14 +490,42 @@ void DataStructure::subInOrder(AVLNode<Company*,int> *subtree, int *arr, int ind
 }
 
 
-void DataStructure::nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade)
+void DataStructure::nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees)
 {
+    if(subtree==nullptr)
+    return;
     if(subtree->data->getEmployeeID()> MinEmployeeID)
-    nodeToNodeInOrder(subtree->left,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
-    //update
-    if(subtree->data->getEmployeeID() <= MinEmployeeID)
-    nodeToNodeInOrder(subtree->right,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade);
+    nodeToNodeInOrder(subtree->left,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
+    if((subtree->data->getEmployeeID()>=MinEmployeeID)&&(subtree->data->getEmployeeID()>=MaxEmployeeId))
+    {
+        (*TotalNumOfEmployees)++;
+        if((subtree->data->getSalary()>=MinSalary)&&(subtree->data->getGrade()>=MinGrade))
+        {
+            (*NumOfEmployees)++;
+        }
+    }
+    if(subtree->data->getEmployeeID() <= MaxEmployeeId)
+    nodeToNodeInOrder(subtree->right,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
 
     return;
 }
 
+void DataStructure::nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees)
+{
+    if(subtree==nullptr)
+    return;
+    if(subtree->data.getEmployeeID()> MinEmployeeID)
+    nodeToNodeInOrderEmployeeBySalary(subtree->left,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
+    if((subtree->data.getEmployeeID()>=MinEmployeeID)&&(subtree->data.getEmployeeID()>=MaxEmployeeId))
+    {
+        (*TotalNumOfEmployees)++;
+        if((subtree->data.getSalary()>=MinSalary)&&(subtree->data.getGrade()>=MinGrade))
+        {
+            (*NumOfEmployees)++;
+        }
+    }
+    if(subtree->data.getEmployeeID() <= MaxEmployeeId)
+    nodeToNodeInOrderEmployeeBySalary(subtree->right,MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
+
+    return;
+}

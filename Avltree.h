@@ -172,6 +172,11 @@ private:
 
 	AVLNode<T, S> *handleZeroSonsRemove(AVLNode<T, S> *node)
 	{
+		if(!node->father)
+		{
+			delete node;
+			return nullptr;
+		}
 		if (node->father->left == node)
 		{
 			node->father->left = nullptr;
@@ -400,8 +405,11 @@ public:
 			}
 		}
 		AVLNode<T, S> *father = removeFromBST(node, left_son_exist, right_son_exist);
-		setHeight(father);
-		balance(father);
+		if(father)
+		{
+			setHeight(father);
+			balance(father);
+		}
 		num_of_nodes -= 1; //added by yagel 06.06
 	}
 
