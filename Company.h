@@ -72,6 +72,8 @@ public:
     
     //setters
 
+    void setcomEmpBySalary(AVLTree<Employee*,KeyBySalary>* emp_by_sal ) { comEmpBySalary = emp_by_sal; };
+    void setcomEmpByID(AVLTree<Employee*,int>* emp_by_id) { comEmpByID = emp_by_id; };
     void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
     void setNumEmployees(){numEmployees++;};
     void incNumEmployees(){numEmployees++;}
