@@ -237,50 +237,50 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     }
 
     // step 2: get the info from the companies
-    AVLTree<Employee*,KeyBySalary> *acq_comp_by_sal = acquire_com->data->getcomEmpBySalary(); //of acquire
-    AVLTree<Employee*,int> *acq_comp_by_id = acquire_com->data->getcomEmpByID();
+    AVLTree<Employee*,KeyBySalary> acq_comp_by_sal = acquire_com->data->getcomEmpBySalary(); //of acquire
+    AVLTree<Employee*,int> acq_comp_by_id = acquire_com->data->getcomEmpByID();
     int acq_val = acquire_com->data->getValue();
     int acq_num_of_emp = acquire_com->data->getValue();
     Employee* acq_highest = acquire_com->data->getHighestEarnerInCom();
 
-    AVLTree<Employee*,KeyBySalary> *tar_comp_by_sal = target_com->data->getcomEmpBySalary(); // of target
-    AVLTree<Employee*,int> *tar_comp_by_id = target_com->data->getcomEmpByID();
+    AVLTree<Employee*,KeyBySalary> tar_comp_by_sal = target_com->data->getcomEmpBySalary(); // of target
+    AVLTree<Employee*,int> tar_comp_by_id = target_com->data->getcomEmpByID();
     int tar_val = target_com->data->getValue();
     int tar_num_of_emp = target_com->data->getValue();
     Employee* tar_highest = target_com->data->getHighestEarnerInCom();
 
     //step 3: combine employees
-    AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal->combineTree(tar_comp_by_sal, acq_comp_by_sal);
-    AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id->combineTree(tar_comp_by_id, acq_comp_by_id);
+    AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal.combineTree(&tar_comp_by_sal, &acq_comp_by_sal);
+    AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id.combineTree(&tar_comp_by_id, &acq_comp_by_id);
 
     //step 4: set other datas
-    int merged_value = (acquire_com->data->getValue + target_com->data->getValue) * factor;
+    int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
     int merged_num_of_employees = acquire_com->data->getNumEmployees() + target_com->data->getNumEmployees();
     Employee* merged_highest_emp;
     if (*(acquire_com->data->getHighestEarnerInCom()) > *(target_com->data->getHighestEarnerInCom()))
     {
-        merged_highest_emp = new Employee(*(acquire_com->data->getHighestEarnerInCom()))
+        merged_highest_emp = new Employee(*(acquire_com->data->getHighestEarnerInCom()));
     }
     else{
-        merged_highest_emp = new Employee(*(target_com->data->getHighestEarnerInCom()))
+        merged_highest_emp = new Employee(*(target_com->data->getHighestEarnerInCom()));
     }
     
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
-    delete target_com->data->getcomEmpBySalary();
-    delete target_com->data->getcomEmpByID();
+    delete &target_com->data->getcomEmpBySalary();
+    delete &target_com->data->getcomEmpByID();
     delete target_com->data->getHighestEarnerInCom();
-    target_com->data->setHighestEarnerInCom(nullptr)
+    target_com->data->setHighestEarnerInCom(nullptr);
     target_com->data->setcomEmpBySalary(nullptr);
     target_com->data->setcomEmpByID(nullptr);
     target_com->data->setNumEmployees(0);
 
     //step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
     AVLNode<Company*, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
-    delete target_com_with_emps->data->getcomEmpBySalary();
-    delete target_com_with_emps->data->getcomEmpByID();
+    delete &target_com_with_emps->data->getcomEmpBySalary();
+    delete &target_com_with_emps->data->getcomEmpByID();
     delete target_com_with_emps->data->getHighestEarnerInCom();
-    target_com_with_emps->data->setHighestEarnerInCom(nullptr)
+    target_com_with_emps->data->setHighestEarnerInCom(nullptr);
     target_com_with_emps->data->setcomEmpBySalary(nullptr);
     target_com_with_emps->data->setcomEmpByID(nullptr);
     target_com_with_emps->data->setNumEmployees(0);
@@ -289,8 +289,8 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     this->RemoveCompany(target_id);
 
     //step 6.1: delete old data acquire company (acquire)
-    delete acquire_com->data->getcomEmpBySalary();
-    delete acquire_com->data->getcomEmpByID();
+    delete &acquire_com->data->getcomEmpBySalary();
+    delete &acquire_com->data->getcomEmpByID();
     delete acquire_com->data->getHighestEarnerInCom();
     acquire_com->data->setHighestEarnerInCom(nullptr);
     acquire_com->data->setcomEmpBySalary(nullptr);
@@ -299,8 +299,8 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
 
     //step 6.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
     AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
-    delete acquire_com_with_emps->data->getcomEmpBySalary();
-    delete acquire_com_with_emps->data->getcomEmpByID();
+    delete &acquire_com_with_emps->data->getcomEmpBySalary();
+    delete &acquire_com_with_emps->data->getcomEmpByID();
     delete acquire_com_with_emps->data->getHighestEarnerInCom();
     acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
     acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
@@ -439,9 +439,4 @@ void DataStructure::subInOrder(AVLNode<Company*,int> *subtree, int *arr, int ind
 	subInOrder(subtree->right, arr, index, size);
     }
     return;
-}
-
-AVLTree<Employee*,KeyBySalary> *combineTree(AVLTree<Employee*,KeyBySalary> * tar_comp_by_sal, AVLTree<Employee*,KeyBySalary> * acq_comp_by_sal){
-    Employee* tar_arr[tar_comp_by_sal->getNumOfNode()];
-    Employee* acq_arr[acq_comp_by_sal->getNumOfNode()];
 }
