@@ -18,30 +18,27 @@ public:
     KeyBySalary(int salary, int empID) : EmployeeID(empID), Salary(salary) {};
 
     bool operator<(const KeyBySalary& a) const{
-    if (a.Salary<Salary)
-    {
-        return true;
-    }
-    if (a.Salary>Salary)
-    {
-        return false;
-    }
-    return a.EmployeeID > EmployeeID;
-    }
+        if (Salary > a.Salary)
+        {
+            return true;
+        }
+        if (Salary < a.Salary)
+        {
+            return false;
+        }
+        return EmployeeID < a.EmployeeID;
+        }
     bool operator>(const KeyBySalary& a) const
     {
-        if (a.Salary>Salary)
+        if (Salary < a.Salary)
         {
-           if (a.Salary > Salary)
-            {
-                return true;
-            }
-            if (a.Salary < Salary)
-            {
-             return false;
-            }
+            return true;
         }
-          return a.EmployeeID < EmployeeID;
+        if (Salary > a.Salary)
+        {
+            return false;
+        }
+        return EmployeeID > a.EmployeeID;
     }
     bool operator==(const KeyBySalary &a) const
     {

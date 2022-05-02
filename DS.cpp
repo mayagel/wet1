@@ -283,19 +283,20 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
-    delete &target_com->data->getcomEmpBySalary();
-    delete &target_com->data->getcomEmpByID();
+    target_com->data->setcomEmpBySalary(nullptr);
+    target_com->data->setcomEmpByID(nullptr);
     target_com->data->setHighestEarnerInCom(nullptr);
     target_com->data->setcomEmpBySalary(nullptr);
     target_com->data->setcomEmpByID(nullptr);
     target_com->data->setNumEmployees(0);
+    
 
     //step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
     AVLNode<Company*, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
     if (target_com_with_emps)
     {
-        delete &target_com_with_emps->data->getcomEmpBySalary();
-        delete &target_com_with_emps->data->getcomEmpByID();
+        target_com_with_emps->data->setcomEmpBySalary(nullptr);
+        target_com_with_emps->data->setcomEmpByID(nullptr);
         target_com_with_emps->data->setHighestEarnerInCom(nullptr);
         target_com_with_emps->data->setcomEmpBySalary(nullptr);
         target_com_with_emps->data->setcomEmpByID(nullptr);
@@ -308,20 +309,20 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     //step 5.3: remove the target company
     this->RemoveCompany(target_id);
 
-    //step 6.1: delete old data acquire company (acquire)
-    delete &acquire_com->data->getcomEmpBySalary();
-    delete &acquire_com->data->getcomEmpByID();
+    //step 6.1: old data acquire company (acquire)
+    acquire_com->data->setcomEmpBySalary(nullptr);
+    acquire_com->data->setcomEmpByID(nullptr);
     acquire_com->data->setHighestEarnerInCom(nullptr);
     acquire_com->data->setcomEmpBySalary(nullptr);
     acquire_com->data->setcomEmpByID(nullptr);
     acquire_com->data->setNumEmployees(0);
 
-    //step 6.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
+    //step 6.2: comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
     AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
     if (acquire_com_with_emps)
     {
-        delete &acquire_com_with_emps->data->getcomEmpBySalary();
-        delete &acquire_com_with_emps->data->getcomEmpByID();
+        acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
+        acquire_com_with_emps->data->setcomEmpByID(nullptr);
         acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
         acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
         acquire_com_with_emps->data->setcomEmpByID(nullptr);

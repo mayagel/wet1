@@ -21,6 +21,14 @@ public:
 	AVLNode(){};// Yagel added empty default constructor 
 	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), rank(1), height(0), left(nullptr), right(nullptr), father(father){};
 	~AVLNode() = default;
+	bool operator<(const AVLNode &node) const
+    {
+		return this->key < node.key;
+    }
+    bool operator>(const AVLNode &node) const
+    {
+		return this->key > node.key;
+    }
 	AVLNode<C, D> *getRight(){return right;} 
 	AVLNode<C, D> *getLeft(){return left;} 
 };
@@ -429,7 +437,7 @@ public:
     while (i < m && j < n)
     {
         // Pick the smaller element and put it in mergedArr
-        if (arr1[i] < arr2[j])
+        if (*arr1[i] < *arr2[j])
         {
             mergedArr[k] = arr1[i];
             i++;

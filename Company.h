@@ -62,6 +62,10 @@ public:
     //geters
     AVLTree<Employee*,KeyBySalary>& getcomEmpBySalary() { return *comEmpBySalary; };
     AVLTree<Employee*,int>& getcomEmpByID() { return *comEmpByID; };
+
+    AVLTree<Employee*,KeyBySalary>* getcomEmpBySalary2() { return comEmpBySalary; };
+    AVLTree<Employee*,int>* getcomEmpByID2() { return comEmpByID; };
+
     int getCompanyID() {return CompanyID; };
     int getValue() {return Value; };
     int getNumEmployees() { return numEmployees; };
