@@ -1,0 +1,3 @@
+/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles/my_executable.dir
+/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles/edit_cache.dir
+/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles/rebuild_cache.dir
