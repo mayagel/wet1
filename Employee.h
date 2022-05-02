@@ -35,8 +35,8 @@ public:
     // }
     Employee(const Employee &emp) = default;
 
-    bool operator<(const Employee &emp) const; // based on EmployeeID
-    bool operator>(const Employee &emp) const; // based on EmployeeID
+    // bool operator<(const Employee &emp) const; // based on EmployeeID
+    // bool operator>(const Employee &emp) const; // based on EmployeeID
     // Employee &operator=(const Employee &emp);
 
     //geters
@@ -49,6 +49,39 @@ public:
     //seters
     void addToSalary(int t) { Salary += t; }
     void incGrade() { Grade++; }
+
+    bool operator<(const Employee &emp) const
+    {
+
+        if(this->Salary < emp.Salary)
+        {
+            return true;
+        }
+        else if(this->Salary == emp.Salary)
+        {
+            if(this->EmployeeID > emp.EmployeeID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    bool operator>(const Employee &emp) const
+    {
+        if(this->Salary > emp.Salary)
+        {
+            return true;
+        }
+        else if(this->Salary == emp.Salary)
+        {
+            if(this->EmployeeID < emp.EmployeeID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 };
 
 #endif

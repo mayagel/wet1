@@ -47,11 +47,19 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     ((employer->data)->getcomEmpByID()).insert(EmployeeID, newEmployee);
 
     // HighestEarner
-    if (newEmployee >  HighestEarner)
+    if(this->Employees->getNumOfNode()==1)
     {
         (HighestEarner = newEmployee);
     }
-    if (newEmployee > (employer->data)->getHighestEarnerInCom())
+    else if (*newEmployee >  *HighestEarner)
+    {
+        (HighestEarner = newEmployee);
+    }
+    if(employer->data->getNumEmployees()==0)
+    {
+        (employer->data)->setHighestEarnerInCom(newEmployee);
+    }
+    else if (*newEmployee > *(employer->data)->getHighestEarnerInCom())
     {
         (employer->data)->setHighestEarnerInCom(newEmployee);
     }
@@ -253,13 +261,25 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
     int merged_num_of_employees = acquire_com->data->getNumEmployees() + target_com->data->getNumEmployees();
     Employee* merged_highest_emp;
-    if (*(acquire_com->data->getHighestEarnerInCom()) > *(target_com->data->getHighestEarnerInCom()))
+
+    if((acquire_com->data->getHighestEarnerInCom())&&(target_com->data->getHighestEarnerInCom()))
     {
-        merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
+        if (*(acquire_com->data->getHighestEarnerInCom()) > *(target_com->data->getHighestEarnerInCom()))
+        {
+            merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
+        }
+        else{
+            merged_highest_emp = target_com->data->getHighestEarnerInCom();
+      }
     }
-    else{
-        merged_highest_emp = target_com->data->getHighestEarnerInCom();
-    }
+    else if(target_com->data->getHighestEarnerInCom())
+        {
+            merged_highest_emp = target_com->data->getHighestEarnerInCom();
+        }
+    else if(acquire_com->data->getHighestEarnerInCom())
+        {
+            merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
+        }
     
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
