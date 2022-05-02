@@ -53,10 +53,10 @@ public:
     ~DataStructure()
     {
         delete Companies;
-        delete CompaniesWithEmp;
+        // delete CompaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
-        delete HighestEarner;
+        // delete HighestEarner;
     };
 
     StatusType AddCompany(int CompanyID, int Value);

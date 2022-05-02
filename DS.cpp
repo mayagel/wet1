@@ -55,6 +55,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     {
         (employer->data)->setHighestEarnerInCom(newEmployee);
     }
+    // insert to comWithEmps
     if ((employer->data)->getNumEmployees() == 0)
     {
         this->CompaniesWithEmp->insert(CompanyID, employer->data);
@@ -259,17 +260,16 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     Employee* merged_highest_emp;
     if (*(acquire_com->data->getHighestEarnerInCom()) > *(target_com->data->getHighestEarnerInCom()))
     {
-        merged_highest_emp = new Employee(*(acquire_com->data->getHighestEarnerInCom()));
+        merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
     }
     else{
-        merged_highest_emp = new Employee(*(target_com->data->getHighestEarnerInCom()));
+        merged_highest_emp = target_com->data->getHighestEarnerInCom();
     }
     
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
     delete &target_com->data->getcomEmpBySalary();
     delete &target_com->data->getcomEmpByID();
-    delete target_com->data->getHighestEarnerInCom();
     target_com->data->setHighestEarnerInCom(nullptr);
     target_com->data->setcomEmpBySalary(nullptr);
     target_com->data->setcomEmpByID(nullptr);
@@ -277,13 +277,18 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
 
     //step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
     AVLNode<Company*, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
-    delete &target_com_with_emps->data->getcomEmpBySalary();
-    delete &target_com_with_emps->data->getcomEmpByID();
-    delete target_com_with_emps->data->getHighestEarnerInCom();
-    target_com_with_emps->data->setHighestEarnerInCom(nullptr);
-    target_com_with_emps->data->setcomEmpBySalary(nullptr);
-    target_com_with_emps->data->setcomEmpByID(nullptr);
-    target_com_with_emps->data->setNumEmployees(0);
+    if (target_com_with_emps)
+    {
+        delete &target_com_with_emps->data->getcomEmpBySalary();
+        delete &target_com_with_emps->data->getcomEmpByID();
+        target_com_with_emps->data->setHighestEarnerInCom(nullptr);
+        target_com_with_emps->data->setcomEmpBySalary(nullptr);
+        target_com_with_emps->data->setcomEmpByID(nullptr);
+        target_com_with_emps->data->setNumEmployees(0);
+        this->CompaniesWithEmp->remove(target_id);
+    }
+    
+
 
     //step 5.3: remove the target company
     this->RemoveCompany(target_id);
@@ -291,7 +296,6 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     //step 6.1: delete old data acquire company (acquire)
     delete &acquire_com->data->getcomEmpBySalary();
     delete &acquire_com->data->getcomEmpByID();
-    delete acquire_com->data->getHighestEarnerInCom();
     acquire_com->data->setHighestEarnerInCom(nullptr);
     acquire_com->data->setcomEmpBySalary(nullptr);
     acquire_com->data->setcomEmpByID(nullptr);
@@ -299,14 +303,17 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
 
     //step 6.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
     AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
-    delete &acquire_com_with_emps->data->getcomEmpBySalary();
-    delete &acquire_com_with_emps->data->getcomEmpByID();
-    delete acquire_com_with_emps->data->getHighestEarnerInCom();
-    acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
-    acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
-    acquire_com_with_emps->data->setcomEmpByID(nullptr);
-    acquire_com_with_emps->data->setNumEmployees(0);
-
+    if (acquire_com_with_emps)
+    {
+        delete &acquire_com_with_emps->data->getcomEmpBySalary();
+        delete &acquire_com_with_emps->data->getcomEmpByID();
+        acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
+        acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
+        acquire_com_with_emps->data->setcomEmpByID(nullptr);
+        acquire_com_with_emps->data->setNumEmployees(0);
+        this->CompaniesWithEmp->remove(acquirer_id);
+    }
+    
     //step 6.3: remove acquire ccompany
     this->RemoveCompany(acquirer_id);
 
@@ -317,17 +324,17 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     AVLNode<Company*, int> *merged_comp = Companies->find((this->Companies)->getRoot(), acquirer_id);
 
     //step 9: set data of acquire in companies
-    acquire_com->data->setHighestEarnerInCom(merged_highest_emp);
-    acquire_com->data->setcomEmpBySalary(merged_emp_by_sal);
-    acquire_com->data->setcomEmpByID(merged_emp_by_id);
-    acquire_com->data->setNumEmployees(merged_num_of_employees);
+    merged_comp->data->setHighestEarnerInCom(merged_highest_emp);
+    merged_comp->data->setcomEmpBySalary(merged_emp_by_sal);
+    merged_comp->data->setcomEmpByID(merged_emp_by_id);
+    merged_comp->data->setNumEmployees(merged_num_of_employees);
 
     //step 10: set data of acquire in CompaniesWithEmp
-    acquire_com->data->setHighestEarnerInCom(merged_highest_emp);
-    acquire_com->data->setcomEmpBySalary(merged_emp_by_sal);
-    acquire_com->data->setcomEmpByID(merged_emp_by_id);
-    acquire_com->data->setNumEmployees(merged_num_of_employees);
-
+    if (merged_comp->data->getNumEmployees())
+    {
+        this->CompaniesWithEmp->insert(acquirer_id, merged_comp->data);
+    }
+    
     return SUCCESS;
 }
 

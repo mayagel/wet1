@@ -8,7 +8,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(322835976)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -v -g -DNDEBUG")
 add_executable(my_executable Employee.h Company.h DS.cpp library1.cpp List.h Avltree.h main1.cpp SalaryKey.h)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test.in
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

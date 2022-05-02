@@ -47,7 +47,6 @@ public:
             *comEmpByID = *comp.comEmpByID;
         }
         
-        HighestEarnerInCom = new Employee();
         if (comp.HighestEarnerInCom)
         {
             *HighestEarnerInCom = *comp.HighestEarnerInCom;
