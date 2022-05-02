@@ -25,14 +25,16 @@ public:
 
 
     ~Employee() = default;
-    Employee(const Employee &emp)
-    {
-        EmployeeID = emp.EmployeeID;
-        EmployerID = emp.EmployerID;
-        Salary = emp.Salary;
-        Grade = emp.Grade;
-        Employer = emp.Employer;  //the check if new is needed
-    }
+    // Employee(const Employee &emp)
+    // {
+    //     EmployeeID = emp.EmployeeID;
+    //     EmployerID = emp.EmployerID;
+    //     Salary = emp.Salary;
+    //     Grade = emp.Grade;
+    //     Employer = emp.Employer;  //the check if new is needed
+    // }
+    Employee(const Employee &emp) = default;
+
     bool operator<(const Employee &emp) const; // based on EmployeeID
     bool operator>(const Employee &emp) const; // based on EmployeeID
     // Employee &operator=(const Employee &emp);
