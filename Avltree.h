@@ -417,5 +417,11 @@ public:
 
 	int getNumOfNode() { return num_of_nodes; } //added by yagel 06.06
 	
+	AVLTree<T, S>* combineTree(AVLTree<T, S>* tree1, AVLTree<T, S>* tree2){
+		AVLNode<T, S>* new_root = mergeTrees(tree1->getRoot(), tree2->getRoot(), tree1->getNumOfNode(), tree2->getNumOfNode());
+		AVLTree<T, S>* res_tree = new AVLTree(new_root);
+		res_tree->getNumOfNode(tree1->getNumOfNode() + tree2->getNumOfNode());
+		return res_tree;
+	}
 };
 #endif
