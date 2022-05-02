@@ -15,13 +15,13 @@ private:
 
 public:
     Employee() = default;
-    Employee(int EmployeeID) : EmployeeID(EmployeeID) {};
+    Employee(int EmployeeID) : EmployeeID(EmployeeID) {}
     Employee(int EmployeeID, int EmployerID, int Salary, int Grade, AVLNode<Company*,int> *Employer) : EmployeeID(EmployeeID),
                                                                                                        EmployerID(EmployerID),
                                                                                                        Salary(Salary),
                                                                                                        Grade(Grade),
                                                                                                        Employer(Employer)
-                                                                                                       {};
+                                                                                                       {}
 
 
     ~Employee() = default;
@@ -31,7 +31,7 @@ public:
         EmployerID = emp.EmployerID;
         Salary = emp.Salary;
         Grade = emp.Grade;
-        Employer = emp.Employer;
+        Employer = emp.Employer;  //the check if new is needed
     }
     bool operator<(const Employee &emp) const; // based on EmployeeID
     bool operator>(const Employee &emp) const; // based on EmployeeID
