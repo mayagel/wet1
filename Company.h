@@ -47,7 +47,6 @@ public:
             *comEmpByID = *comp.comEmpByID;
         }
         
-        HighestEarnerInCom = new Employee();
         if (comp.HighestEarnerInCom)
         {
             *HighestEarnerInCom = *comp.HighestEarnerInCom;
@@ -63,6 +62,10 @@ public:
     //geters
     AVLTree<Employee*,KeyBySalary>& getcomEmpBySalary() { return *comEmpBySalary; };
     AVLTree<Employee*,int>& getcomEmpByID() { return *comEmpByID; };
+
+    AVLTree<Employee*,KeyBySalary>* getcomEmpBySalary2() { return comEmpBySalary; };
+    AVLTree<Employee*,int>* getcomEmpByID2() { return comEmpByID; };
+
     int getCompanyID() {return CompanyID; };
     int getValue() {return Value; };
     int getNumEmployees() { return numEmployees; };
@@ -72,8 +75,9 @@ public:
     
     //setters
 
+    void setcomEmpBySalary(AVLTree<Employee*,KeyBySalary>* emp_by_sal ) { comEmpBySalary = emp_by_sal; };
+    void setcomEmpByID(AVLTree<Employee*,int>* emp_by_id) { comEmpByID = emp_by_id; };
     void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
-    void setNumEmployees(){numEmployees++;};
     void incNumEmployees(){numEmployees++;}
     void decNumEmployees(){numEmployees--;}
     void setNumEmployees(int num){numEmployees=num;}
