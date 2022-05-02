@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp" "CMakeFiles/my_executable.dir/DS.cpp.o" "gcc" "CMakeFiles/my_executable.dir/DS.cpp.o.d"
-  "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp" "CMakeFiles/my_executable.dir/library1.cpp.o" "gcc" "CMakeFiles/my_executable.dir/library1.cpp.o.d"
-  "/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main1.cpp" "CMakeFiles/my_executable.dir/main1.cpp.o" "gcc" "CMakeFiles/my_executable.dir/main1.cpp.o.d"
+  "/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.cpp" "CMakeFiles/my_executable.dir/DS.cpp.o" "gcc" "CMakeFiles/my_executable.dir/DS.cpp.o.d"
+  "/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/library1.cpp" "CMakeFiles/my_executable.dir/library1.cpp.o" "gcc" "CMakeFiles/my_executable.dir/library1.cpp.o.d"
+  "/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/main1.cpp" "CMakeFiles/my_executable.dir/main1.cpp.o" "gcc" "CMakeFiles/my_executable.dir/main1.cpp.o.d"
   )
 
 # Targets to which this target links.

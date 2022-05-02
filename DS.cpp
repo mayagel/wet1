@@ -55,6 +55,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     {
         (employer->data)->setHighestEarnerInCom(newEmployee);
     }
+    // insert to comWithEmps
     if ((employer->data)->getNumEmployees() == 0)
     {
         this->CompaniesWithEmp->insert(CompanyID, employer->data);
@@ -218,22 +219,122 @@ StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
 
 }
 
-//NOT FINISHED
-StatusType DataStructure::AcquireCompany(int AcquirerID, int TargetID, double Factor)
+
+
+
+//yagel write this 01.05 23:05
+StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double factor)
 {
-    // if (AcquirerID <= 0||TargetID<=0||TargetID == AcquirerID ||Factor<1.00)
-    // {
-    //     return INVALID_INPUT;
-    // }
-    // AVLNode<Company*, int> *AcquirerCom = Companies->find((this->Companies)->getRoot(), AcquirerID);
-    // AVLNode<Company*, int> *TargetCom = Companies->find((this->Companies)->getRoot(), TargetID);
-    // if(!TargetCom || !AcquirerCom || AcquirerCom->data->getValue() < (TargetCom->data->getValue()*10))
-    // {
-    //     return FAILURE;
-    // }
+    if (acquirer_id <= 0||target_id<=0||target_id == acquirer_id ||factor<1.00)
+    {
+        return INVALID_INPUT;
+    }
+    //step 1: get the 2 companies
+    AVLNode<Company*, int> *acquire_com = Companies->find((this->Companies)->getRoot(), acquirer_id);
+    AVLNode<Company*, int> *target_com = Companies->find((this->Companies)->getRoot(), target_id);
+    if(!target_com || !acquire_com || acquire_com->data->getValue() < (target_com->data->getValue()*10))
+    {
+        return FAILURE;
+    }
+
+    // step 2: get the info from the companies
+    AVLTree<Employee*,KeyBySalary> acq_comp_by_sal = acquire_com->data->getcomEmpBySalary(); //of acquire
+    AVLTree<Employee*,int> acq_comp_by_id = acquire_com->data->getcomEmpByID();
+    int acq_val = acquire_com->data->getValue();
+    int acq_num_of_emp = acquire_com->data->getValue();
+    Employee* acq_highest = acquire_com->data->getHighestEarnerInCom();
+
+    AVLTree<Employee*,KeyBySalary> tar_comp_by_sal = target_com->data->getcomEmpBySalary(); // of target
+    AVLTree<Employee*,int> tar_comp_by_id = target_com->data->getcomEmpByID();
+    int tar_val = target_com->data->getValue();
+    int tar_num_of_emp = target_com->data->getValue();
+    Employee* tar_highest = target_com->data->getHighestEarnerInCom();
+
+    //step 3: combine employees
+    AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal.combineTree(&tar_comp_by_sal, &acq_comp_by_sal);
+    AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id.combineTree(&tar_comp_by_id, &acq_comp_by_id);
+
+    //step 4: set other datas
+    int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
+    int merged_num_of_employees = acquire_com->data->getNumEmployees() + target_com->data->getNumEmployees();
+    Employee* merged_highest_emp;
+    if (*(acquire_com->data->getHighestEarnerInCom()) > *(target_com->data->getHighestEarnerInCom()))
+    {
+        merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
+    }
+    else{
+        merged_highest_emp = target_com->data->getHighestEarnerInCom();
+    }
+    
+    // step 5: delete the target company
+    // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
+    delete &target_com->data->getcomEmpBySalary();
+    delete &target_com->data->getcomEmpByID();
+    target_com->data->setHighestEarnerInCom(nullptr);
+    target_com->data->setcomEmpBySalary(nullptr);
+    target_com->data->setcomEmpByID(nullptr);
+    target_com->data->setNumEmployees(0);
+
+    //step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
+    AVLNode<Company*, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
+    if (target_com_with_emps)
+    {
+        delete &target_com_with_emps->data->getcomEmpBySalary();
+        delete &target_com_with_emps->data->getcomEmpByID();
+        target_com_with_emps->data->setHighestEarnerInCom(nullptr);
+        target_com_with_emps->data->setcomEmpBySalary(nullptr);
+        target_com_with_emps->data->setcomEmpByID(nullptr);
+        target_com_with_emps->data->setNumEmployees(0);
+        this->CompaniesWithEmp->remove(target_id);
+    }
     
 
 
+    //step 5.3: remove the target company
+    this->RemoveCompany(target_id);
+
+    //step 6.1: delete old data acquire company (acquire)
+    delete &acquire_com->data->getcomEmpBySalary();
+    delete &acquire_com->data->getcomEmpByID();
+    acquire_com->data->setHighestEarnerInCom(nullptr);
+    acquire_com->data->setcomEmpBySalary(nullptr);
+    acquire_com->data->setcomEmpByID(nullptr);
+    acquire_com->data->setNumEmployees(0);
+
+    //step 6.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
+    AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
+    if (acquire_com_with_emps)
+    {
+        delete &acquire_com_with_emps->data->getcomEmpBySalary();
+        delete &acquire_com_with_emps->data->getcomEmpByID();
+        acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
+        acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
+        acquire_com_with_emps->data->setcomEmpByID(nullptr);
+        acquire_com_with_emps->data->setNumEmployees(0);
+        this->CompaniesWithEmp->remove(acquirer_id);
+    }
+    
+    //step 6.3: remove acquire ccompany
+    this->RemoveCompany(acquirer_id);
+
+    // step 7: add again the acquire company
+    this->AddCompany(acquirer_id, merged_value);
+
+    //step 8: get the acquire company
+    AVLNode<Company*, int> *merged_comp = Companies->find((this->Companies)->getRoot(), acquirer_id);
+
+    //step 9: set data of acquire in companies
+    merged_comp->data->setHighestEarnerInCom(merged_highest_emp);
+    merged_comp->data->setcomEmpBySalary(merged_emp_by_sal);
+    merged_comp->data->setcomEmpByID(merged_emp_by_id);
+    merged_comp->data->setNumEmployees(merged_num_of_employees);
+
+    //step 10: set data of acquire in CompaniesWithEmp
+    if (merged_comp->data->getNumEmployees())
+    {
+        this->CompaniesWithEmp->insert(acquirer_id, merged_comp->data);
+    }
+    
     return SUCCESS;
 }
 

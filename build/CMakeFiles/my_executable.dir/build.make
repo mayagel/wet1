@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CMake.app/Contents/bin/cmake -E rm -f
+RM = /usr/local/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1
+CMAKE_SOURCE_DIR = /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build
+CMAKE_BINARY_DIR = /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/my_executable.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/my_executable.dir/flags.make
 CMakeFiles/my_executable.dir/DS.cpp.o: CMakeFiles/my_executable.dir/flags.make
 CMakeFiles/my_executable.dir/DS.cpp.o: ../DS.cpp
 CMakeFiles/my_executable.dir/DS.cpp.o: CMakeFiles/my_executable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/my_executable.dir/DS.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/DS.cpp.o -MF CMakeFiles/my_executable.dir/DS.cpp.o.d -o CMakeFiles/my_executable.dir/DS.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/my_executable.dir/DS.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/DS.cpp.o -MF CMakeFiles/my_executable.dir/DS.cpp.o.d -o CMakeFiles/my_executable.dir/DS.cpp.o -c /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.cpp
 
 CMakeFiles/my_executable.dir/DS.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_executable.dir/DS.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp > CMakeFiles/my_executable.dir/DS.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.cpp > CMakeFiles/my_executable.dir/DS.cpp.i
 
 CMakeFiles/my_executable.dir/DS.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_executable.dir/DS.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp -o CMakeFiles/my_executable.dir/DS.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.cpp -o CMakeFiles/my_executable.dir/DS.cpp.s
 
 CMakeFiles/my_executable.dir/library1.cpp.o: CMakeFiles/my_executable.dir/flags.make
 CMakeFiles/my_executable.dir/library1.cpp.o: ../library1.cpp
 CMakeFiles/my_executable.dir/library1.cpp.o: CMakeFiles/my_executable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/my_executable.dir/library1.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/library1.cpp.o -MF CMakeFiles/my_executable.dir/library1.cpp.o.d -o CMakeFiles/my_executable.dir/library1.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/my_executable.dir/library1.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/library1.cpp.o -MF CMakeFiles/my_executable.dir/library1.cpp.o.d -o CMakeFiles/my_executable.dir/library1.cpp.o -c /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/library1.cpp
 
 CMakeFiles/my_executable.dir/library1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_executable.dir/library1.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp > CMakeFiles/my_executable.dir/library1.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/library1.cpp > CMakeFiles/my_executable.dir/library1.cpp.i
 
 CMakeFiles/my_executable.dir/library1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_executable.dir/library1.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.cpp -o CMakeFiles/my_executable.dir/library1.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/library1.cpp -o CMakeFiles/my_executable.dir/library1.cpp.s
 
 CMakeFiles/my_executable.dir/main1.cpp.o: CMakeFiles/my_executable.dir/flags.make
 CMakeFiles/my_executable.dir/main1.cpp.o: ../main1.cpp
 CMakeFiles/my_executable.dir/main1.cpp.o: CMakeFiles/my_executable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/my_executable.dir/main1.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/main1.cpp.o -MF CMakeFiles/my_executable.dir/main1.cpp.o.d -o CMakeFiles/my_executable.dir/main1.cpp.o -c /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/my_executable.dir/main1.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/my_executable.dir/main1.cpp.o -MF CMakeFiles/my_executable.dir/main1.cpp.o.d -o CMakeFiles/my_executable.dir/main1.cpp.o -c /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/main1.cpp
 
 CMakeFiles/my_executable.dir/main1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_executable.dir/main1.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main1.cpp > CMakeFiles/my_executable.dir/main1.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/main1.cpp > CMakeFiles/my_executable.dir/main1.cpp.i
 
 CMakeFiles/my_executable.dir/main1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_executable.dir/main1.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/main1.cpp -o CMakeFiles/my_executable.dir/main1.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/main1.cpp -o CMakeFiles/my_executable.dir/main1.cpp.s
 
 # Object files for target my_executable
 my_executable_OBJECTS = \
@@ -125,7 +125,7 @@ my_executable: CMakeFiles/my_executable.dir/library1.cpp.o
 my_executable: CMakeFiles/my_executable.dir/main1.cpp.o
 my_executable: CMakeFiles/my_executable.dir/build.make
 my_executable: CMakeFiles/my_executable.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable my_executable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable my_executable"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/my_executable.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -137,6 +137,6 @@ CMakeFiles/my_executable.dir/clean:
 .PHONY : CMakeFiles/my_executable.dir/clean
 
 CMakeFiles/my_executable.dir/depend:
-	cd /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1 /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1 /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/build/CMakeFiles/my_executable.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1 /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1 /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/build/CMakeFiles/my_executable.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/my_executable.dir/depend
 

@@ -14,7 +14,8 @@ public:
     int Salary;
 
 public:
-    KeyBySalary() = delete;
+    // KeyBySalary() = delete;
+    KeyBySalary(){}
     KeyBySalary(int salary, int empID) : EmployeeID(empID), Salary(salary) {};
 
     bool operator<(const KeyBySalary& a) const{

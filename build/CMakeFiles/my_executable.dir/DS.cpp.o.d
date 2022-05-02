@@ -1,7 +1,7 @@
 CMakeFiles/my_executable.dir/DS.cpp.o: \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.cpp \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/DS.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Avltree.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.cpp \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/DS.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/Avltree.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/algorithm \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config_site \
@@ -351,7 +351,7 @@ CMakeFiles/my_executable.dir/DS.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/transform.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/unique_copy.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/unique.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Exceptions.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/Exceptions.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/string \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstdio \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/string_view \
@@ -418,7 +418,7 @@ CMakeFiles/my_executable.dir/DS.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/_types/_nl_item.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Company.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/Employee.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/SalaryKey.h \
-  /Users/lmwgqryp/Desktop/technion/mivne/hw1/wet1/library1.h
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/Company.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/Employee.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/SalaryKey.h \
+  /Users/yagelmaimon/Desktop/technion/mivne/hw1wet/wet1/library1.h
