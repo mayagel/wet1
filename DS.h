@@ -26,7 +26,13 @@ private:
     void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
     void inOrderBySalary2(AVLNode<Employee, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
     void subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size);
-    void nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade);
+    void nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees);
+    void nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees);
+    int findMinMaxKey(AVLNode<Employee*,KeyBySalary> *subtree, int MinMaxEmployeeID);
+    int findMinMaxKeyBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinMaxEmployeeID);
+    void inOrderUpdateEmployer(AVLNode<Employee*,int> *subtree,AVLNode<Company*,int> *newEmployer);
+    void inOrderUpdateEmployerBySal(AVLNode<Employee*,KeyBySalary> *subtree,AVLNode<Company*,int> *newEmployer);
+
 
 
 public:

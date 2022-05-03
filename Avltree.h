@@ -13,13 +13,12 @@ class AVLNode
 public:
 	D key;
 	C data;
-	int rank;
 	int height;
 	AVLNode *left;
 	AVLNode *right;
 	AVLNode *father;
 	AVLNode(){};// Yagel added empty default constructor 
-	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), rank(1), height(0), left(nullptr), right(nullptr), father(father){};
+	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), height(0), left(nullptr), right(nullptr), father(father){};
 	~AVLNode() = default;
 	bool operator<(const AVLNode &node) const
     {
@@ -72,19 +71,12 @@ private:
 					right_left_rotation(node);
 				}
 			}
-			updateRank(node);
 			setHeight(node);
 			node = node->father;
 		}
 	}
 
-	void updateRank(AVLNode<T, S> *node)
-	{
-		int node_left_rank = node->left == nullptr ? 0 : node->left->rank;
-		int node_right_rank = node->right == nullptr ? 0 : node->right->rank;
-		node->rank = node_left_rank + node_right_rank + 1;
-	}
-
+	
 	void left_left_rotation(AVLNode<T, S> *node)
 	{
 		AVLNode<T, S> *tmp = node->left;
@@ -111,7 +103,6 @@ private:
 		}
 		tmp->right = node;
 		node->father = tmp;
-		updateRank(node);
 		setHeight(node);
 		setHeight(tmp);
 	}
@@ -142,7 +133,6 @@ private:
 		}
 		tmp->left = node;
 		node->father = tmp;
-		updateRank(node);
 		setHeight(node);
 		setHeight(tmp);
 	}
@@ -172,6 +162,11 @@ private:
 
 	AVLNode<T, S> *handleZeroSonsRemove(AVLNode<T, S> *node)
 	{
+		if(!node->father)
+		{
+			delete node;
+			return nullptr;
+		}
 		if (node->father->left == node)
 		{
 			node->father->left = nullptr;
@@ -383,7 +378,6 @@ public:
 				delete root->right;
 				root->right = nullptr;
 				setHeight(root);
-				updateRank(root);
 				num_of_nodes -= 1; //added by yagel 06.06
 				return;
 			}
@@ -394,34 +388,19 @@ public:
 				delete root->left;
 				root->left = nullptr;
 				setHeight(root);
-				updateRank(root);
 				num_of_nodes -= 1; //added by yagel 06.06
 				return;
 			}
 		}
 		AVLNode<T, S> *father = removeFromBST(node, left_son_exist, right_son_exist);
-		setHeight(father);
-		balance(father);
+		if(father)
+		{
+			setHeight(father);
+			balance(father);
+		}
 		num_of_nodes -= 1; //added by yagel 06.06
 	}
 
-	AVLNode<T, S> *select(AVLNode<T, S> *node, int index)
-	{
-		if (!node)
-		{
-			return nullptr;
-		}
-		int left_degree = node->left == nullptr ? 0 : node->left->rank;
-		if (left_degree == index - 1)
-		{
-			return node;
-		}
-		else if (left_degree > index - 1)
-		{
-			return select(node->left, index);
-		}
-		return select(node->right, index - left_degree - 1);
-	}
 
 	int getNumOfNode() { return num_of_nodes; } //added by yagel 06.06
 	
@@ -486,7 +465,7 @@ public:
  
     // Construct a tree from the merged
     // array and return root of the tree
-    return sortedArrayToBST (mergedArr, 0, length1 + length2 - 1);
+    return sortedArrayToBST (mergedArr, 0, length1 + length2 - 1,nullptr);
 }
 	
 	// A helper function that stores inorder
@@ -498,15 +477,15 @@ public:
 	
 		/* first recur on left child */
 		storeInorder(node->left, inorder, index_ptr);
-	
+
+		
 		inorder[*index_ptr] = new AVLNode<T, S> (node->key, node->data, node->father);
 		(*index_ptr)++; // increase index for next entry
-	
 		/* now recur on right child */
 		storeInorder(node->right, inorder, index_ptr);
 	}
  
-	AVLNode<T, S>* sortedArrayToBST(AVLNode<T, S> *arr[], int start, int end)
+	AVLNode<T, S>* sortedArrayToBST(AVLNode<T, S> *arr[], int start, int end,AVLNode<T, S> *root1)
 	{
 		/* Base Case */
 		if (start > end)
@@ -515,23 +494,38 @@ public:
 		/* Get the middle element and make it root */
 		int mid = (start + end)/2;
 		/* maybe create new node with key, data, father*/
-		AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, arr[mid]->father);
+		AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, root1);
 	
 		/* Recursively construct the left subtree and make it
 		left child of root */
-		root->left = sortedArrayToBST(arr, start, mid-1);
+		root->left = sortedArrayToBST(arr, start, mid-1,root);
 	
 		/* Recursively construct the right subtree and make it
 		right child of root */
-		root->right = sortedArrayToBST(arr, mid+1, end);
+		root->right = sortedArrayToBST(arr, mid+1, end,root);
 	
 		return root;
 	}
+
+	void fixHeight(AVLNode<T, S>* root){
+		if(root->left){
+			fixHeight(root->left);
+		}
+		else if(root->right){
+			fixHeight(root->right);
+		}
+		else{
+			root->height =0;
+			return;
+		}
+	setHeight(root);
+}
 
 	AVLTree<T, S>* combineTree(AVLTree<T, S>* tree1, AVLTree<T, S>* tree2){
 		AVLNode<T, S>* new_root = mergeTrees(tree1->getRoot(), tree2->getRoot(), tree1->getNumOfNode(), tree2->getNumOfNode());
 		AVLTree<T, S>* res_tree = new AVLTree(new_root);
 		res_tree->setNumOfNode(tree1->getNumOfNode() + tree2->getNumOfNode());
+		fixHeight(res_tree->root);
 		return res_tree;
 	}
 };

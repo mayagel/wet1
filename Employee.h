@@ -49,7 +49,7 @@ public:
     //seters
     void addToSalary(int t) { Salary += t; }
     void incGrade() { Grade++; }
-
+    void setEmployer(AVLNode<Company*,int> *newEmployer){Employer=newEmployer;}
     bool operator<(const Employee &emp) const
     {
 
