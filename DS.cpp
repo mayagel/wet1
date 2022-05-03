@@ -461,7 +461,7 @@ void DataStructure::inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int 
 {
     if (start == nullptr) return;
     inOrderBySalary(start->getLeft(),Employees,NumOfEmployees);
-    *Employees[*NumOfEmployees] = start->data->getEmployeeID();
+    *Employees[(*NumOfEmployees)] = start->data->getEmployeeID();
     (*NumOfEmployees)++;
     inOrderBySalary(start->getRight(),Employees,NumOfEmployees);
 }
