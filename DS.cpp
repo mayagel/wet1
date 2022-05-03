@@ -5,7 +5,6 @@
 
 StatusType DataStructure::AddCompany(int CompanyID, int Value)
 {
-
     if (CompanyID <= 0 || Value <= 0)
     {
         return INVALID_INPUT;
@@ -88,7 +87,7 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
 
     Employee->data.getEmployer().data->getcomEmpByID().remove(EmployeeID);
     Employee->data.getEmployer().data->getcomEmpBySalary().remove(*tempKey);
-    Employee->data.getEmployer().data->decNumEmployees();
+    // Employee->data.getEmployer().data->decNumEmployees();
     if(Employee->data.getEmployer().data->getNumEmployees()==0)
     {
         this->CompaniesWithEmp->remove(Employee->data.getEmployer().data->getCompanyID());
@@ -242,19 +241,22 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     // step 2: get the info from the companies
     AVLTree<Employee*,KeyBySalary> acq_comp_by_sal = acquire_com->data->getcomEmpBySalary(); //of acquire
     AVLTree<Employee*,int> acq_comp_by_id = acquire_com->data->getcomEmpByID();
-    int acq_val = acquire_com->data->getValue();
-    int acq_num_of_emp = acquire_com->data->getValue();
-    Employee* acq_highest = acquire_com->data->getHighestEarnerInCom();
+    // int acq_val = acquire_com->data->getValue();
+    // int acq_num_of_emp = acquire_com->data->getValue();
+    // Employee* acq_highest = acquire_com->data->getHighestEarnerInCom();
 
     AVLTree<Employee*,KeyBySalary> tar_comp_by_sal = target_com->data->getcomEmpBySalary(); // of target
     AVLTree<Employee*,int> tar_comp_by_id = target_com->data->getcomEmpByID();
-    int tar_val = target_com->data->getValue();
-    int tar_num_of_emp = target_com->data->getValue();
-    Employee* tar_highest = target_com->data->getHighestEarnerInCom();
+    // int tar_val = target_com->data->getValue();
+    // int tar_num_of_emp = target_com->data->getValue();
+    // Employee* tar_highest = target_com->data->getHighestEarnerInCom();
 
     //step 3: combine employees
     AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal.combineTree(&tar_comp_by_sal, &acq_comp_by_sal);
     AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id.combineTree(&tar_comp_by_id, &acq_comp_by_id);
+    inOrderUpdateEmployer(merged_emp_by_id->getRoot(),acquire_com);
+    inOrderUpdateEmployerBySal(merged_emp_by_sal->getRoot(),acquire_com);
+
 
     //step 4: set other datas
     int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
@@ -275,11 +277,10 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
         {
             merged_highest_emp = target_com->data->getHighestEarnerInCom();
         }
-    else if(acquire_com->data->getHighestEarnerInCom())
+    else
         {
             merged_highest_emp = acquire_com->data->getHighestEarnerInCom();
         }
-    
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
     target_com->data->setcomEmpBySalary(nullptr);
@@ -439,8 +440,11 @@ MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOf
         {
             return FAILURE;
         }
+
         *TotalNumOfEmployees =0;
         *NumOfEmployees =0;
+        MinEmployeeID = findMinMaxKey(theCompany->data->getcomEmpBySalary().getRoot(),MinEmployeeID);
+        MaxEmployeeId = findMinMaxKey(theCompany->data->getcomEmpBySalary().getRoot(),MaxEmployeeId);
         nodeToNodeInOrder(theCompany->data->getcomEmpBySalary().getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
     }
     else
@@ -449,6 +453,8 @@ MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOf
         {
             return FAILURE;
         }
+        MinEmployeeID = findMinMaxKeyBySalary(EmployeesBySalary->getRoot(),MinEmployeeID);
+        MaxEmployeeId = findMinMaxKeyBySalary(EmployeesBySalary->getRoot(),MaxEmployeeId);
         nodeToNodeInOrderEmployeeBySalary(EmployeesBySalary->getRoot(),MinEmployeeID ,MaxEmployeeId, MinSalary, MinGrade,TotalNumOfEmployees,NumOfEmployees);
 
     }
@@ -529,3 +535,54 @@ void DataStructure::nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee,KeyBySala
 
     return;
 }
+
+int DataStructure::findMinMaxKey(AVLNode<Employee*,KeyBySalary> *subtree, int MinMaxEmployeeID)
+	{
+		if (subtree->data->getEmployeeID() == MinMaxEmployeeID)
+		{
+			return subtree->data->getEmployeeID();
+		}
+        if(subtree == nullptr)
+        {
+            return subtree->father->data->getEmployeeID();
+        }
+		if (subtree->data->getEmployeeID() < MinMaxEmployeeID)
+		{
+			return findMinMaxKey(subtree->right, MinMaxEmployeeID);
+		}
+		return findMinMaxKey(subtree->left, MinMaxEmployeeID);
+	}
+
+int DataStructure::findMinMaxKeyBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinMaxEmployeeID)
+	{
+		if (subtree->data.getEmployeeID() == MinMaxEmployeeID)
+		{
+			return subtree->data.getEmployeeID();
+		}
+        if(subtree == nullptr)
+        {
+            return subtree->father->data.getEmployeeID();
+        }
+		if (subtree->data.getEmployeeID() < MinMaxEmployeeID)
+		{
+			return findMinMaxKeyBySalary(subtree->right, MinMaxEmployeeID);
+		}
+		return findMinMaxKeyBySalary(subtree->left, MinMaxEmployeeID);
+	}
+
+void DataStructure::inOrderUpdateEmployer(AVLNode<Employee*,int> *subtree,AVLNode<Company*,int> *newEmployer)
+{
+    if (subtree == nullptr) return;
+    inOrderUpdateEmployer(subtree->getLeft(),newEmployer);
+    subtree->data->setEmployer(newEmployer);
+    inOrderUpdateEmployer(subtree->getRight(),newEmployer);
+}
+
+void DataStructure::inOrderUpdateEmployerBySal(AVLNode<Employee*,KeyBySalary> *subtree,AVLNode<Company*,int> *newEmployer)
+{
+    if (subtree == nullptr) return;
+    inOrderUpdateEmployerBySal(subtree->getLeft(),newEmployer);
+    subtree->data->setEmployer(newEmployer);
+    inOrderUpdateEmployerBySal(subtree->getRight(),newEmployer);
+}
+
