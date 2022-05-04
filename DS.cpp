@@ -45,6 +45,8 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     ((employer->data)->getcomEmpBySalary()).insert(*keyToInsert, newEmployeeBySal);
     ((employer->data)->getcomEmpByID()).insert(EmployeeID, newEmployee);
 
+    
+    
     // HighestEarner
     if(this->Employees->getNumOfNode()==1)
     {
@@ -224,6 +226,7 @@ StatusType DataStructure::HireEmployee(int EmployeeID, int NewCompanyID)
     return SUCCESS;
 
 }
+
 StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double factor)
 {
     if (acquirer_id <= 0||target_id<=0||target_id == acquirer_id ||factor<1.00)
@@ -237,26 +240,23 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     {
         return FAILURE;
     }
-
     // step 2: get the info from the companies
-    AVLTree<Employee*,KeyBySalary> acq_comp_by_sal = acquire_com->data->getcomEmpBySalary(); //of acquire
-    AVLTree<Employee*,int> acq_comp_by_id = acquire_com->data->getcomEmpByID();
+    AVLTree<Employee*,KeyBySalary> *acq_comp_by_sal = &(acquire_com->data->getcomEmpBySalary()); //of acquire
+    AVLTree<Employee*,int> *acq_comp_by_id = &(acquire_com->data->getcomEmpByID());
     // int acq_val = acquire_com->data->getValue();
     // int acq_num_of_emp = acquire_com->data->getValue();
     // Employee* acq_highest = acquire_com->data->getHighestEarnerInCom();
 
-    AVLTree<Employee*,KeyBySalary> tar_comp_by_sal = target_com->data->getcomEmpBySalary(); // of target
-    AVLTree<Employee*,int> tar_comp_by_id = target_com->data->getcomEmpByID();
+    AVLTree<Employee*,KeyBySalary> *tar_comp_by_sal = &(target_com->data->getcomEmpBySalary()); // of target
+    AVLTree<Employee*,int> *tar_comp_by_id = &(target_com->data->getcomEmpByID());
     // int tar_val = target_com->data->getValue();
     // int tar_num_of_emp = target_com->data->getValue();
     // Employee* tar_highest = target_com->data->getHighestEarnerInCom();
 
     //step 3: combine employees
-    AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal.combineTree(&tar_comp_by_sal, &acq_comp_by_sal);
-    AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id.combineTree(&tar_comp_by_id, &acq_comp_by_id);
-    inOrderUpdateEmployer(merged_emp_by_id->getRoot(),acquire_com);
-    inOrderUpdateEmployerBySal(merged_emp_by_sal->getRoot(),acquire_com);
-
+    AVLTree<Employee*,KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal->combineTree(tar_comp_by_sal, acq_comp_by_sal);
+    AVLTree<Employee*,int> *merged_emp_by_id = tar_comp_by_id->combineTree(tar_comp_by_id, acq_comp_by_id);
+   
 
     //step 4: set other datas
     int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
@@ -295,60 +295,60 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     AVLNode<Company*, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
     if (target_com_with_emps)
     {
-        target_com_with_emps->data->setcomEmpBySalary(nullptr);
-        target_com_with_emps->data->setcomEmpByID(nullptr);
-        target_com_with_emps->data->setHighestEarnerInCom(nullptr);
-        target_com_with_emps->data->setcomEmpBySalary(nullptr);
-        target_com_with_emps->data->setcomEmpByID(nullptr);
-        target_com_with_emps->data->setNumEmployees(0);
         this->CompaniesWithEmp->remove(target_id);
     }
-    
-
 
     //step 5.3: remove the target company
     this->RemoveCompany(target_id);
+    AVLNode<Company*, int> *new_acquire_com = Companies->find((this->Companies)->getRoot(), acquirer_id);
 
-    //step 6.1: old data acquire company (acquire)
-    acquire_com->data->setcomEmpBySalary(nullptr);
-    acquire_com->data->setcomEmpByID(nullptr);
-    acquire_com->data->setHighestEarnerInCom(nullptr);
-    acquire_com->data->setcomEmpBySalary(nullptr);
-    acquire_com->data->setcomEmpByID(nullptr);
-    acquire_com->data->setNumEmployees(0);
 
-    //step 6.2: comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
-    AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
-    if (acquire_com_with_emps)
-    {
-        acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
-        acquire_com_with_emps->data->setcomEmpByID(nullptr);
-        acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
-        acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
-        acquire_com_with_emps->data->setcomEmpByID(nullptr);
-        acquire_com_with_emps->data->setNumEmployees(0);
-        this->CompaniesWithEmp->remove(acquirer_id);
-    }
+    // //step 6.1: old data acquire company (acquire)
+    // acquire_com->data->setcomEmpBySalary(nullptr);
+    // acquire_com->data->setcomEmpByID(nullptr);
+    // acquire_com->data->setHighestEarnerInCom(nullptr);
+    // acquire_com->data->setcomEmpBySalary(nullptr);
+    // acquire_com->data->setcomEmpByID(nullptr);
+    // acquire_com->data->setNumEmployees(0);
+
+    // //step 6.2: comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (acquire)
+    // AVLNode<Company*, int> *acquire_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), acquirer_id);
+    // if (acquire_com_with_emps)
+    // {
+    //     acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
+    //     acquire_com_with_emps->data->setcomEmpByID(nullptr);
+    //     acquire_com_with_emps->data->setHighestEarnerInCom(nullptr);
+    //     acquire_com_with_emps->data->setcomEmpBySalary(nullptr);
+    //     acquire_com_with_emps->data->setcomEmpByID(nullptr);
+    //     acquire_com_with_emps->data->setNumEmployees(0);
+    //     this->CompaniesWithEmp->remove(acquirer_id);
+    // }
     
-    //step 6.3: remove acquire ccompany
-    this->RemoveCompany(acquirer_id);
+    // //step 6.3: remove acquire ccompany
+    // this->RemoveCompany(acquirer_id);
 
-    // step 7: add again the acquire company
-    this->AddCompany(acquirer_id, merged_value);
+    // // step 7: add again the acquire company
+    // this->AddCompany(acquirer_id, merged_value);
 
     //step 8: get the acquire company
-    AVLNode<Company*, int> *merged_comp = Companies->find((this->Companies)->getRoot(), acquirer_id);
+    // AVLNode<Company*, int> *merged_comp = Companies->find((this->Companies)->getRoot(), acquirer_id);
 
     //step 9: set data of acquire in companies
-    merged_comp->data->setHighestEarnerInCom(merged_highest_emp);
-    merged_comp->data->setcomEmpBySalary(merged_emp_by_sal);
-    merged_comp->data->setcomEmpByID(merged_emp_by_id);
-    merged_comp->data->setNumEmployees(merged_num_of_employees);
+    inOrderUpdateEmployer(merged_emp_by_id->getRoot(),new_acquire_com);
+    inOrderUpdateEmployerBySal(merged_emp_by_sal->getRoot(),new_acquire_com);
+    new_acquire_com->data->setValue(merged_value);
+    new_acquire_com->data->setHighestEarnerInCom(merged_highest_emp);
+    new_acquire_com->data->setcomEmpBySalary(merged_emp_by_sal);
+    new_acquire_com->data->setcomEmpByID(merged_emp_by_id);
+    new_acquire_com->data->setNumEmployees(merged_num_of_employees);
+    
+    
 
+    //NEED TO CHANGE
     //step 10: set data of acquire in CompaniesWithEmp
-    if (merged_comp->data->getNumEmployees())
+    if (acquire_com->data->getNumEmployees())
     {
-        this->CompaniesWithEmp->insert(acquirer_id, merged_comp->data);
+        this->CompaniesWithEmp->insert(acquirer_id, acquire_com->data);
     }
     
     return SUCCESS;
@@ -424,7 +424,6 @@ StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int 
     return SUCCESS;
 }
 
-//NOT FINISHED
 StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployeeID, int
 MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
 {
@@ -574,6 +573,7 @@ void DataStructure::inOrderUpdateEmployer(AVLNode<Employee*,int> *subtree,AVLNod
 {
     if (subtree == nullptr) return;
     inOrderUpdateEmployer(subtree->getLeft(),newEmployer);
+    subtree->data->setEmployerID(newEmployer->data->getCompanyID());
     subtree->data->setEmployer(newEmployer);
     inOrderUpdateEmployer(subtree->getRight(),newEmployer);
 }
@@ -582,7 +582,9 @@ void DataStructure::inOrderUpdateEmployerBySal(AVLNode<Employee*,KeyBySalary> *s
 {
     if (subtree == nullptr) return;
     inOrderUpdateEmployerBySal(subtree->getLeft(),newEmployer);
+
     subtree->data->setEmployer(newEmployer);
+    subtree->data->setEmployerID(newEmployer->data->getCompanyID());
     inOrderUpdateEmployerBySal(subtree->getRight(),newEmployer);
 }
 

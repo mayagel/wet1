@@ -47,6 +47,7 @@ public:
     AVLNode<Company*,int>& getEmployer() {return *Employer; };
     
     //seters
+    void setEmployerID(int newID){EmployerID=newID;}
     void addToSalary(int t) { Salary += t; }
     void incGrade() { Grade++; }
     void setEmployer(AVLNode<Company*,int> *newEmployer){Employer=newEmployer;}
