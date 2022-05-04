@@ -36,13 +36,13 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
     AVLNode<Company*, int> *employer = Companies->find((this->Companies)->getRoot(), CompanyID);
        
     Employee *newEmployee = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
-    Employee *newEmployeeBySal = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
+    // Employee *newEmployeeBySal = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
     KeyBySalary *keyToInsert = new KeyBySalary(Salary, EmployeeID);
 
     // insert to trees
     (this->Employees)->insert(EmployeeID, newEmployee);
-    (this->EmployeesBySalary)->insert(*keyToInsert, newEmployeeBySal);
-    ((employer->data)->getcomEmpBySalary2())->insert(*keyToInsert, newEmployeeBySal);
+    (this->EmployeesBySalary)->insert(*keyToInsert, newEmployee);
+    ((employer->data)->getcomEmpBySalary2())->insert(*keyToInsert, newEmployee);
     ((employer->data)->getcomEmpByID2())->insert(EmployeeID, newEmployee);
 
     // HighestEarner
@@ -67,6 +67,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
         this->CompaniesWithEmp->insert(CompanyID, employer->data);
     }
 
+    delete keyToInsert;
     //numOfEmployees++
     (employer->data)->incNumEmployees();
     return SUCCESS;
@@ -83,8 +84,9 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
         return FAILURE;
     }
     AVLNode<Employee*, int> *EmployeeByID = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
+
     KeyBySalary *tempKey = new KeyBySalary(EmployeeByID->data->getSalary(),EmployeeID);
-    AVLNode<Employee*, KeyBySalary> *EmployeeBySal = this->EmployeesBySalary->find((this->EmployeesBySalary)->getRoot(), *tempKey);
+    // AVLNode<Employee*, KeyBySalary> *EmployeeBySal = this->EmployeesBySalary->find((this->EmployeesBySalary)->getRoot(), *tempKey);
 
     EmployeeByID->data->getEmployer().data->decNumEmployees();
     EmployeeByID->data->getEmployer().data->getcomEmpByID().remove(EmployeeID);
@@ -94,7 +96,6 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
     {
         this->CompaniesWithEmp->remove(EmployeeByID->data->getEmployer().data->getCompanyID());
     }
-
     delete EmployeeByID->data;
 
     this->EmployeesBySalary->remove(*tempKey);
@@ -114,6 +115,9 @@ StatusType DataStructure::RemoveCompany(int CompanyID)
     {
         return FAILURE;
     }
+    // delete theCompany->data->getcomEmpBySalary2();
+    // delete theCompany->data->getcomEmpByID2();
+    // delete theCompany->data;
     this->Companies->remove(CompanyID);
     return SUCCESS;
 }
