@@ -58,10 +58,8 @@ public:
     }
      ~Company()
     {
-        comEmpBySalary->deleteTree((*comEmpBySalary).getRoot());
-        comEmpByID->deleteTree((*comEmpByID).getRoot());
-        // delete comEmpBySalary;
-        // delete comEmpByID;
+        delete comEmpBySalary;
+        delete comEmpByID;
     };   
     bool operator<(const Company &c) const; 
     bool operator>(const Company &c) const; 

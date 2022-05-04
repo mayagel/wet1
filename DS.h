@@ -61,13 +61,15 @@ public:
 
     ~DataStructure()
     {
-        Companies->deleteTree((*Companies).getRoot());
-        CompaniesWithEmp->deleteTree((*CompaniesWithEmp).getRoot());
-        Employees->deleteTree((*Employees).getRoot());
-        EmployeesBySalary->deleteTree((*EmployeesBySalary).getRoot());
-        // delete CompaniesWithEmp;
-        // delete Employees;
-        // delete EmployeesBySalary;
+        delete Companies;
+        delete CompaniesWithEmp;
+        delete Employees;
+        delete EmployeesBySalary;
+
+        Companies = nullptr;
+        CompaniesWithEmp =nullptr;
+        Employees = nullptr;
+        EmployeesBySalary = nullptr;
         // delete HighestEarner;
     };
 
