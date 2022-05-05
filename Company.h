@@ -17,18 +17,19 @@ private:
     int CompanyID;
     int Value;
     int numEmployees;
-    AVLTree<Employee*,KeyBySalary> *comEmpBySalary; 
-    AVLTree<Employee*,int> *comEmpByID;    
+    AVLTree<Employee *, KeyBySalary> *comEmpBySalary;
+    AVLTree<Employee *, int> *comEmpByID;
     Employee *HighestEarnerInCom;
+
 public:
     Company() = default;
-    Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0){
-        comEmpBySalary = new AVLTree<Employee*, KeyBySalary>();
-        comEmpByID = new AVLTree<Employee*, int>();
+    Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0)
+    {
+        comEmpBySalary = new AVLTree<Employee *, KeyBySalary>();
+        comEmpByID = new AVLTree<Employee *, int>();
         // comEmpBySalary = nullptr;
         // comEmpByID = nullptr;
         HighestEarnerInCom = nullptr;
-        
     };
     // Company(int carType, int modelId, int grade, i) : best(false), demo(false), carType(carType), modelId(modelId), modelSells(0), modelGrade(grade){};
 
@@ -37,64 +38,60 @@ public:
         CompanyID = comp.CompanyID;
         Value = comp.Value;
         numEmployees = comp.numEmployees;
-        comEmpBySalary = new AVLTree<Employee*, KeyBySalary>();
+        comEmpBySalary = new AVLTree<Employee *, KeyBySalary>();
         if (comp.comEmpBySalary)
         {
             *comEmpBySalary = *comp.comEmpBySalary;
         }
-        
-        comEmpByID = new AVLTree<Employee*, int>();
+
+        comEmpByID = new AVLTree<Employee *, int>();
         if (comp.comEmpByID)
         {
             *comEmpByID = *comp.comEmpByID;
         }
-        
+
         if (comp.HighestEarnerInCom)
         {
             *HighestEarnerInCom = *comp.HighestEarnerInCom;
         }
-        
-
     }
-     ~Company()
+    ~Company()
     {
         delete comEmpBySalary;
         delete comEmpByID;
-        comEmpBySalary=nullptr;
-        comEmpByID =nullptr;
-    };   
-    bool operator<(const Company &c) const; 
-    bool operator>(const Company &c) const; 
-    Company &operator=(const Company &c);
+        comEmpBySalary = nullptr;
+        comEmpByID = nullptr;
+    };
+    bool operator<(const Company &c) const;
+    bool operator>(const Company &c) const;
+    // Company &operator=(const Company &c){
+    //     this->addtoNumEmployees
+    // };
 
-    //geters
-    AVLTree<Employee*,KeyBySalary>& getcomEmpBySalary() { return *comEmpBySalary; };
-    AVLTree<Employee*,int>& getcomEmpByID() { return *comEmpByID; };
+    // geters
+    AVLTree<Employee *, KeyBySalary> &getcomEmpBySalary() { return *comEmpBySalary; };
+    AVLTree<Employee *, int> &getcomEmpByID() { return *comEmpByID; };
 
-    AVLTree<Employee*,KeyBySalary>* getcomEmpBySalary2() { return comEmpBySalary; };
-    AVLTree<Employee*,int>* getcomEmpByID2() { return comEmpByID; };
+    AVLTree<Employee *, KeyBySalary> *getcomEmpBySalary2() { return comEmpBySalary; };
+    AVLTree<Employee *, int> *getcomEmpByID2() { return comEmpByID; };
 
-    int getCompanyID() {return CompanyID; };
-    int getValue() {return Value; };
+    int getCompanyID() { return CompanyID; };
+    int getValue() { return Value; };
     int getNumEmployees() { return numEmployees; };
-    Employee* getHighestEarnerInCom() {return HighestEarnerInCom; };
+    Employee *getHighestEarnerInCom() { return HighestEarnerInCom; };
 
-    
-    
-    //setters
+    // setters
 
-    void setcomEmpBySalary(AVLTree<Employee*,KeyBySalary>* emp_by_sal ) { comEmpBySalary = emp_by_sal; };
-    void setcomEmpByID(AVLTree<Employee*,int>* emp_by_id) { comEmpByID = emp_by_id; };
-    void setHighestEarnerInCom(Employee* emp) {HighestEarnerInCom=emp; };
-    void incNumEmployees(){numEmployees++;}
-    void decNumEmployees(){numEmployees--;}
-    void setNumEmployees(int num){numEmployees=num;}
-    void addtoNumEmployees(int numToAdd){numEmployees+=numToAdd;}
-    void setValue(int val){Value=val;}
-    void incValue(int val){Value+=val;}
+    void setcomEmpBySalary(AVLTree<Employee *, KeyBySalary> *emp_by_sal) { comEmpBySalary = emp_by_sal; };
+    void setcomEmpByID(AVLTree<Employee *, int> *emp_by_id) { comEmpByID = emp_by_id; };
+    void setHighestEarnerInCom(Employee *emp) { HighestEarnerInCom = emp; };
+    void incNumEmployees() { numEmployees++; }
+    void decNumEmployees() { numEmployees--; }
+    void setNumEmployees(int num) { numEmployees = num; }
+    void addtoNumEmployees(int numToAdd) { numEmployees += numToAdd; }
+    void setValue(int val) { Value = val; }
+    void incValue(int val) { Value += val; }
     // Employee *HighestEarner = nullptr;
-
-   
 };
 
 #endif

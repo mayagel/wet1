@@ -6,8 +6,6 @@
 #define SALARY_KEY
 #include <stdio.h>
 
-
-
 class KeyBySalary
 {
 public:
@@ -15,10 +13,11 @@ public:
     int Salary;
 
 public:
-    KeyBySalary() = delete;
-    KeyBySalary(int salary, int empID) : EmployeeID(empID), Salary(salary) {};
+    KeyBySalary(){};
+    KeyBySalary(int salary, int empID) : EmployeeID(empID), Salary(salary){};
 
-    bool operator<(const KeyBySalary& a) const{
+    bool operator<(const KeyBySalary &a) const
+    {
         if (Salary > a.Salary)
         {
             return true;
@@ -28,8 +27,14 @@ public:
             return false;
         }
         return EmployeeID < a.EmployeeID;
-        }
-    bool operator>(const KeyBySalary& a) const
+    }
+    KeyBySalary operator=(const KeyBySalary &a)
+    {
+        this->Salary = a.Salary;
+        this->EmployeeID = a.EmployeeID;
+        return *this;
+    }
+    bool operator>(const KeyBySalary &a) const
     {
         if (Salary < a.Salary)
         {
@@ -50,9 +55,9 @@ public:
         return false;
     }
     ~KeyBySalary() {};
+
     int getSalary() const { return Salary; };
     int getEmployeeID() const { return EmployeeID; };
 };
 
 #endif
-
