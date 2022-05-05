@@ -17,8 +17,37 @@ public:
 	AVLNode *left;
 	AVLNode *right;
 	AVLNode *father;
-	AVLNode(){};// Yagel added empty default constructor 
+	AVLNode(){}; // Yagel added empty default constructor
 	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), height(0), left(nullptr), right(nullptr), father(father){};
+	AVLNode(AVLNode *node)
+	{
+		key = node->key;
+		data = node->data;
+		if (!node->left)
+		{
+			left = nullptr;
+		}
+		else
+		{
+			left = new AVLNode(node->left);
+		}
+		if (!node->right)
+		{
+			right = nullptr;
+		}
+		else
+		{
+			left = new AVLNode(node->right);
+		}
+		if (!node->father)
+		{
+			father = nullptr;
+		}
+		else
+		{
+			father = new AVLNode(node->father);
+		}
+	}
 	~AVLNode()
 	{
 		// if(data)
@@ -28,15 +57,15 @@ public:
 		// }
 	}
 	bool operator<(const AVLNode &node) const
-    {
+	{
 		return this->key < node.key;
-    }
-    bool operator>(const AVLNode &node) const
-    {
+	}
+	bool operator>(const AVLNode &node) const
+	{
 		return this->key > node.key;
-    }
-	AVLNode<C, D> *getRight(){return right;} 
-	AVLNode<C, D> *getLeft(){return left;} 
+	}
+	AVLNode<C, D> *getRight() { return right; }
+	AVLNode<C, D> *getLeft() { return left; }
 };
 
 template <class T, class S>
@@ -44,7 +73,7 @@ class AVLTree
 {
 private:
 	AVLNode<T, S> *root;
-	int num_of_nodes; //added by yagel 06.06
+	int num_of_nodes; // added by yagel 06.06
 
 	int getBalanceFactor(AVLNode<T, S> *node)
 	{
@@ -83,7 +112,6 @@ private:
 		}
 	}
 
-	
 	void left_left_rotation(AVLNode<T, S> *node)
 	{
 		AVLNode<T, S> *tmp = node->left;
@@ -169,7 +197,7 @@ private:
 
 	AVLNode<T, S> *handleZeroSonsRemove(AVLNode<T, S> *node)
 	{
-		if(!node->father)
+		if (!node->father)
 		{
 			delete node;
 			return nullptr;
@@ -266,6 +294,14 @@ public:
 		root = nullptr;
 	}
 
+	AVLTree operator=(const AVLTree &a)
+	{
+		this->num_of_nodes = a.num_of_nodes;
+		AVLNode<T, S> *new_root = new AVLNode<T, S>(a.root);
+		this->root = new_root;
+		return *this;
+	}
+
 	void printNode(AVLNode<T, S> *node)
 	{
 		if (!node)
@@ -279,7 +315,7 @@ public:
 		std::cout << ". is it recognize as sell tree?: " << node->data.sells_tree;
 	}
 
-	//for testing
+	// for testing
 	void printTree(AVLNode<T, S> *root)
 	{
 		if (!root)
@@ -299,7 +335,7 @@ public:
 			deleteTree(node->left);
 			deleteTree(node->right);
 			delete node;
-			node =nullptr;
+			node = nullptr;
 		}
 	}
 
@@ -363,7 +399,7 @@ public:
 				}
 			}
 		}
-		num_of_nodes += 1; //added by yagel 06.06
+		num_of_nodes += 1; // added by yagel 06.06
 	}
 
 	void remove(const S &key)
@@ -377,7 +413,7 @@ public:
 			{
 				delete root;
 				root = nullptr;
-				num_of_nodes -= 1; //added by yagel 06.06
+				num_of_nodes -= 1; // added by yagel 06.06
 				return;
 			}
 			else if (right_son_exist && !left_son_exist)
@@ -387,7 +423,7 @@ public:
 				delete root->right;
 				root->right = nullptr;
 				setHeight(root);
-				num_of_nodes -= 1; //added by yagel 06.06
+				num_of_nodes -= 1; // added by yagel 06.06
 				return;
 			}
 			else if (left_son_exist && !right_son_exist)
@@ -397,146 +433,167 @@ public:
 				delete root->left;
 				root->left = nullptr;
 				setHeight(root);
-				num_of_nodes -= 1; //added by yagel 06.06
+				num_of_nodes -= 1; // added by yagel 06.06
 				return;
 			}
 		}
 		AVLNode<T, S> *father = removeFromBST(node, left_son_exist, right_son_exist);
-		if(father)
+		if (father)
 		{
 			setHeight(father);
 			balance(father);
 		}
-		num_of_nodes -= 1; //added by yagel 06.06
+		num_of_nodes -= 1; // added by yagel 06.06
 	}
 
+	int getNumOfNode() { return num_of_nodes; } // added by yagel 06.06
 
-	int getNumOfNode() { return num_of_nodes; } //added by yagel 06.06
-	
-	void setNumOfNode(int newNumOfNodes){num_of_nodes=newNumOfNodes;}
+	void setNumOfNode(int newNumOfNodes) { num_of_nodes = newNumOfNodes; }
 
-	AVLNode<T, S>  **merge(AVLNode<T, S>* arr1[], AVLNode<T, S>* arr2[], int m, int n)
+	AVLNode<T, S> **merge(AVLNode<T, S> *arr1[], AVLNode<T, S> *arr2[], int m, int n)
 	{
-    // mergedArr[] is going to contain result
-    AVLNode<T, S>  **mergedArr = new AVLNode<T, S>*[m + n];
-    int i = 0, j = 0, k = 0;
- 
-    // Traverse through both arrays
-    while (i < m && j < n)
-    {
-        // Pick the smaller element and put it in mergedArr
-        if (*arr1[i] < *arr2[j])
-        {
-            mergedArr[k] = arr1[i];
-            i++;
-        }
-        else
-        {
-            mergedArr[k] = arr2[j];
-            j++;
-        }
-        k++;
-    }
- 
-    // If there are more elements in first array
-    while (i < m)
-    {
-        mergedArr[k] = arr1[i];
-        i++; k++;
-    }
- 
-    // If there are more elements in second array
-    while (j < n)
-    {
-        mergedArr[k] = arr2[j];
-        j++; k++;
-    }
- 
-    return mergedArr;
-}
+		// mergedArr[] is going to contain result
+		AVLNode<T, S> **mergedArr = new AVLNode<T, S> *[m + n];
+		int i = 0, j = 0, k = 0;
 
-	AVLNode<T, S>* mergeTrees(AVLNode<T, S> *root1, AVLNode<T, S> *root2, int length1, int length2)
-{
-    // Store inorder traversal of
-    // first tree in an array arr1[]
-    AVLNode<T, S> **arr1 = new AVLNode<T, S>* [length1];
-    int i = 0;
-    storeInorder(root1, arr1, &i);
- 
-    // Store inorder traversal of second
-    // tree in another array arr2[]
-    AVLNode<T, S> **arr2 = new AVLNode<T, S>* [length2];
-    int j = 0;
-    storeInorder(root2, arr2, &j);
- 
-    // Merge the two sorted array into one
-    AVLNode<T, S> **mergedArr = merge(arr1, arr2, length1, length2);
-	
-	delete[] arr1;
-	delete[] arr2;
-    // Construct a tree from the merged
-    // array and return root of the tree
-    return sortedArrayToBST (mergedArr, 0, length1 + length2 - 1,nullptr);
-}
-	
+		// Traverse through both arrays
+		while (i < m && j < n)
+		{
+			// Pick the smaller element and put it in mergedArr
+			if (*arr1[i] < *arr2[j])
+			{
+				mergedArr[k] = arr1[i];
+				i++;
+			}
+			else
+			{
+				mergedArr[k] = arr2[j];
+				j++;
+			}
+			k++;
+		}
+
+		// If there are more elements in first array
+		while (i < m)
+		{
+			mergedArr[k] = arr1[i];
+			i++;
+			k++;
+		}
+
+		// If there are more elements in second array
+		while (j < n)
+		{
+			mergedArr[k] = arr2[j];
+			j++;
+			k++;
+		}
+
+		return mergedArr;
+	}
+
+	AVLNode<T, S> *mergeTrees(AVLNode<T, S> *root1, AVLNode<T, S> *root2, int length1, int length2)
+	{
+		// Store inorder traversal of
+		// first tree in an array arr1[]
+		AVLNode<T, S> **arr1 = new AVLNode<T, S> *[length1];
+		int i = 0;
+		storeInorder(new AVLNode<T, S>(root1), arr1, &i);
+
+		// Store inorder traversal of second
+		// tree in another array arr2[]
+		AVLNode<T, S> **arr2 = new AVLNode<T, S> *[length2];
+		int j = 0;
+		storeInorder(new AVLNode<T, S>(root2), arr2, &j);
+
+		// Merge the two sorted array into one
+		AVLNode<T, S> **mergedArr = merge(arr1, arr2, length1, length2);
+
+		delete[] arr1;
+		delete[] arr2;
+		// Construct a tree from the merged
+		// array and return root of the tree
+		AVLNode<T, S> *node = sortedArrayToBST(mergedArr, 0, length1 + length2 - 1, nullptr);
+		delete[] mergedArr;
+		return node;
+	}
+
 	// A helper function that stores inorder
 	// traversal of a tree rooted with node
-	void storeInorder(AVLNode<T, S>* node, AVLNode<T, S>* inorder[], int *index_ptr)
+	void storeInorder(AVLNode<T, S> *node, AVLNode<T, S> *inorder[], int *index_ptr)
 	{
-		if (node == NULL)
+		if (node == nullptr)
 			return;
-	
-		/* first recur on left child */
-		storeInorder(node->left, inorder, index_ptr);
 
-		
+		/* first recur on left child */
+		if (node->left)
+		{
+			storeInorder(new AVLNode<T, S>(node->left), inorder, index_ptr);
+		}
+		else
+		{
+			storeInorder(nullptr, inorder, index_ptr);
+		}
+
 		// inorder[*index_ptr] = new AVLNode<T, S> (node->key, node->data, node->father);
-		inorder[*index_ptr] = node; //almog change 04.05 0:50
-		(*index_ptr)++; // increase index for next entry
+		inorder[*index_ptr] = node; // almog change 04.05 0:50
+		(*index_ptr)++;				// increase index for next entry
 		/* now recur on right child */
-		storeInorder(node->right, inorder, index_ptr);
+		if (node->right)
+		{
+			storeInorder(new AVLNode<T, S>(node->right), inorder, index_ptr);
+		}
+		else
+		{
+			storeInorder(nullptr, inorder, index_ptr);
+		}
 	}
- 
-	AVLNode<T, S>* sortedArrayToBST(AVLNode<T, S> *arr[], int start, int end,AVLNode<T, S> *root1)
+
+	AVLNode<T, S> *sortedArrayToBST(AVLNode<T, S> *arr[], int start, int end, AVLNode<T, S> *root1)
 	{
 		/* Base Case */
 		if (start > end)
-		return NULL;
-	
+			return NULL;
+
 		/* Get the middle element and make it root */
-		int mid = (start + end)/2;
+		int mid = (start + end) / 2;
 		/* maybe create new node with key, data, father*/
 		// AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, root1);
-		AVLNode<T, S> *root = arr[mid]; //almog change
-		root->father= root1;            //almog change
+		AVLNode<T, S> *root = arr[mid]; // almog change
+		root->father = root1;			// almog change
 		/* Recursively construct the left subtree and make it
 		left child of root */
-		root->left = sortedArrayToBST(arr, start, mid-1,root);
-	
+		root->left = sortedArrayToBST(arr, start, mid - 1, root);
+
 		/* Recursively construct the right subtree and make it
 		right child of root */
-		root->right = sortedArrayToBST(arr, mid+1, end,root);
-	
+		root->right = sortedArrayToBST(arr, mid + 1, end, root);
+
 		return root;
 	}
 
-	void fixHeight(AVLNode<T, S>* root){
-		if(root->left){
+	void fixHeight(AVLNode<T, S> *root)
+	{
+		if (root->left)
+		{
 			fixHeight(root->left);
 		}
-		else if(root->right){
+		else if (root->right)
+		{
 			fixHeight(root->right);
 		}
-		else{
-			root->height =0;
+		else
+		{
+			root->height = 0;
 			return;
 		}
-	setHeight(root);
-}
+		setHeight(root);
+	}
 
-	AVLTree<T, S>* combineTree(AVLTree<T, S>* tree1, AVLTree<T, S>* tree2){
-		AVLNode<T, S>* new_root = mergeTrees(tree1->getRoot(), tree2->getRoot(), tree1->getNumOfNode(), tree2->getNumOfNode());
-		AVLTree<T, S>* res_tree = new AVLTree(new_root);
+	AVLTree<T, S> *combineTree(AVLTree<T, S> *tree1, AVLTree<T, S> *tree2)
+	{
+		AVLNode<T, S> *new_root = mergeTrees(tree1->getRoot(), tree2->getRoot(), tree1->getNumOfNode(), tree2->getNumOfNode());
+		AVLTree<T, S> *res_tree = new AVLTree(new_root);
 		res_tree->setNumOfNode(tree1->getNumOfNode() + tree2->getNumOfNode());
 		fixHeight(res_tree->root);
 		return res_tree;

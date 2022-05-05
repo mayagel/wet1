@@ -11,6 +11,7 @@
         "vector": "cpp",
         "iterator": "cpp",
         "utility": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "new": "cpp"
     }
 }

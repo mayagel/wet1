@@ -11,18 +11,18 @@ private:
     int EmployerID;
     int Salary;
     int Grade;
-    AVLNode<Company*,int> *Employer;
+    AVLNode<Company *, int> *Employer;
 
 public:
     Employee() = default;
     Employee(int EmployeeID) : EmployeeID(EmployeeID) {}
-    Employee(int EmployeeID, int EmployerID, int Salary, int Grade, AVLNode<Company*,int> *Employer) : EmployeeID(EmployeeID),
-                                                                                                       EmployerID(EmployerID),
-                                                                                                       Salary(Salary),
-                                                                                                       Grade(Grade),
-                                                                                                       Employer(Employer)
-                                                                                                       {}
-
+    Employee(int EmployeeID, int EmployerID, int Salary, int Grade, AVLNode<Company *, int> *Employer) : EmployeeID(EmployeeID),
+                                                                                                         EmployerID(EmployerID),
+                                                                                                         Salary(Salary),
+                                                                                                         Grade(Grade),
+                                                                                                         Employer(Employer)
+    {
+    }
 
     ~Employee() = default;
     // Employee(const Employee &emp)
@@ -37,30 +37,38 @@ public:
 
     // bool operator<(const Employee &emp) const; // based on EmployeeID
     // bool operator>(const Employee &emp) const; // based on EmployeeID
-    // Employee &operator=(const Employee &emp);
+    // Employee &operator=(const Employee &emp)
+    // {
+    //     EmployeeID = emp.EmployeeID;
+    //     EmployerID = emp.EmployerID;
+    //     Salary = emp.Salary;
+    //     Grade = emp.Grade;
+    //     Employer = emp.Employer;
+    //     return *this;
+    // };
 
-    //geters
+    // geters
     int getEmployeeID() { return EmployeeID; };
     int getGrade() { return Grade; };
     int getSalary() { return Salary; };
     int getEmployerID() { return EmployerID; };
-    AVLNode<Company*,int>& getEmployer() {return *Employer; };
-    
-    //seters
-    void setEmployerID(int newID){EmployerID=newID;}
+    AVLNode<Company *, int> &getEmployer() { return *Employer; };
+
+    // seters
+    void setEmployerID(int newID) { EmployerID = newID; }
     void addToSalary(int t) { Salary += t; }
     void incGrade() { Grade++; }
-    void setEmployer(AVLNode<Company*,int> *newEmployer){Employer=newEmployer;}
+    void setEmployer(AVLNode<Company *, int> *newEmployer) { Employer = newEmployer; }
     bool operator<(const Employee &emp) const
     {
 
-        if(this->Salary < emp.Salary)
+        if (this->Salary < emp.Salary)
         {
             return true;
         }
-        else if(this->Salary == emp.Salary)
+        else if (this->Salary == emp.Salary)
         {
-            if(this->EmployeeID > emp.EmployeeID)
+            if (this->EmployeeID > emp.EmployeeID)
             {
                 return true;
             }
@@ -69,20 +77,19 @@ public:
     }
     bool operator>(const Employee &emp) const
     {
-        if(this->Salary > emp.Salary)
+        if (this->Salary > emp.Salary)
         {
             return true;
         }
-        else if(this->Salary == emp.Salary)
+        else if (this->Salary == emp.Salary)
         {
-            if(this->EmployeeID < emp.EmployeeID)
+            if (this->EmployeeID < emp.EmployeeID)
             {
                 return true;
             }
         }
         return false;
     }
-
 };
 
 #endif
