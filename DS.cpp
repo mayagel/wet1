@@ -305,7 +305,7 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     target_com->data->setNumEmployees(0);
 
     // step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
-    AVLNode<Company *, int> *target_com_with_emps = CompaniesWithEmp->find((this->Companies)->getRoot(), target_id);
+    AVLNode<Company *, int> *target_com_with_emps = CompaniesWithEmp->find((this->CompaniesWithEmp)->getRoot(), target_id);
     if (target_com_with_emps)
     {
         this->CompaniesWithEmp->remove(target_id);
@@ -358,6 +358,7 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     // step 10: set data of acquire in CompaniesWithEmp
     if (new_acquire_com->data->getNumEmployees())
     {
+        this->CompaniesWithEmp->remove(new_acquire_com->data->getCompanyID());
         this->CompaniesWithEmp->insert(acquirer_id, new_acquire_com->data);
     }
     return SUCCESS;
