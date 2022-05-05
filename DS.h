@@ -68,6 +68,12 @@ public:
             Companies->remove(to_delete->getCompanyID());
             delete to_delete;
         }
+        while(Employees->getNumOfNode()!=0)
+        {
+            Employee* to_delete = Employees->getRoot()->data;
+            Employees->remove(to_delete->getEmployeeID());
+            delete to_delete;
+        }
         delete Companies;
         delete CompaniesWithEmp;
         delete Employees;
