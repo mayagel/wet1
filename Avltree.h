@@ -261,7 +261,6 @@ public:
 
 	~AVLTree()
 	{
-		printf(" avl tree d'tor ");
 		deleteTree(root);
 		root = nullptr;
 	}
@@ -476,7 +475,9 @@ public:
 	delete[] arr2;
     // Construct a tree from the merged
     // array and return root of the tree
-    return sortedArrayToBST (mergedArr, 0, length1 + length2 - 1,nullptr);
+    AVLNode<T, S> *node = sortedArrayToBST(mergedArr, 0, length1 + length2 - 1, nullptr); 
+  	delete[] mergedArr; 
+  	return node;
 }
 	
 	// A helper function that stores inorder
@@ -540,6 +541,16 @@ public:
 		res_tree->setNumOfNode(tree1->getNumOfNode() + tree2->getNumOfNode());
 		fixHeight(res_tree->root);
 		return res_tree;
+	}
+
+	void setNullDataInTree(AVLNode<T, S> *node)
+	{
+		if (node != nullptr)
+		{
+			setNullDataInTree(node->left);
+			setNullDataInTree(node->right);
+			node->data =nullptr;
+		}
 	}
 };
 #endif

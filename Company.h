@@ -58,7 +58,6 @@ public:
     }
      ~Company()
     {
-        printf(" company d'tor ");
         delete comEmpBySalary;
         delete comEmpByID;
         comEmpBySalary=nullptr;
