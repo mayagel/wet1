@@ -25,6 +25,8 @@ public:
     Company(int compId, int value) : CompanyID(compId), Value(value), numEmployees(0){
         comEmpBySalary = new AVLTree<Employee*, KeyBySalary>();
         comEmpByID = new AVLTree<Employee*, int>();
+        // comEmpBySalary = nullptr;
+        // comEmpByID = nullptr;
         HighestEarnerInCom = nullptr;
         
     };
@@ -54,7 +56,14 @@ public:
         
 
     }
-    ~Company() = default;
+     ~Company()
+    {
+        printf(" company d'tor ");
+        delete comEmpBySalary;
+        delete comEmpByID;
+        comEmpBySalary=nullptr;
+        comEmpByID =nullptr;
+    };   
     bool operator<(const Company &c) const; 
     bool operator>(const Company &c) const; 
     Company &operator=(const Company &c);
@@ -81,6 +90,7 @@ public:
     void incNumEmployees(){numEmployees++;}
     void decNumEmployees(){numEmployees--;}
     void setNumEmployees(int num){numEmployees=num;}
+    void addtoNumEmployees(int numToAdd){numEmployees+=numToAdd;}
     void setValue(int val){Value=val;}
     void incValue(int val){Value+=val;}
     // Employee *HighestEarner = nullptr;

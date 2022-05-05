@@ -4,6 +4,7 @@
 
 #ifndef SALARY_KEY
 #define SALARY_KEY
+#include <stdio.h>
 
 
 
@@ -48,7 +49,7 @@ public:
         }
         return false;
     }
-    ~KeyBySalary() = default;
+    ~KeyBySalary() { printf(" i was here ");};
     int getSalary() const { return Salary; };
     int getEmployeeID() const { return EmployeeID; };
 };

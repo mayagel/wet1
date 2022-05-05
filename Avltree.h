@@ -19,7 +19,14 @@ public:
 	AVLNode *father;
 	AVLNode(){};// Yagel added empty default constructor 
 	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), height(0), left(nullptr), right(nullptr), father(father){};
-	~AVLNode() = default;
+	~AVLNode()
+	{
+		// if(data)
+		// {
+		// 	delete data;
+		// 	data = nullptr;
+		// }
+	}
 	bool operator<(const AVLNode &node) const
     {
 		return this->key < node.key;
@@ -254,6 +261,7 @@ public:
 
 	~AVLTree()
 	{
+		printf(" avl tree d'tor ");
 		deleteTree(root);
 		root = nullptr;
 	}
@@ -291,6 +299,7 @@ public:
 			deleteTree(node->left);
 			deleteTree(node->right);
 			delete node;
+			node =nullptr;
 		}
 	}
 
@@ -462,7 +471,9 @@ public:
  
     // Merge the two sorted array into one
     AVLNode<T, S> **mergedArr = merge(arr1, arr2, length1, length2);
- 
+	
+	delete[] arr1;
+	delete[] arr2;
     // Construct a tree from the merged
     // array and return root of the tree
     return sortedArrayToBST (mergedArr, 0, length1 + length2 - 1,nullptr);
@@ -479,7 +490,8 @@ public:
 		storeInorder(node->left, inorder, index_ptr);
 
 		
-		inorder[*index_ptr] = new AVLNode<T, S> (node->key, node->data, node->father);
+		// inorder[*index_ptr] = new AVLNode<T, S> (node->key, node->data, node->father);
+		inorder[*index_ptr] = node; //almog change 04.05 0:50
 		(*index_ptr)++; // increase index for next entry
 		/* now recur on right child */
 		storeInorder(node->right, inorder, index_ptr);
@@ -494,8 +506,9 @@ public:
 		/* Get the middle element and make it root */
 		int mid = (start + end)/2;
 		/* maybe create new node with key, data, father*/
-		AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, root1);
-	
+		// AVLNode<T, S> *root = new AVLNode<T, S>(arr[mid]->key, arr[mid]->data, root1);
+		AVLNode<T, S> *root = arr[mid]; //almog change
+		root->father= root1;            //almog change
 		/* Recursively construct the left subtree and make it
 		left child of root */
 		root->left = sortedArrayToBST(arr, start, mid-1,root);

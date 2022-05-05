@@ -19,17 +19,18 @@ class DataStructure
 private:
     AVLTree<Company*,int> *Companies;
     AVLTree<Company*,int> *CompaniesWithEmp;
-    AVLTree<Employee,int> *Employees;
-    AVLTree<Employee, KeyBySalary> *EmployeesBySalary;
+    AVLTree<Employee*,int> *Employees;
+    AVLTree<Employee*, KeyBySalary> *EmployeesBySalary;
     Employee *HighestEarner;
 
     void inOrderBySalary(AVLNode<Employee*, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
     void inOrderBySalary2(AVLNode<Employee, KeyBySalary> *start, int **Employees,int *NumOfEmployees);
-    void subInOrder(AVLNode<Company*,int> *subtree, int *arr, int index, int size);
-    void nodeToNodeInOrder(AVLNode<Employee*,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees);
+    void subInOrder(AVLNode<Company*,int> *subtree, int **Employees, int *index, int *NumOfCompanies);
+    void nodeToNodeInOrder(AVLNode<Employee*,int> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees);
     void nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade,int *TotalNumOfEmployees,int *NumOfEmployees);
-    int findMinMaxKey(AVLNode<Employee*,KeyBySalary> *subtree, int MinMaxEmployeeID);
-    int findMinMaxKeyBySalary(AVLNode<Employee,KeyBySalary> *subtree, int MinMaxEmployeeID);
+    int findMinKey(AVLNode<Employee*,int> *subtree, int MinMaxEmployeeID);
+    int findMaxKey(AVLNode<Employee*,int> *subtree, int MinMaxEmployeeID);
+    // int findMinMaxKeyBySalary(AVLNode<Employee*,KeyBySalary> *subtree, int MinMaxEmployeeID);
     void inOrderUpdateEmployer(AVLNode<Employee*,int> *subtree,AVLNode<Company*,int> *newEmployer);
     void inOrderUpdateEmployerBySal(AVLNode<Employee*,KeyBySalary> *subtree,AVLNode<Company*,int> *newEmployer);
 
@@ -40,11 +41,12 @@ public:
     {
         AVLTree<Company*,int> *Companies = new AVLTree<Company*,int>(); 
         this->Companies = Companies;
+        // this->Companies =nullptr;
         AVLTree<Company*,int> *CompaniesWithEmp = new AVLTree<Company*,int>(); 
         this->CompaniesWithEmp = CompaniesWithEmp;
-        AVLTree<Employee, int> *Employees = new AVLTree<Employee, int>(); 
+        AVLTree<Employee*, int> *Employees = new AVLTree<Employee*, int>(); 
         this->Employees = Employees;
-        AVLTree<Employee, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee, KeyBySalary>(); 
+        AVLTree<Employee*, KeyBySalary> *EmployeesBySalary = new AVLTree<Employee*, KeyBySalary>(); 
         this->EmployeesBySalary = EmployeesBySalary;
         HighestEarner = nullptr; 
     }
@@ -60,10 +62,27 @@ public:
 
     ~DataStructure()
     {
+        while(Companies->getNumOfNode()!=0)
+        {
+            Company* to_delete = Companies->getRoot()->data;
+            Companies->remove(to_delete->getCompanyID());
+            delete to_delete;
+        }
+        while(Employees->getNumOfNode()!=0)
+        {
+            Employee* to_delete = Employees->getRoot()->data;
+            Employees->remove(to_delete->getEmployeeID());
+            delete to_delete;
+        }
         delete Companies;
-        // delete CompaniesWithEmp;
+        delete CompaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
+
+        // Companies = nullptr;
+        CompaniesWithEmp =nullptr;
+        Employees = nullptr;
+        EmployeesBySalary = nullptr;
         // delete HighestEarner;
     };
 
