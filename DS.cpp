@@ -201,15 +201,14 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     ((theEmployee->getEmployer().data)->getcomEmpBySalary()).insert(*keyToInsert, theEmployee);
 
     // HighestEarner
-    if (theEmployee > HighestEarner)
+    if ((*theEmployee) > (*HighestEarner))
     {
         (HighestEarner = theEmployee);
     }
-    if (theEmployee > theEmployee->getEmployer().data->getHighestEarnerInCom())
+    if ((*theEmployee) > (*theEmployee->getEmployer().data->getHighestEarnerInCom()))
     {
         theEmployee->getEmployer().data->setHighestEarnerInCom(theEmployee);
     }
-    delete keyToInsert;
     delete keyToRemove;
     delete keyToInsert;
     return SUCCESS;

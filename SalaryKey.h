@@ -28,12 +28,12 @@ public:
         }
         return EmployeeID < a.EmployeeID;
     }
-    KeyBySalary operator=(const KeyBySalary &a)
-    {
-        this->Salary = a.Salary;
-        this->EmployeeID = a.EmployeeID;
-        return *this;
-    }
+    // KeyBySalary operator=(const KeyBySalary &a)
+    // {
+    //     this->Salary = a.Salary;
+    //     this->EmployeeID = a.EmployeeID;
+    //     return *this;
+    // }
     bool operator>(const KeyBySalary &a) const
     {
         if (Salary < a.Salary)
