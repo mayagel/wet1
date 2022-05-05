@@ -58,8 +58,11 @@ public:
     }
      ~Company()
     {
+        printf(" company d'tor ");
         delete comEmpBySalary;
         delete comEmpByID;
+        comEmpBySalary=nullptr;
+        comEmpByID =nullptr;
     };   
     bool operator<(const Company &c) const; 
     bool operator>(const Company &c) const; 

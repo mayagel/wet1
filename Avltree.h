@@ -19,7 +19,14 @@ public:
 	AVLNode *father;
 	AVLNode(){};// Yagel added empty default constructor 
 	AVLNode(const D &key, const C &data, AVLNode *father) : key(key), data(data), height(0), left(nullptr), right(nullptr), father(father){};
-	~AVLNode() = default;
+	~AVLNode()
+	{
+		// if(data)
+		// {
+		// 	delete data;
+		// 	data = nullptr;
+		// }
+	}
 	bool operator<(const AVLNode &node) const
     {
 		return this->key < node.key;
@@ -254,6 +261,7 @@ public:
 
 	~AVLTree()
 	{
+		printf(" avl tree d'tor ");
 		deleteTree(root);
 		root = nullptr;
 	}
@@ -291,6 +299,7 @@ public:
 			deleteTree(node->left);
 			deleteTree(node->right);
 			delete node;
+			node =nullptr;
 		}
 	}
 

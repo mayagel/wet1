@@ -9,7 +9,7 @@ StatusType DataStructure::AddCompany(int CompanyID, int Value)
     {
         return INVALID_INPUT;
     }
-    if (this->Companies->find((this->Companies)->getRoot(), CompanyID))
+    if (this->Companies->find(Companies->getRoot(), CompanyID))
     {
         return FAILURE;
     }
@@ -19,6 +19,8 @@ StatusType DataStructure::AddCompany(int CompanyID, int Value)
         return ALLOCATION_ERROR;
     }
     this->Companies->insert(CompanyID, newCompany);
+    // delete newCompany;
+
     return SUCCESS;
 }
 
@@ -128,7 +130,7 @@ StatusType DataStructure::GetCompanyInfo(int CompanyID, int *Value, int *NumEmpl
     {
         return INVALID_INPUT;
     }
-    if (!this->Companies->find((this->Companies)->getRoot(), CompanyID))
+    if (!this->Companies->find((Companies)->getRoot(), CompanyID))
     {
         return FAILURE;
     }
@@ -582,26 +584,7 @@ int DataStructure::findMaxKey(AVLNode<Employee*,int> *subtree, int MinMaxEmploye
 		}
 		return findMaxKey(subtree->left, MinMaxEmployeeID);
 	}
-// int DataStructure::findMinMaxKeyBySalary(AVLNode<Employee*,KeyBySalary> *subtree, int MinMaxEmployeeID)
-// 	{
-//         if(subtree == nullptr)
-//         {
-//             return subtree->father->data->getEmployeeID();
-//         }
-// 		if (subtree->data->getEmployeeID() == MinMaxEmployeeID)
-// 		{
-// 			return subtree->data->getEmployeeID();
-// 		}
-//         if(subtree == nullptr)
-//         {
-//             return subtree->father->data->getEmployeeID();
-//         }
-// 		if (subtree->data->getEmployeeID() < MinMaxEmployeeID)
-// 		{
-// 			return findMinMaxKeyBySalary(subtree->right, MinMaxEmployeeID);
-// 		}
-// 		return findMinMaxKeyBySalary(subtree->left, MinMaxEmployeeID);
-// 	}
+
 
 void DataStructure::inOrderUpdateEmployer(AVLNode<Employee*,int> *subtree,AVLNode<Company*,int> *newEmployer)
 {

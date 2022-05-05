@@ -41,6 +41,7 @@ public:
     {
         AVLTree<Company*,int> *Companies = new AVLTree<Company*,int>(); 
         this->Companies = Companies;
+        // this->Companies =nullptr;
         AVLTree<Company*,int> *CompaniesWithEmp = new AVLTree<Company*,int>(); 
         this->CompaniesWithEmp = CompaniesWithEmp;
         AVLTree<Employee*, int> *Employees = new AVLTree<Employee*, int>(); 
@@ -61,12 +62,18 @@ public:
 
     ~DataStructure()
     {
+        while(Companies->getNumOfNode()!=0)
+        {
+            Company* to_delete = Companies->getRoot()->data;
+            Companies->remove(to_delete->getCompanyID());
+            delete to_delete;
+        }
         delete Companies;
         delete CompaniesWithEmp;
         delete Employees;
         delete EmployeesBySalary;
 
-        Companies = nullptr;
+        // Companies = nullptr;
         CompaniesWithEmp =nullptr;
         Employees = nullptr;
         EmployeesBySalary = nullptr;
