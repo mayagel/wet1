@@ -358,7 +358,7 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     //step 10: set data of acquire in CompaniesWithEmp
     if (new_acquire_com->data->getNumEmployees())
     {
-        this->CompaniesWithEmp->insert(acquirer_id, acquire_com->data);
+        this->CompaniesWithEmp->insert(acquirer_id, new_acquire_com->data);
     }
     
     return SUCCESS;
