@@ -209,6 +209,7 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     {
         theEmployee->getEmployer().data->setHighestEarnerInCom(theEmployee);
     }
+    delete keyToInsert;
     delete keyToRemove;
     delete keyToInsert;
     return SUCCESS;
@@ -295,16 +296,13 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     }
     // step 5: delete the target company
     // step 5.1: delete comEmpBySalary and comEmpByID and set numEmployees = 0 (target)
-    // free(tar_comp_by_sal);
-    // free(tar_comp_by_id);
-
-    // tar_comp_by_id->deleteTree(tar_comp_by_id->getRoot());
-    // tar_comp_by_sal->deleteTree(tar_comp_by_sal->getRoot());
+    // target_com->data->getcomEmpByID().setNullDataInTree(target_com->data->getcomEmpByID().getRoot());
+    // target_com->data->getcomEmpBySalary().setNullDataInTree(target_com->data->getcomEmpBySalary().getRoot());
+    // delete acq_comp_by_sal;
+    // delete tar_comp_by_id;
     target_com->data->setcomEmpBySalary(nullptr);
     target_com->data->setcomEmpByID(nullptr);
     target_com->data->setHighestEarnerInCom(nullptr);
-    target_com->data->setcomEmpBySalary(nullptr);
-    target_com->data->setcomEmpByID(nullptr);
     target_com->data->setNumEmployees(0);
 
     // step 5.2: delete comEmpBySalary and comEmpByID and set numEmployees = 0 from CompaniesWithEmp (target)
@@ -424,11 +422,12 @@ StatusType DataStructure::GetAllEmployeesBySalary(int CompanyID, int **Employees
 
 StatusType DataStructure::GetHighestEarnerInEachCompany(int NumOfCompanies, int **Employees)
 {
-    if (Employees == nullptr || this->Employees->getNumOfNode() < 1)
+    if(Employees == nullptr || this->Employees->getNumOfNode() < 1 || NumOfCompanies <= 0)
     {
         return INVALID_INPUT;
     }
-    if (this->CompaniesWithEmp->getNumOfNode() < 1)
+    if(this->CompaniesWithEmp->getNumOfNode() < NumOfCompanies)
+
     {
         return FAILURE;
     }

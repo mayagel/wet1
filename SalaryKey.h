@@ -54,7 +54,8 @@ public:
         }
         return false;
     }
-    ~KeyBySalary() { printf(" i was here "); };
+    ~KeyBySalary() {};
+
     int getSalary() const { return Salary; };
     int getEmployeeID() const { return EmployeeID; };
 };
