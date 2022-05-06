@@ -12,6 +12,8 @@
         "iterator": "cpp",
         "utility": "cpp",
         "algorithm": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp"
     }
 }

@@ -85,9 +85,8 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
         return FAILURE;
     }
     AVLNode<Employee *, int> *EmployeeByID = this->Employees->find((this->Employees)->getRoot(), EmployeeID);
-
     KeyBySalary *tempKey = new KeyBySalary(EmployeeByID->data->getSalary(), EmployeeID);
-    // AVLNode<Employee*, KeyBySalary> *EmployeeBySal = this->EmployeesBySalary->find((this->EmployeesBySalary)->getRoot(), *tempKey);
+    AVLTree<Employee *, KeyBySalary> *compBySal = &(EmployeeByID->data->getEmployer().getcomEmpBySalary()); // of target
 
     EmployeeByID->data->getEmployer().decNumEmployees();
     EmployeeByID->data->getEmployer().getcomEmpByID().remove(EmployeeID);
@@ -97,10 +96,26 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
     {
         this->CompaniesWithEmp->remove(EmployeeByID->data->getEmployer().getCompanyID());
     }
-    delete EmployeeByID->data;
 
     this->EmployeesBySalary->remove(*tempKey);
+    
+    //hiest earner
+    if(EmployeeID == HighestEarner->getEmployeeID())
+    {
+       HighestEarner = goLeft(EmployeesBySalary->getRoot());
+    }
+    if(EmployeeID == EmployeeByID->data->getEmployer().getHighestEarnerInCom()->getEmployeeID())
+    {
+        if(EmployeeByID->data->getEmployer().getNumEmployees() != 0)
+        {
+            EmployeeByID->data->getEmployer().setHighestEarnerInCom(goLeft(compBySal->getRoot()));
+        }
+    }
+    delete EmployeeByID->data;
+
     this->Employees->remove(EmployeeID);
+
+    
     delete tempKey;
     return SUCCESS;
 }
@@ -265,10 +280,10 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     // step 3: combine employees
     AVLTree<Employee *, KeyBySalary> *merged_emp_by_sal = tar_comp_by_sal->combineTree(tar_comp_by_sal, acq_comp_by_sal);
     AVLTree<Employee *, int> *merged_emp_by_id = tar_comp_by_id->combineTree(tar_comp_by_id, acq_comp_by_id);
-    delete tar_comp_by_id;
-    delete tar_comp_by_sal;
-    delete acq_comp_by_id;
-    delete acq_comp_by_sal;
+    // delete tar_comp_by_id;
+    // delete tar_comp_by_sal;
+    // delete acq_comp_by_id;
+    // delete acq_comp_by_sal;
     // step 4: set other datas
     int merged_value = (acquire_com->data->getValue() + target_com->data->getValue()) * factor;
     int merged_num_of_employees = acquire_com->data->getNumEmployees() + target_com->data->getNumEmployees();
@@ -360,6 +375,10 @@ StatusType DataStructure::AcquireCompany(int acquirer_id, int target_id, double 
     {
         this->CompaniesWithEmp->insert(acquirer_id, new_acquire_com->data);
     }
+    delete tar_comp_by_id;
+    delete tar_comp_by_sal;
+    delete acq_comp_by_id;
+    delete acq_comp_by_sal;
     return SUCCESS;
 }
 
@@ -454,9 +473,9 @@ StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployee
             return FAILURE;
         }
 
-        MinEmployeeID = findMinKey(theCompany->data->getcomEmpByID().getRoot(), MinEmployeeID);
-        MaxEmployeeId = findMaxKey(theCompany->data->getcomEmpByID().getRoot(), MaxEmployeeId);
-        nodeToNodeInOrder(theCompany->data->getcomEmpByID().getRoot(), MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+        int newMinEmployeeID = findMinKey(theCompany->data->getcomEmpByID().getRoot(), MinEmployeeID);
+        int newMaxEmployeeId = findMaxKey(theCompany->data->getcomEmpByID().getRoot(), MaxEmployeeId);
+        nodeToNodeInOrder(theCompany->data->getcomEmpByID().getRoot(), MinEmployeeID, MaxEmployeeId,newMinEmployeeID, newMaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
     }
     else
     {
@@ -464,9 +483,9 @@ StatusType DataStructure::GetNumEmployeesMatching(int CompanyID, int MinEmployee
         {
             return FAILURE;
         }
-        MinEmployeeID = findMinKey(Employees->getRoot(), MinEmployeeID);
-        MaxEmployeeId = findMaxKey(Employees->getRoot(), MaxEmployeeId);
-        nodeToNodeInOrder(Employees->getRoot(), MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+        int newMinEmployeeID = findMinKey(Employees->getRoot(), MinEmployeeID);
+        int newMaxEmployeeId = findMaxKey(Employees->getRoot(), MaxEmployeeId);
+        nodeToNodeInOrder(Employees->getRoot(), MinEmployeeID, MaxEmployeeId, newMinEmployeeID, newMaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
     }
 
     return SUCCESS;
@@ -509,13 +528,13 @@ void DataStructure::subInOrder(AVLNode<Company *, int> *subtree, int **Employees
     return;
 }
 
-void DataStructure::nodeToNodeInOrder(AVLNode<Employee *, int> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
+void DataStructure::nodeToNodeInOrder(AVLNode<Employee *, int> *subtree, int oldmin, int oldmax, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
 {
     if (subtree == nullptr)
         return;
     if (subtree->data->getEmployeeID() > MinEmployeeID)
-        nodeToNodeInOrder(subtree->left, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
-    if ((subtree->data->getEmployeeID() >= MinEmployeeID) && (subtree->data->getEmployeeID() <= MaxEmployeeId))
+        nodeToNodeInOrder(subtree->left, oldmin, oldmax, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+    if ((subtree->data->getEmployeeID() >= oldmin) && (subtree->data->getEmployeeID() <= oldmax))
     {
         (*TotalNumOfEmployees)++;
         if ((subtree->data->getSalary() >= MinSalary) && (subtree->data->getGrade() >= MinGrade))
@@ -524,18 +543,18 @@ void DataStructure::nodeToNodeInOrder(AVLNode<Employee *, int> *subtree, int Min
         }
     }
     if (subtree->data->getEmployeeID() <= MaxEmployeeId)
-        nodeToNodeInOrder(subtree->right, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+        nodeToNodeInOrder(subtree->right,  oldmin, oldmax,MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
 
     return;
 }
 
-void DataStructure::nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee, KeyBySalary> *subtree, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
+void DataStructure::nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee, KeyBySalary> *subtree,int oldmin, int oldmax, int MinEmployeeID, int MaxEmployeeId, int MinSalary, int MinGrade, int *TotalNumOfEmployees, int *NumOfEmployees)
 {
     if (subtree == nullptr)
         return;
     if (subtree->data.getEmployeeID() > MinEmployeeID)
-        nodeToNodeInOrderEmployeeBySalary(subtree->left, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
-    if ((subtree->data.getEmployeeID() >= MinEmployeeID) && (subtree->data.getEmployeeID() >= MaxEmployeeId))
+        nodeToNodeInOrderEmployeeBySalary(subtree->left,oldmin,oldmax, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+    if ((subtree->data.getEmployeeID() >= oldmin) && (subtree->data.getEmployeeID() >= oldmax))
     {
         (*TotalNumOfEmployees)++;
         if ((subtree->data.getSalary() >= MinSalary) && (subtree->data.getGrade() >= MinGrade))
@@ -544,7 +563,7 @@ void DataStructure::nodeToNodeInOrderEmployeeBySalary(AVLNode<Employee, KeyBySal
         }
     }
     if (subtree->data.getEmployeeID() <= MaxEmployeeId)
-        nodeToNodeInOrderEmployeeBySalary(subtree->right, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
+        nodeToNodeInOrderEmployeeBySalary(subtree->right,oldmin,oldmax, MinEmployeeID, MaxEmployeeId, MinSalary, MinGrade, TotalNumOfEmployees, NumOfEmployees);
 
     return;
 }
@@ -562,7 +581,10 @@ int DataStructure::findMinKey(AVLNode<Employee *, int> *subtree, int MinMaxEmplo
     }
     if (subtree->data->getEmployeeID() < MinMaxEmployeeID)
     {
+        if(subtree->right)
         return findMinKey(subtree->right, MinMaxEmployeeID);
+        else
+        return subtree->data->getEmployeeID();
     }
     return findMinKey(subtree->left, MinMaxEmployeeID);
 }
@@ -582,7 +604,10 @@ int DataStructure::findMaxKey(AVLNode<Employee *, int> *subtree, int MinMaxEmplo
     {
         return findMaxKey(subtree->right, MinMaxEmployeeID);
     }
+    if(subtree->left)
     return findMaxKey(subtree->left, MinMaxEmployeeID);
+    else
+    return subtree->data->getEmployeeID();
 }
 
 void DataStructure::inOrderUpdateEmployer(AVLNode<Employee *, int> *subtree, AVLNode<Company *, int> *newEmployer)
@@ -604,4 +629,13 @@ void DataStructure::inOrderUpdateEmployerBySal(AVLNode<Employee *, KeyBySalary> 
     subtree->data->setEmployer(newEmployer->data);
     subtree->data->setEmployerID(newEmployer->data->getCompanyID());
     inOrderUpdateEmployerBySal(subtree->getRight(), newEmployer);
+}
+
+Employee* DataStructure::goLeft(AVLNode<Employee *, KeyBySalary> *subtree)
+{
+    if(subtree->left == nullptr)
+    {
+        return subtree->data;
+    }
+    return goLeft(subtree->left);
 }
