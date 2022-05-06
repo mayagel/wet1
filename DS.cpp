@@ -36,7 +36,7 @@ StatusType DataStructure::AddEmployee(int EmployeeID, int CompanyID, int Salary,
 
     AVLNode<Company *, int> *employer = Companies->find((this->Companies)->getRoot(), CompanyID);
 
-    Employee *newEmployee = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
+    Employee *newEmployee = new Employee(EmployeeID, CompanyID, Salary, Grade, employer->data);
     // Employee *newEmployeeBySal = new Employee(EmployeeID, CompanyID, Salary, Grade, employer);
     KeyBySalary *keyToInsert = new KeyBySalary(Salary, EmployeeID);
 
@@ -89,13 +89,13 @@ StatusType DataStructure::RemoveEmployee(int EmployeeID)
     KeyBySalary *tempKey = new KeyBySalary(EmployeeByID->data->getSalary(), EmployeeID);
     // AVLNode<Employee*, KeyBySalary> *EmployeeBySal = this->EmployeesBySalary->find((this->EmployeesBySalary)->getRoot(), *tempKey);
 
-    EmployeeByID->data->getEmployer().data->decNumEmployees();
-    EmployeeByID->data->getEmployer().data->getcomEmpByID().remove(EmployeeID);
-    EmployeeByID->data->getEmployer().data->getcomEmpBySalary().remove(*tempKey);
+    EmployeeByID->data->getEmployer().decNumEmployees();
+    EmployeeByID->data->getEmployer().getcomEmpByID().remove(EmployeeID);
+    EmployeeByID->data->getEmployer().getcomEmpBySalary().remove(*tempKey);
     // Employee->data.getEmployer().data->decNumEmployees();
-    if (EmployeeByID->data->getEmployer().data->getNumEmployees() == 0)
+    if (EmployeeByID->data->getEmployer().getNumEmployees() == 0)
     {
-        this->CompaniesWithEmp->remove(EmployeeByID->data->getEmployer().data->getCompanyID());
+        this->CompaniesWithEmp->remove(EmployeeByID->data->getEmployer().getCompanyID());
     }
     delete EmployeeByID->data;
 
@@ -185,7 +185,7 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     KeyBySalary *keyToRemove = new KeyBySalary(theEmployee->getSalary(), EmployeeID);
 
     // remove
-    theEmployee->getEmployer().data->getcomEmpBySalary().remove(*keyToRemove);
+    theEmployee->getEmployer().getcomEmpBySalary().remove(*keyToRemove);
     this->EmployeesBySalary->remove(*keyToRemove);
 
     // upgrade
@@ -198,16 +198,16 @@ StatusType DataStructure::PromoteEmployee(int EmployeeID, int SalaryIncrease, in
     // insert
     KeyBySalary *keyToInsert = new KeyBySalary(theEmployee->getSalary(), EmployeeID);
     (this->EmployeesBySalary)->insert(*keyToInsert, theEmployee);
-    ((theEmployee->getEmployer().data)->getcomEmpBySalary()).insert(*keyToInsert, theEmployee);
+    (theEmployee->getEmployer().getcomEmpBySalary()).insert(*keyToInsert, theEmployee);
 
     // HighestEarner
     if ((*theEmployee) > (*HighestEarner))
     {
         (HighestEarner = theEmployee);
     }
-    if ((*theEmployee) > (*theEmployee->getEmployer().data->getHighestEarnerInCom()))
+    if ((*theEmployee) > (*theEmployee->getEmployer().getHighestEarnerInCom()))
     {
-        theEmployee->getEmployer().data->setHighestEarnerInCom(theEmployee);
+        theEmployee->getEmployer().setHighestEarnerInCom(theEmployee);
     }
     delete keyToRemove;
     delete keyToInsert;
@@ -591,7 +591,7 @@ void DataStructure::inOrderUpdateEmployer(AVLNode<Employee *, int> *subtree, AVL
         return;
     inOrderUpdateEmployer(subtree->getLeft(), newEmployer);
     subtree->data->setEmployerID(newEmployer->data->getCompanyID());
-    subtree->data->setEmployer(newEmployer);
+    subtree->data->setEmployer(newEmployer->data);
     inOrderUpdateEmployer(subtree->getRight(), newEmployer);
 }
 
@@ -601,7 +601,7 @@ void DataStructure::inOrderUpdateEmployerBySal(AVLNode<Employee *, KeyBySalary> 
         return;
     inOrderUpdateEmployerBySal(subtree->getLeft(), newEmployer);
 
-    subtree->data->setEmployer(newEmployer);
+    subtree->data->setEmployer(newEmployer->data);
     subtree->data->setEmployerID(newEmployer->data->getCompanyID());
     inOrderUpdateEmployerBySal(subtree->getRight(), newEmployer);
 }
